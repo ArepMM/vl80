@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<Vehicle>
+		<EmptyMass>96000</EmptyMass>
+		<PayloadMass>0</PayloadMass>
+		<Length>17.0</Length>
+		<WheelDiameter>1.25</WheelDiameter>
+        <MainResist>loco-resist</MainResist>
+        <NumAxis>4</NumAxis>
+        <WheelInertia>2.0</WheelInertia> 
+	</Vehicle>
+</Config>

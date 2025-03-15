@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+    <Common>
+        <CouplingModule>ef-coupling</CouplingModule>
+        <CabineInVehicle>0</CabineInVehicle>
+        <ChargingPressure>0.5</ChargingPressure>
+        <InitMainResPressure>0.9</InitMainResPressure>
+        <NoAir>0</NoAir>
+        <Title>ВЛ80с (резервом)</Title>
+        <Description>Грузовой электровоз переменного тока</Description>            
+    </Common>
+
+    <Vehicle>
+         <Module>vl80s</Module>
+         <ModuleConfig>vl80s</ModuleConfig>
+         <Count>1</Count>
+         <PayloadCoeff>1</PayloadCoeff>    
+    </Vehicle>
+
+    <Vehicle>
+         <Module>vl80s</Module>
+         <ModuleConfig>vl80s</ModuleConfig>
+         <Count>1</Count>
+         <PayloadCoeff>1</PayloadCoeff>    
+    </Vehicle>
+
+</Config>
