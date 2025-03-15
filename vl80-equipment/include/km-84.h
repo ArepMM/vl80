@@ -75,6 +75,31 @@ enum KM84_ResersPos
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+enum KM84_BrakePos
+{
+    BRAKE_NUM_POS = 4,
+    BRAKE_POS_0 = 0,
+    BRAKE_POS_P = 1,
+    BRAKE_POS_PT = 2,
+    BRAKE_POS_T = 3
+};
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+enum KM84_BrakeShaft
+{
+    BS_NUM_CONTACTS = 5,
+    K_31_32 = 0,
+    K_33_34 = 1,
+    K_35_36 = 2,
+    K_37_38 = 3,
+    K_39_40 = 4
+};
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 class ControllerKM84 : public Device
 {
 public:
@@ -93,6 +118,9 @@ private:
     /// Развертка реверсивного вала
     std::array<km84_contact_state_t, KM84_ReversShaft::RS_NUM_CONTACTS> revers_shaft_state;
 
+    /// Развертка тормозного вала
+    std::array<km84_contact_state_t, KM84_BrakeShaft::BS_NUM_CONTACTS> brake_shaft_state;
+
     void preStep(state_vector_t &Y, double t) override;
 
     void ode_system(const state_vector_t &Y,
@@ -103,14 +131,17 @@ private:
 
     void stepKeysControl(double t, double dt) override;
 
-    /// Установка начального состояния контактов
+    /// Установка начального состояния контактов вала
     void set_shaft_contacts_state(km84_contact_state_t &shaft_state, bool state);
 
     /// Инициализация развертки главного вала
     void init_main_shaft();
 
-    /// инициализация развертки реверсивного вала
+    /// Инициализация развертки реверсивного вала
     void init_revers_shaft();
+
+    /// Инициализация развертки тормозного вала
+    void init_brake_shaft();
 };
 
 #endif

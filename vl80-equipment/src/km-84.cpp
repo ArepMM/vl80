@@ -26,6 +26,9 @@ void ControllerKM84::init()
 
     // Инициализируем развертку реверсивного вала
     init_revers_shaft();
+
+    // Инициализитуем развертку тормозного вала
+    init_brake_shaft();
 }
 
 //------------------------------------------------------------------------------
@@ -162,4 +165,32 @@ void ControllerKM84::init_revers_shaft()
 
     set_shaft_contacts_state(revers_shaft_state[K_15_16], true);
     revers_shaft_state[K_15_16][REVERS_POS_0] = false;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ControllerKM84::init_brake_shaft()
+{
+    for (size_t i = 0; i < brake_shaft_state.size(); ++i)
+    {
+        brake_shaft_state[i].resize(BRAKE_NUM_POS);
+    }
+
+    set_shaft_contacts_state(brake_shaft_state[K_31_32], true);
+    brake_shaft_state[K_31_32][BRAKE_POS_0] = false;
+
+    set_shaft_contacts_state(brake_shaft_state[K_33_34], false);
+    brake_shaft_state[K_33_34][BRAKE_POS_P] = true;
+
+    set_shaft_contacts_state(brake_shaft_state[K_35_36], true);
+    brake_shaft_state[K_35_36][BRAKE_POS_0] = false;
+    brake_shaft_state[K_35_36][BRAKE_POS_P] = false;
+
+    set_shaft_contacts_state(brake_shaft_state[K_37_38], true);
+    brake_shaft_state[K_37_38][BRAKE_POS_0] = false;
+    brake_shaft_state[K_37_38][BRAKE_POS_PT] = false;
+
+    set_shaft_contacts_state(brake_shaft_state[K_39_40], true);
+    brake_shaft_state[K_39_40][BRAKE_POS_0] = false;
 }
