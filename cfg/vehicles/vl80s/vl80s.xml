@@ -24,8 +24,8 @@
 		<!-- Конфиг автосцепного устройства -->
 		<CouplingConfig>sa3</CouplingConfig>
 
-		<!-- Объём главных резервуаров, л -->
-		<MainReservoirVolume>900.0</MainReservoirVolume>
+		<!-- Объём главных резервуаров, м^3 -->
+		<MainReservoirVolume>0.9</MainReservoirVolume>
 		<!-- Темп утечек из главных резервуаров -->
 		<MainReservoirFlow>1.0e-6</MainReservoirFlow>
 

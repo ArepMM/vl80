@@ -72,6 +72,18 @@ private:
     /// Главный резервуар
     Reservoir   *main_reservoir = nullptr;
 
+    /// Концевой кран питательной магистрали спереди
+    PneumoAngleCock *anglecock_fl_fwd = nullptr;
+
+    /// Концевой кран питательной магистрали сзади
+    PneumoAngleCock *anglecock_fl_bwd = nullptr;
+
+    /// Рукав питательной  магистрали спереди
+    PneumoHose      *hose_fl_fwd = nullptr;
+
+    /// Рукав питательной  магистрали сзади
+    PneumoHose      *hose_fl_bwd = nullptr;
+
     /// Контроллер машиниста КМ-84
     ControllerKM84 *km = new ControllerKM84;
 

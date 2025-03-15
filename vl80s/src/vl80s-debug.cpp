@@ -22,8 +22,8 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(brake_crane->getPositionName(), 3)
                     .arg(loco_crane->getHandlePosition() * 100.0, 3, 'f', 0)*/;
 
-/*
     DebugMsg += QString("\n");
+    /*
     DebugMsg += QString("%1%2%3-%4-couplings-%5-%6%7%8")
                     .arg(coupling_fwd->isLinked() ? "=" : " ")
                     .arg(coupling_fwd->isCoupled() ? "=" : " ")
@@ -41,7 +41,7 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(anglecock_bp_bwd->isOpened() ? "\\" : "|")
                     .arg(hose_bp_bwd->isConnected() ? "_" : " ")
                     .arg(hose_bp_bwd->isLinked() ? "/" : " ");
-    DebugMsg += QString("  |  ");
+    DebugMsg += QString("  |  ");*/
     DebugMsg += QString("%1%2/=%3==FL==%4=\\%5%6")
                     .arg(hose_fl_fwd->isLinked() ? "\\" : " ")
                     .arg(hose_fl_fwd->isConnected() ? "_" : " ")
@@ -49,7 +49,7 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(anglecock_fl_bwd->isOpened() ? "\\" : "|")
                     .arg(hose_fl_bwd->isConnected() ? "_" : " ")
                     .arg(hose_fl_bwd->isLinked() ? "/" : " ");
-    DebugMsg += QString("  |  ");
+    DebugMsg += QString("  |  ");/*
     DebugMsg += QString("%1%2/=%3==BC==%4=\\%5%6")
                     .arg(hose_bc_fwd->isLinked() ? "\\" : " ")
                     .arg(hose_bc_fwd->isConnected() ? "_" : " ")
