@@ -58,6 +58,10 @@ void VL80s::initialization()
 
     initPneumoSupply(modules_dir, custom_cfg_dir);
 
+    initBrakesControl(modules_dir, custom_cfg_dir);
+
+    initBrakesEquipment(modules_dir, custom_cfg_dir);
+
     // Контроллер машиниста
     km->init();
 }
@@ -68,6 +72,10 @@ void VL80s::initialization()
 void VL80s::step(double t, double dt)
 {
     stepPneumoSupply(t, dt);
+
+    stepBrakesControl(t, dt);
+
+    stepBrakesEquipment(t, dt);
 
     stepDebugPrint(t, dt);
 }

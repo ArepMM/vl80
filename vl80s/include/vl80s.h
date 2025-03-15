@@ -33,7 +33,7 @@ private:
     QString coupling_config_name = "sa3";
 
     /// Объём главных резервуаров
-    double main_reservoir_volume = 900.0;
+    double main_reservoir_volume = 0.9;
     /// Темп утечек из главных резервуаров
     double main_reservoir_leak_flow = 1.0e-6;
 
@@ -84,6 +84,30 @@ private:
     /// Рукав питательной  магистрали сзади
     PneumoHose      *hose_fl_bwd = nullptr;
 
+    /// Блокировочное устройство УБТ усл.№367м
+    BrakeLock   *brake_lock = nullptr;
+
+    /// Поездной кран машиниста усл.№395
+    BrakeCrane  *brake_crane = nullptr;
+
+    /// Кран впомогательного тормоза усл.№254
+    LocoCrane   *loco_crane = nullptr;
+
+    /// Тормозная магистраль
+    Reservoir   *brakepipe = nullptr;
+
+    /// Концевой кран тормозной магистрали спереди
+    PneumoAngleCock *anglecock_bp_fwd = Q_NULLPTR;
+
+    /// Концевой кран тормозной магистрали сзади
+    PneumoAngleCock *anglecock_bp_bwd = Q_NULLPTR;
+
+    /// Рукав тормозной магистрали спереди
+    PneumoHose  *hose_bp_fwd = Q_NULLPTR;
+
+    /// Рукав тормозной магистрали сзади
+    PneumoHose  *hose_bp_bwd = Q_NULLPTR;
+
     /// Контроллер машиниста КМ-84
     ControllerKM84 *km = new ControllerKM84;
 
@@ -94,12 +118,24 @@ private:
     /// Инициализация питательной магистрали
     void initPneumoSupply(const QString &modules_dir, const QString &custom_cfg_dir);
 
+    /// Инициализация приборов управления тормозами
+    void initBrakesControl(const QString &modules_dir, const QString &custom_cfg_dir);
+
+    /// Инициализация тормозного оборудования
+    void initBrakesEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
+
     // Симуляция:
     /// Шаг симуляции всех систем электровоза
     void step(double t, double dt) override;
 
     /// Моделирование питательной магистрали
     void stepPneumoSupply(double t, double dt);
+
+    /// Моделирование приборов управления тормозами
+    void stepBrakesControl(double t, double dt);
+
+    /// Моделирование тормозного оборудования
+    void stepBrakesEquipment(double t, double dt);
 
     /// Отладочный вывод
     void stepDebugPrint(double t, double dt);
