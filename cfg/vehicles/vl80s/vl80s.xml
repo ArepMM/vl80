@@ -24,12 +24,14 @@
 		<!-- Конфиг автосцепного устройства -->
 		<CouplingConfig>sa3</CouplingConfig>
 
+		<!-- Объём главных резервуаров, л -->
+		<MainReservoirVolume>900.0</MainReservoirVolume>
 		<!-- Темп утечек из главных резервуаров -->
-		<MainReservoirFlow>1.1e-4</MainReservoirFlow>
+		<MainReservoirFlow>1.0e-6</MainReservoirFlow>
 
 		<!-- Состояние устройства блокировки тормозов  -->
 		<!-- (1 - разблокирована, 0 - заблокирована) -->
-		<BrakeLockDevice>1</BrakeLockDevice>
+		<BrakeLockState>1</BrakeLockState>
 
 		<!-- Положение комбинированного крана -->
 		<!-- ( -1 - положение двойной тяги, 0 - поездное, 1 - экстренное торможение) -->
