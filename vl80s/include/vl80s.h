@@ -63,8 +63,14 @@ private:
     QString airdist_config_name = "vr483";
 
     // Оборудование:
+    /// Мотор-компрессор
+    ACMotorCompressor *motor_compressor = nullptr;
+
+    /// Регулятор давления в ГР
+    PressureRegulator *press_reg = nullptr;
+
     /// Главный резервуар
-    Reservoir   *main_reservoir = Q_NULLPTR;
+    Reservoir   *main_reservoir = nullptr;
 
     /// Контроллер машиниста КМ-84
     ControllerKM84 *km = new ControllerKM84;
