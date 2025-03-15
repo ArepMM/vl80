@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
 
-    <Common>
-        <CouplingModule>ef-coupling</CouplingModule>
-        <CabineInVehicle>0</CabineInVehicle>
-        <ChargingPressure>0.5</ChargingPressure>
-        <InitMainResPressure>0.9</InitMainResPressure>
-        <NoAir>0</NoAir>
-        <Title>ВЛ80с (резервом)</Title>
-        <Description>Грузовой электровоз переменного тока</Description>            
-    </Common>
+	<Common>
+		<!-- Зарядное давление, МПа -->
+		<ChargingPressure>0.52</ChargingPressure>
+		<!-- Начальное давление в ГР, МПа -->
+		<InitMainResPressure>0.9</InitMainResPressure>
+		<!-- Поезд без воздуха (1 - без воздуха, 0 - полностью заряженный) -->
+		<NoAir>0</NoAir>
 
-    <Vehicle>
-         <Module>vl80s</Module>
-         <ModuleConfig>vl80s</ModuleConfig>
-         <Count>1</Count>
-         <PayloadCoeff>1</PayloadCoeff>    
-    </Vehicle>
+		<Title>ВЛ80с (резервом)</Title>
+		<Description>Грузовой электровоз переменного тока</Description>
+	</Common>
 
-    <Vehicle>
-         <Module>vl80s</Module>
-         <ModuleConfig>vl80s</ModuleConfig>
-         <Count>1</Count>
-         <PayloadCoeff>1</PayloadCoeff>    
-    </Vehicle>
+	<Vehicle>
+		<ModuleDir>vl80s</ModuleDir>
+		<Module>vl80s</Module>
+		<ModuleConfigDir>vl80s</ModuleConfigDir>
+		<ModuleConfig>vl80s</ModuleConfig>
+		<IsOrientationForward>1</IsOrientationForward>
+		<Count>1</Count>
+		<PayloadCoeff>1</PayloadCoeff>
+	</Vehicle>
+
+	<Vehicle>
+		<ModuleDir>vl80s</ModuleDir>
+		<Module>vl80s</Module>
+		<ModuleConfigDir>vl80s</ModuleConfigDir>
+		<ModuleConfig>vl80s-inactive</ModuleConfig>
+		<IsOrientationForward>0</IsOrientationForward>
+		<Count>1</Count>
+		<PayloadCoeff>1</PayloadCoeff>
+	</Vehicle>
 
 </Config>
