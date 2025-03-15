@@ -17,7 +17,11 @@ public:
 
 private:
 
+    /// Контроллер машиниста КМ-84
     ControllerKM84 *km = new ControllerKM84;
+
+    /// Инициализация подсистем секции электровоза
+    void initialization() override;
 };
 
 #endif // VL80S_H
