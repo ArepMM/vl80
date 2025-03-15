@@ -10,7 +10,7 @@ enum KM84_Position
 {
     NUM_POS = 7,
     POS_BV = 0,
-    POS_ZERO = 1,
+    POS_0 = 1,
     POS_AV = 2,
     POS_RV = 3,
     POS_FV = 4,
@@ -52,6 +52,8 @@ public:
     ControllerKM84(QObject *parent = Q_NULLPTR);
 
     ~ControllerKM84();
+
+    void init();
 
 private:
 
