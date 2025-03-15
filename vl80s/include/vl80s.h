@@ -2,6 +2,7 @@
 #define		VL80S_H
 
 #include    <vehicle-api.h>
+#include    <km-84.h>
 
 //------------------------------------------------------------------------------
 //
@@ -16,6 +17,7 @@ public:
 
 private:
 
+    ControllerKM84 *km = new ControllerKM84;
 };
 
 #endif // VL80S_H
