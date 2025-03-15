@@ -1,7 +1,7 @@
 #ifndef     KM_84_H
 #define     KM_84_H
 
-#include    <device.h>
+#include    <electric-module.h>
 
 //------------------------------------------------------------------------------
 //
@@ -100,7 +100,7 @@ enum KM84_BrakeShaft
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-class ControllerKM84 : public Device
+class ControllerKM84 : public ElectricModule
 {
 public:
 
@@ -121,11 +121,20 @@ private:
     /// Развертка тормозного вала
     std::array<km84_contact_state_t, KM84_BrakeShaft::BS_NUM_CONTACTS> brake_shaft_state;
 
+    /// Положение главного вала
+    size_t main_pos = KM84_Position::POS_0;
+
+    /// Положение реверсивного вала
+    size_t revers_pos = KM84_ResersPos::REVERS_POS_0;
+
+    /// Положение тормозного вала
+    size_t brake_pos = KM84_BrakePos::BRAKE_POS_0;
+
     void preStep(state_vector_t &Y, double t) override;
 
     void ode_system(const state_vector_t &Y,
-                    state_vector_t &dYdt,
-                    double t) override;
+                            state_vector_t &dYdt,
+                            double t) override;
 
     void load_config(CfgReader &cfg) override;
 

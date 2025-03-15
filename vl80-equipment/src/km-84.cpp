@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-ControllerKM84::ControllerKM84(QObject *parent) : Device(parent)
+ControllerKM84::ControllerKM84(QObject *parent) : ElectricModule(parent)
 {
 
 }
