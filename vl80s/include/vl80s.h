@@ -4,6 +4,7 @@
 #include    <vehicle-api.h>
 
 #include    <km-84.h>
+#include    <battery.h>
 #include    <shield-215.h>
 
 //------------------------------------------------------------------------------
@@ -116,6 +117,9 @@ private:
     /// Щиток 215
     Shield_215 *shield_215 = new Shield_215(S215_INPUTS_NUM, S215_OUTPUTS_NUM);
 
+    /// АКБ
+    Battery *battery = new Battery;
+
     // Инициализация:
     /// Инициализация подсистем секции электровоза
     void initialization() override;
@@ -129,6 +133,9 @@ private:
     /// Инициализация тормозного оборудования
     void initBrakesEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
 
+    /// Инициализация подсистемы питания цепей управления
+    void initPowerControlCircuit(const QString &modules_dir, const QString &custom_cfg_dir);
+
     // Симуляция:
     /// Шаг симуляции всех систем электровоза
     void step(double t, double dt) override;
@@ -141,6 +148,9 @@ private:
 
     /// Моделирование тормозного оборудования
     void stepBrakesEquipment(double t, double dt);
+
+    /// Моделирование подсистемы питания цепей управления
+    void stepPowerControlCircuit(double t, double dt);
 
     /// Отладочный вывод
     void stepDebugPrint(double t, double dt);

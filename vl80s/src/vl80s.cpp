@@ -62,6 +62,8 @@ void VL80s::initialization()
 
     initBrakesEquipment(modules_dir, custom_cfg_dir);
 
+    initPowerControlCircuit(modules_dir, custom_cfg_dir);
+
     // Контроллер машиниста
     km->init();
 }
@@ -76,6 +78,8 @@ void VL80s::step(double t, double dt)
     stepBrakesControl(t, dt);
 
     stepBrakesEquipment(t, dt);
+
+    stepPowerControlCircuit(t, dt);
 
     stepDebugPrint(t, dt);
 }
