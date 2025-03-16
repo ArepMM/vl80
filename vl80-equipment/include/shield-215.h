@@ -13,9 +13,10 @@
 //------------------------------------------------------------------------------
 enum S215_InputWires
 {
-    S215_INPUTS_NUM = 2,
+    S215_INPUTS_NUM = 3,
     S215_N0 = 0,
-    S125_N119 = 1
+    S215_N119 = 1,
+    S215_N113 = 2
 };
 
 /*!
@@ -27,15 +28,15 @@ enum S215_InputWires
 //------------------------------------------------------------------------------
 enum S215_OutputWires
 {
-    S125_OUTPUTS_NUM = 16,
+    S215_OUTPUTS_NUM = 16,
     S215_N01 = 0,
     S215_N02 = 1,
     S215_N03 = 2,
     S215_N04 = 3,
     S215_N05 = 4,
     S215_N06 = 5,
-    S215_N07 = 6,
-    S215_N08 = 7,
+    S215_N122 = 6,
+    S215_216 = 7,
     S215_N09 = 8,
     S215_N010 = 9,
     S215_N011 = 10,
@@ -61,6 +62,17 @@ public:
                QObject *parent = Q_NULLPTR);
 
     ~Shield_215();
+
+    /// Вернуть состояние автомата (для возможной анимации)
+    bool getCircuitBreakerState(size_t cb_idx) const
+    {
+        if (cb_idx < circuit_breaker.size())
+        {
+            return circuit_breaker[cb_idx].getState();
+        }
+
+        return false;
+    }
 
 private:
 

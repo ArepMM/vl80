@@ -2,7 +2,9 @@
 #define		VL80S_H
 
 #include    <vehicle-api.h>
+
 #include    <km-84.h>
+#include    <shield-215.h>
 
 //------------------------------------------------------------------------------
 //
@@ -110,6 +112,9 @@ private:
 
     /// Контроллер машиниста КМ-84
     ControllerKM84 *km = new ControllerKM84;
+
+    /// Щиток 215
+    Shield_215 *shield_215 = new Shield_215(S215_INPUTS_NUM, S215_OUTPUTS_NUM);
 
     // Инициализация:
     /// Инициализация подсистем секции электровоза
