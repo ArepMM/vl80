@@ -70,6 +70,16 @@ private:
     double supply_reservoir_leak_flow = 1.0e-6;
 
     // Оборудование:
+    /// Сцепка спереди
+    Coupling *coupling_fwd = nullptr;
+    /// Сцепка сзади
+    Coupling *coupling_bwd = nullptr;
+
+    /// Расцепной рычаг спереди
+    OperatingRod *oper_rod_fwd = nullptr;
+    /// Расцепной рычаг сзади
+    OperatingRod *oper_rod_bwd = nullptr;
+
     /// Мотор-компрессор
     ACMotorCompressor *motor_compressor = nullptr;
 
@@ -169,6 +179,9 @@ private:
     /// Инициализация подсистем секции электровоза
     void initialization() override;
 
+    /// Инициализация сцепных устройств
+    void initCouplings(const QString &modules_dir, const QString &custom_cfg_dir);
+
     /// Инициализация питательной магистрали
     void initPneumoSupply(const QString &modules_dir, const QString &custom_cfg_dir);
 
@@ -179,8 +192,17 @@ private:
     void initBrakesEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
 
     // Симуляция:
+    /// Предварительные расчёты перед симуляцией
+    void preStep(double t) override;
+
+    /// Предварительный расчёт координат сцепных устройств
+    void preStepCouplings(double t);
+
     /// Шаг симуляции всех систем электровоза
     void step(double t, double dt) override;
+
+    /// Моделирование сцепных устройств
+    void stepCouplings(double t, double dt);
 
     /// Моделирование питательной магистрали
     void stepPneumoSupply(double t, double dt);

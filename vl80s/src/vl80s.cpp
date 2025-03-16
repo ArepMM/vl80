@@ -58,6 +58,8 @@ void VL80s::initialization()
     QString custom_cfg_dir(fs.getVehiclesDir().c_str());
     custom_cfg_dir += fs.separator() + config_dir;
 
+    initCouplings(modules_dir, custom_cfg_dir);
+
     initPneumoSupply(modules_dir, custom_cfg_dir);
 
     initBrakesControl(modules_dir, custom_cfg_dir);
@@ -71,8 +73,18 @@ void VL80s::initialization()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+void VL80s::preStep(double t)
+{
+    preStepCouplings(t);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void VL80s::step(double t, double dt)
 {
+    stepCouplings(t, dt);
+
     stepPneumoSupply(t, dt);
 
     stepBrakesControl(t, dt);
