@@ -1,25 +1,12 @@
-#include    <electric-module.h>
+#include    <shield-215.h>
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-ElectricModule::ElectricModule(size_t input_wires_num,
-                               size_t output_wires_num,
-                               QObject *parent)
-    : Device(parent)
-{
-    input_wire.resize(input_wires_num);
-    std::fill(input_wire.begin(), input_wire.end(), 0.0);
-
-    output_wire.resize(output_wires_num);
-
-    std::fill(output_wire.begin(), output_wire.end(), 0.0);
-}
-
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
-ElectricModule::~ElectricModule()
+Shield_215::Shield_215(size_t input_wires_num,
+                       size_t output_wires_num,
+                       QObject *parent)
+    : ElectricModule(input_wires_num, output_wires_num, parent)
 {
 
 }
@@ -27,36 +14,39 @@ ElectricModule::~ElectricModule()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ElectricModule::preStep(state_vector_t &Y, double t)
+Shield_215::~Shield_215()
 {
-    Q_UNUSED(Y)
-    Q_UNUSED(t)
+
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ElectricModule::ode_system(const state_vector_t &Y,
-                                state_vector_t &dYdt,
-                                double t)
+void Shield_215::preStep(state_vector_t &Y, double t)
 {
-    Q_UNUSED(Y)
-    Q_UNUSED(dYdt)
-    Q_UNUSED(t)
+
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ElectricModule::load_config(CfgReader &cfg)
+void Shield_215::ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t)
 {
-    Q_UNUSED(cfg)
+
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ElectricModule::stepKeysControl(double t, double dt)
+void Shield_215::load_config(CfgReader &cfg)
+{
+
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Shield_215::stepKeysControl(double t, double dt)
 {
 
 }

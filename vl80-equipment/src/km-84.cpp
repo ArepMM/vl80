@@ -3,7 +3,10 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-ControllerKM84::ControllerKM84(QObject *parent) : ElectricModule(parent)
+ControllerKM84::ControllerKM84(size_t input_wires_num,
+                               size_t output_wires_num,
+                               QObject *parent)
+    : ElectricModule(input_wires_num, output_wires_num, parent)
 {
 
 }

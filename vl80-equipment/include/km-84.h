@@ -2,6 +2,7 @@
 #define     KM_84_H
 
 #include    <electric-module.h>
+#include    <timer.h>
 
 //------------------------------------------------------------------------------
 //
@@ -100,11 +101,24 @@ enum KM84_BrakeShaft
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+enum KM84_InputWires
+{
+    KM84_N1 = 0,
+    KM84_N03 = 1,
+    KM84_N04 = 2,
+    KM84_N05 = 3
+};
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 class ControllerKM84 : public ElectricModule
 {
 public:
 
-    ControllerKM84(QObject *parent = Q_NULLPTR);
+    ControllerKM84(size_t input_wires_num = 1,
+                   size_t output_wires_num = 1,
+                   QObject *parent = Q_NULLPTR);
 
     ~ControllerKM84();
 

@@ -6,15 +6,48 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+using wire_t = std::vector<double>;
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 class ElectricModule : public Device
 {
 public:
 
-    ElectricModule(QObject *parent = Q_NULLPTR);
+    ElectricModule(size_t input_wires_num = 1,
+                   size_t output_wires_num = 1,
+                   QObject *parent = Q_NULLPTR);
 
     ~ElectricModule();
 
+    /// Задать напряжение на входном проводе
+    void setInputVoltage(size_t wire_idx, double U)
+    {
+        if (wire_idx < input_wire.size())
+        {
+            input_wire[wire_idx] = U;
+        }
+    }
+
+    /// Получить напряжение с выходного провода
+    double getOutputVoltage(size_t wire_idx) const
+    {
+        if (wire_idx < output_wire.max_size())
+        {
+            return output_wire[wire_idx];
+        }
+
+        return 0.0;
+    }
+
 protected:
+
+    /// Входные электрические линии
+    wire_t input_wire;
+
+    /// Выходные электрические линии
+    wire_t output_wire;
 
     virtual void preStep(state_vector_t &Y, double t);
 
