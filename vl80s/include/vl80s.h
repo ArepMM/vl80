@@ -5,6 +5,7 @@
 
 #include    <km-84.h>
 #include    <battery.h>
+#include    <shield-210.h>
 #include    <shield-215.h>
 
 //------------------------------------------------------------------------------
@@ -162,6 +163,9 @@ private:
 
     /// Контроллер машиниста КМ-84
     ControllerKM84 *km = new ControllerKM84;
+
+    /// Распеределительный щит 210
+    Shield_210 *shield_210 = new Shield_210(S210_INPUTS_NUM, S210_OUTPUT_NUM);
 
     /// Щиток 215
     Shield_215 *shield_215 = new Shield_215(S215_INPUTS_NUM, S215_OUTPUTS_NUM);
