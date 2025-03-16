@@ -12,10 +12,12 @@ void VL80s::stepDebugPrint(double t, double dt)
     DebugMsg += QString("x%1 km|V%2 km/h|")
                     .arg(profile_point_data.railway_coord / 1000.0, 10, 'f', 3)
                     .arg(velocity * Physics::kmh, 6, 'f', 1);
-    DebugMsg += QString("pBP%1|pBC%2|pSR%3|")
-                    .arg(10.0 * brakepipe->getPressure(), 6, 'f', 2)/*
+    DebugMsg += QString("pBP%1|pIL%2|pBCf%3|pBCb%4|pSR%5|")
+                    .arg(10.0 * brakepipe->getPressure(), 6, 'f', 2)
+                    .arg(10.0 * impulse_line->getPressure(), 6, 'f', 2)
                     .arg(10.0 * brake_mech[TROLLEY_FWD]->getBCpressure(), 6, 'f', 2)
-                    .arg(10.0 * supply_reservoir->getPressure(), 6, 'f', 2)*/;
+                    .arg(10.0 * brake_mech[TROLLEY_BWD]->getBCpressure(), 6, 'f', 2)
+                    .arg(10.0 * supply_reservoir->getPressure(), 6, 'f', 2);
     DebugMsg += QString("pFL%1|pER%2|395:%3|254:%4%|")
                     .arg(10.0 * main_reservoir->getPressure(), 6, 'f', 2)
                     .arg(10.0 * brake_crane->getERpressure(), 6, 'f', 2)
@@ -49,7 +51,7 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(anglecock_fl_bwd->isOpened() ? "\\" : "|")
                     .arg(hose_fl_bwd->isConnected() ? "_" : " ")
                     .arg(hose_fl_bwd->isLinked() ? "/" : " ");
-    DebugMsg += QString("  |  ");/*
+    DebugMsg += QString("  |  ");
     DebugMsg += QString("%1%2/=%3==BC==%4=\\%5%6")
                     .arg(hose_bc_fwd->isLinked() ? "\\" : " ")
                     .arg(hose_bc_fwd->isConnected() ? "_" : " ")
@@ -57,7 +59,12 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(anglecock_bc_bwd->isOpened() ? "\\" : "|")
                     .arg(hose_bc_bwd->isConnected() ? "_" : " ")
                     .arg(hose_bc_bwd->isLinked() ? "/" : " ");
-
+    DebugMsg += QString("  |  ");
+    DebugMsg += QString("|==IL==%1=\\%2%3")
+                    .arg(anglecock_il_bwd->isOpened() ? "\\" : "|")
+                    .arg(hose_il_bwd->isConnected() ? "_" : " ")
+                    .arg(hose_il_bwd->isLinked() ? "/" : " ");
+/*
     DebugMsg += QString("\n");
     DebugMsg += QString("FWD Speed limit %1 km/h | Next %2 km/h (%3 m)")
                     .arg(speedmap_fwd->getCurrentLimit(), 3, 'f', 0)

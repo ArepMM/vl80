@@ -29,7 +29,7 @@
 		<!-- Темп утечек из главных резервуаров -->
 		<MainReservoirFlow>1.0e-6</MainReservoirFlow>
 
-		<!-- Состояние устройства блокировки тормозов  -->
+		<!-- Состояние устройства блокировки тормозов -->
 		<!-- (1 - разблокирована, 0 - заблокирована) -->
 		<BrakeLockState>1</BrakeLockState>
 
@@ -58,5 +58,10 @@
 		<AirDistModule>vr483</AirDistModule>
 		<!-- Конфиг воздухораспределителя -->
 		<AirDistConfig>vr483</AirDistConfig>
+
+		<!-- Объём запасного резервуара, м^3 -->
+		<SupplyReservoirVolume>0.055</SupplyReservoirVolume>
+		<!-- Темп утечек из запасного резервуара -->
+		<SupplyReservoirFlow>1.0e-6</SupplyReservoirFlow>
 	</Settings>
 </Config>

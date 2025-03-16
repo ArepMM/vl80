@@ -18,6 +18,33 @@ void VL80s::stepBrakesEquipment(double t, double dt)
     brakepipe->setFlow(BP_flow);
     brakepipe->step(t, dt);
 
+    // Воздухораспределитель
+    air_dist->setBPpressure(brakepipe->getPressure());
+    air_dist->setBCpressure(impulse_line->getPressure());
+    air_dist->setSRpressure(supply_reservoir->getPressure());
+    air_dist->step(t, dt);
+
+    // Запасный резервуар
+    supply_reservoir->setFlow(air_dist->getSRflow());
+    supply_reservoir->step(t, dt);
+
+    // Тормозные рычажные передачи
+    brake_mech[TROLLEY_FWD]->setBCflow(bc_line->getPipeFlow1());
+    brake_mech[TROLLEY_FWD]->setAngularVelocity(0, wheel_omega[0]);
+    brake_mech[TROLLEY_FWD]->setAngularVelocity(1, wheel_omega[1]);
+    brake_mech[TROLLEY_FWD]->step(t, dt);
+
+    brake_mech[TROLLEY_BWD]->setBCflow(bc_pressure_relay->getPipeFlow());
+    brake_mech[TROLLEY_BWD]->setAngularVelocity(0, wheel_omega[2]);
+    brake_mech[TROLLEY_BWD]->setAngularVelocity(1, wheel_omega[3]);
+    brake_mech[TROLLEY_BWD]->step(t, dt);
+
+    Q_r[1] = brake_mech[TROLLEY_FWD]->getBrakeTorque(0);
+    Q_r[2] = brake_mech[TROLLEY_FWD]->getBrakeTorque(1);
+
+    Q_r[3] = brake_mech[TROLLEY_BWD]->getBrakeTorque(0);
+    Q_r[4] = brake_mech[TROLLEY_BWD]->getBrakeTorque(1);
+
     // Концевые краны тормозной магистрали
     anglecock_bp_fwd->setPipePressure(brakepipe->getPressure());
     anglecock_bp_fwd->setControl(keys);

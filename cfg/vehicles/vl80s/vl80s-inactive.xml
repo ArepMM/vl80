@@ -58,5 +58,10 @@
 		<AirDistModule>vr483</AirDistModule>
 		<!-- Конфиг воздухораспределителя -->
 		<AirDistConfig>vr483</AirDistConfig>
+
+		<!-- Объём запасного резервуара, м^3 -->
+		<SupplyReservoirVolume>0.055</SupplyReservoirVolume>
+		<!-- Темп утечек из запасного резервуара -->
+		<SupplyReservoirFlow>1.0e-6</SupplyReservoirFlow>
 	</Settings>
 </Config>

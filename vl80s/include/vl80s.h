@@ -65,6 +65,11 @@ private:
     /// Имя конфига воздухорапределителя
     QString airdist_config_name = "vr483";
 
+    /// Объём запасного резервуара
+    double supply_reservoir_volume = 0.055;
+    /// Темп утечек из запасного резервуара
+    double supply_reservoir_leak_flow = 1.0e-6;
+
     // Оборудование:
     /// Мотор-компрессор
     ACMotorCompressor *motor_compressor = nullptr;
@@ -100,16 +105,60 @@ private:
     Reservoir   *brakepipe = nullptr;
 
     /// Концевой кран тормозной магистрали спереди
-    PneumoAngleCock *anglecock_bp_fwd = Q_NULLPTR;
+    PneumoAngleCock *anglecock_bp_fwd = nullptr;
 
     /// Концевой кран тормозной магистрали сзади
-    PneumoAngleCock *anglecock_bp_bwd = Q_NULLPTR;
+    PneumoAngleCock *anglecock_bp_bwd = nullptr;
 
     /// Рукав тормозной магистрали спереди
-    PneumoHose  *hose_bp_fwd = Q_NULLPTR;
+    PneumoHose  *hose_bp_fwd = nullptr;
 
     /// Рукав тормозной магистрали сзади
-    PneumoHose  *hose_bp_bwd = Q_NULLPTR;
+    PneumoHose  *hose_bp_bwd = nullptr;
+
+    /// Воздухораспределитель
+    AirDistributor  *air_dist = nullptr;
+
+    /// Запасный резервуар
+    Reservoir   *supply_reservoir = nullptr;
+
+    /// Импульсная магистраль
+    Reservoir   *impulse_line = nullptr;
+
+    /// Концевой кран импульсной магистрали сзади
+    PneumoAngleCock  *anglecock_il_bwd = nullptr;
+
+    /// Рукав  импульсной магистрали сзади
+    PneumoHose  *hose_il_bwd = nullptr;
+
+    /// Магистраль тормозных цилиндров (модуль-пневмотройник для потоков в ТЦ)
+    PneumoSplitter   *bc_line = nullptr;
+
+    /// Концевой кран магистрали тормозных цилиндров спереди
+    PneumoAngleCock  *anglecock_bc_fwd = nullptr;
+
+    /// Концевой кран магистрали тормозных цилиндров сзади
+    PneumoAngleCock  *anglecock_bc_bwd = nullptr;
+
+    /// Рукав магистрали тормозных цилиндров спереди
+    PneumoHose  *hose_bc_fwd = nullptr;
+
+    /// Рукав магистрали тормозных цилиндров сзади
+    PneumoHose  *hose_bc_bwd = nullptr;
+
+    /// Повторительное реле давления для ТЦ задней тележки усл.№304
+    PneumoRelay *bc_pressure_relay = nullptr;
+
+    enum
+    {
+        NUM_TROLLEYS = 2,
+        NUM_AXIS_PER_TROLLEY = 2,
+        TROLLEY_FWD = 0,
+        TROLLEY_BWD = 1
+    };
+
+    /// Тормозные механизмы тележек
+    std::array<BrakeMech *, NUM_TROLLEYS> brake_mech;
 
     /// Контроллер машиниста КМ-84
     ControllerKM84 *km = new ControllerKM84;

@@ -43,6 +43,8 @@ void VL80s::loadConfig(QString cfg_path)
         cfg.getDouble(secName, "LocoCraneInitPos", loco_crane_init_pos);
         cfg.getString(secName, "AirDistModule", airdist_module_name);
         cfg.getString(secName, "AirDistConfig", airdist_config_name);
+        cfg.getDouble(secName, "SupplyReservoirVolume", supply_reservoir_volume);
+        cfg.getDouble(secName, "SupplyReservoirFlow", supply_reservoir_leak_flow);
     }
 }
 
