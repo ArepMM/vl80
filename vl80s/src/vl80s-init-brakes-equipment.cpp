@@ -1,4 +1,5 @@
 #include    "vl80s.h"
+#include    <QDir>
 
 //------------------------------------------------------------------------
 //
@@ -12,6 +13,25 @@ void VL80s::initBrakesEquipment(const QString &modules_dir, const QString &custo
     double volume_bp = length * 0.0343 * 0.0343 * Physics::PI / 4.0;
     brakepipe = new Reservoir(volume_bp);
     brakepipe->setLeakCoeff(3e-6);
+
+    // Воздухораспределитель
+    air_dist = loadAirDistributor(modules_dir + QDir::separator() + airdist_module_name);
+    air_dist->read_config(airdist_config_name);
+
+    // Запасный резервуар
+    supply_reservoir = new Reservoir(supply_reservoir_volume);
+    supply_reservoir->setLeakCoeff(supply_reservoir_leak_flow);
+
+    // Тормозные рычажные передачи
+    brake_mech[TROLLEY_FWD] = new BrakeMech(NUM_AXIS_PER_TROLLEY);
+    brake_mech[TROLLEY_FWD]->read_config("brake-mech-fwd", custom_cfg_dir);
+    brake_mech[TROLLEY_FWD]->setWheelRadius(rk[0]);
+    brake_mech[TROLLEY_FWD]->setEffFricRadius(rk[0]);
+
+    brake_mech[TROLLEY_BWD] = new BrakeMech(NUM_AXIS_PER_TROLLEY);
+    brake_mech[TROLLEY_BWD]->read_config("brake-mech-bwd", custom_cfg_dir);
+    brake_mech[TROLLEY_BWD]->setWheelRadius(rk[NUM_AXIS_PER_TROLLEY]);
+    brake_mech[TROLLEY_BWD]->setEffFricRadius(rk[NUM_AXIS_PER_TROLLEY]);
 
     // Концевые краны тормозной магистрали
     anglecock_bp_fwd = new PneumoAngleCock();

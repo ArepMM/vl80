@@ -24,6 +24,42 @@ void VL80s::initBrakeDevices(double p0, double pBP, double pFL)
     hose_bp_fwd->setPressure(pBP);
     hose_bp_bwd->setPressure(pBP);
 
+    air_dist->init(pBP, pFL);
+
+    supply_reservoir->setY(0, pBP);
+
+    // Состояние рукава и концевого крана импульсной магистрали сзади
+    if (hose_il_bwd->isLinked())
+    {
+        hose_il_bwd->connect();
+        anglecock_il_bwd->open();
+    }
+    else
+    {
+        anglecock_il_bwd->close();
+    }
+
+    // Состояние рукавов и концевых кранов магистрали тормозных цилиндров
+    if (hose_bc_fwd->isLinked())
+    {
+        hose_bc_fwd->connect();
+        anglecock_bc_fwd->open();
+    }
+    else
+    {
+        anglecock_bc_fwd->close();
+    }
+
+    if (hose_bc_bwd->isLinked())
+    {
+        hose_bc_bwd->connect();
+        anglecock_bc_bwd->open();
+    }
+    else
+    {
+        anglecock_bc_bwd->close();
+    }
+
     // Состояние рукавов и концевых кранов питательной магистрали
     if (hose_fl_fwd->isLinked())
     {
