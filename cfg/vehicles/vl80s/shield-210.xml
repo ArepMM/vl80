@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<Device>
+		<!-- Рубильник батареи -->
+		<Switch2R_state>1</Switch2R_state>
+		<!-- Рубильник нормально (0)/аварийно (1) -->
+		<Switch3R_state>0</Switch3R_state>
+	</Device>	
+</Config>

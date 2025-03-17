@@ -4,6 +4,8 @@
 #include    <vehicle-api.h>
 
 #include    <km-84.h>
+#include    <battery.h>
+#include    <shield-210.h>
 #include    <shield-215.h>
 
 //------------------------------------------------------------------------------
@@ -172,8 +174,14 @@ private:
     /// Контроллер машиниста КМ-84
     ControllerKM84 *km = new ControllerKM84;
 
+    /// Распеределительный щит 210
+    Shield_210 *shield_210 = new Shield_210(S210_INPUTS_NUM, S210_OUTPUT_NUM);
+
     /// Щиток 215
     Shield_215 *shield_215 = new Shield_215(S215_INPUTS_NUM, S215_OUTPUTS_NUM);
+
+    /// АКБ
+    Battery *battery = new Battery;
 
     // Инициализация:
     /// Инициализация подсистем секции электровоза
@@ -190,6 +198,9 @@ private:
 
     /// Инициализация тормозного оборудования
     void initBrakesEquipment(const QString &modules_dir, const QString &custom_cfg_dir);
+
+    /// Инициализация подсистемы питания цепей управления
+    void initPowerControlCircuit(const QString &modules_dir, const QString &custom_cfg_dir);
 
     // Симуляция:
     /// Предварительные расчёты перед симуляцией
@@ -212,6 +223,9 @@ private:
 
     /// Моделирование тормозного оборудования
     void stepBrakesEquipment(double t, double dt);
+
+    /// Моделирование подсистемы питания цепей управления
+    void stepPowerControlCircuit(double t, double dt);
 
     /// Отладочный вывод
     void stepDebugPrint(double t, double dt);
