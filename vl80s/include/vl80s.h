@@ -227,6 +227,12 @@ private:
     /// Моделирование подсистемы питания цепей управления
     void stepPowerControlCircuit(double t, double dt);
 
+    /// Вывод сигналов анимаций
+    void stepSignalsOutput(double t, double dt);
+
+    /// Вывод сигналов озвучки
+    void stepSoundSignalsOutput(double t, double dt);
+
     /// Отладочный вывод
     void stepDebugPrint(double t, double dt);
 };

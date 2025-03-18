@@ -95,6 +95,13 @@ void VL80s::step(double t, double dt)
 
     stepPowerControlCircuit(t, dt);
 
+    // Анимации
+    stepSignalsOutput(t, dt);
+
+    // Озвучка
+    stepSoundSignalsOutput(t, dt);
+
+    // Отладочная строка
     stepDebugPrint(t, dt);
 }
 
