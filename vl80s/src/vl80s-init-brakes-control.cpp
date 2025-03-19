@@ -6,8 +6,6 @@
 //------------------------------------------------------------------------
 void VL80s::initBrakesControl(const QString &modules_dir, const QString &custom_cfg_dir)
 {
-    (void) modules_dir;
-
     // Блокировочное устройство
     brake_lock = new BrakeLock();
     brake_lock->read_config("ubt367m");
@@ -37,18 +35,17 @@ void VL80s::initBrakesControl(const QString &modules_dir, const QString &custom_
     bc_pressure_relay = new PneumoRelay();
     bc_pressure_relay->read_config("rd304");
 
-    // TODO // отдельный конфиг и отдельное управление
     // Концевой кран импульсной магистрали сзади
     anglecock_il_bwd = new PneumoAngleCock();
-    //anglecock_il_bwd->setKeyCode(KEY_F11);
-    anglecock_il_bwd->read_config("pneumo-anglecock-BC");
+    anglecock_il_bwd->setKeyCode(KEY_9);
+    anglecock_il_bwd->read_config("pneumo-anglecock-IL", custom_cfg_dir);
 
-    // TODO // отдельный конфиг и отдельное управление
     // Рукав импульсной магистрали сзади
     hose_il_bwd = new PneumoHose();
-    //hose_il_bwd->setKeyCode(KEY_F12);
-    hose_il_bwd->read_config("pneumo-hose-BC");
-    //backward_connectors.push_back(hose_il_bwd);
+    hose_il_bwd->setKeyCode(KEY_0);
+    hose_il_bwd->setCustomConfigDir(config_dir);
+    hose_il_bwd->read_config("pneumo-hose-IL", custom_cfg_dir);
+    backward_connectors.push_back(hose_il_bwd);
 
     // Концевые краны магистрали тормозных цилиндров
     anglecock_bc_fwd = new PneumoAngleCock();

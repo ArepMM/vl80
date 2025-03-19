@@ -10,8 +10,17 @@
 		<NumAxis>4</NumAxis>
 		<WheelInertia>100.0</WheelInertia>
 
-		<SoundDir>vl80</SoundDir>
-		<AnimationsConfigDir>vl80</AnimationsConfigDir>
+		<!-- Натягиваем вл60к -->
+		<SoundDir>vl60</SoundDir>
+		<AnimationsConfigDir>vl60k</AnimationsConfigDir>
+
+		<ExtModelName>VL60k-1737/VL60k-1737.osgt</ExtModelName>
+		<ModelShift>0.0 -2.29 0.312</ModelShift>
+
+		<CabineModel>VL60k-1737/VL60k-cabview.osgt</CabineModel>
+		<CabineShift>0.0 -2.29 0.317</CabineShift>
+
+		<DriverPos>0.8 6.1 3.6</DriverPos>
 	</Vehicle>
 
 
@@ -44,7 +53,7 @@
 		<!-- Положение рукоятки поездного крана машиниста -->
 		<!-- (1 - I Отпуск, 2 - II Поездное, 3 - III Перекрыша, 4 - IV Перекрыша с питанием, -->
 		<!--  5 - Va Торможение замедленным темпом, 6 - V Служебное торможение, 7 - VI Экстренное торможение) -->
-		<BrakeCraneInitPos>6</BrakeCraneInitPos>
+		<BrakeCraneInitPos>7</BrakeCraneInitPos>
 
 		<!-- Модуль крана вспомогательного тормоза -->
 		<LocoCraneModule>kvt254</LocoCraneModule>
