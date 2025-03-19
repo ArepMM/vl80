@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<Device>
+		<SwtichTimeout>0.3</SwtichTimeout>
+	</Device>	
+</Config>

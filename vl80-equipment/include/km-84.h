@@ -136,13 +136,34 @@ private:
     std::array<km84_contact_state_t, KM84_BrakeShaft::BS_NUM_CONTACTS> brake_shaft_state;
 
     /// Положение главного вала
-    size_t main_pos = KM84_Position::POS_0;
+    int main_pos = KM84_Position::POS_0;
 
     /// Положение реверсивного вала
-    size_t revers_pos = KM84_ResersPos::REVERS_POS_0;
+    int revers_pos = KM84_ResersPos::REVERS_POS_0;
 
     /// Положение тормозного вала
-    size_t brake_pos = KM84_BrakePos::BRAKE_POS_0;
+    int brake_pos = KM84_BrakePos::BRAKE_POS_0;
+
+    /// Таймаут переключения позиций при зажатых клавишах
+    double switch_timeout = 0.3;
+
+    /// Таймеры управления главным валом
+    Timer *main_shaft_timer = Q_NULLPTR;
+
+    /// Таймер управления реверсивным валом
+    Timer *revers_shaft_timer = Q_NULLPTR;
+
+    /// Таймер управления тормозным валом
+    Timer *brake_shaft_timer = Q_NULLPTR;
+
+    /// Направление вращения главного вала
+    int main_shaft_dir = 1;
+
+    /// Направление вращения реверсивного вала
+    int revers_shaft_dir = 1;
+
+    /// Направление вращения тормозного вала
+    int brake_shaft_dir = 1;
 
     void preStep(state_vector_t &Y, double t) override;
 
@@ -165,6 +186,14 @@ private:
 
     /// Инициализация развертки тормозного вала
     void init_brake_shaft();
+
+private:
+
+    void slotMainShaftUpdate();
+
+    void slotReversShaftUpdate();
+
+    void slotBrakeShaftUpdate();
 };
 
 #endif

@@ -57,7 +57,18 @@ void ControllerKM84::ode_system(const state_vector_t &Y,
 //------------------------------------------------------------------------------
 void ControllerKM84::load_config(CfgReader &cfg)
 {
+    QString secName = "Device";
 
+    cfg.getDouble(secName, "SwitchTimeout", switch_timeout);
+
+    main_shaft_timer = new Timer(switch_timeout);
+    connect(main_shaft_timer, &Timer::process, this, &ControllerKM84::slotMainShaftUpdate);
+
+    revers_shaft_timer = new Timer(switch_timeout);
+    connect(revers_shaft_timer, &Timer::process, this, &ControllerKM84::slotReversShaftUpdate);
+
+    brake_shaft_timer = new Timer(switch_timeout);
+    connect(brake_shaft_timer, &Timer::process, this, &ControllerKM84::slotBrakeShaftUpdate);
 }
 
 //------------------------------------------------------------------------------
@@ -65,7 +76,64 @@ void ControllerKM84::load_config(CfgReader &cfg)
 //------------------------------------------------------------------------------
 void ControllerKM84::stepKeysControl(double t, double dt)
 {
+    // Главная рукоятка на себя
+    if (getKeyState(KEY_A))
+    {
+        if (!main_shaft_timer->isStarted())
+        {
+            main_shaft_dir = 1;
+            main_shaft_timer->start();
+        }
+    }
+    else
+    {
+        main_shaft_timer->stop();
 
+        // Самовозврат из положения АП
+        if (main_pos == POS_AP)
+        {
+            main_shaft_dir = -1;
+            slotMainShaftUpdate();
+        }
+    }
+
+    // Главная рукоятка от себя
+    if (getKeyState(KEY_D))
+    {
+        if (getKeyState(KEY_Control_L) || getKeyState(KEY_Control_R))
+        {
+            if (main_pos != POS_0)
+            {
+                main_pos = POS_0;
+            }
+        }
+        else
+        {
+            if (!main_shaft_timer->isStarted())
+            {
+                main_shaft_dir = -1;
+                main_shaft_timer->start();
+            }
+        }
+    }
+    else
+    {
+        main_shaft_timer->stop();
+
+        // Самовозврат из положения БВ
+        if (main_pos == POS_BV)
+        {
+            main_shaft_dir = 1;
+            slotMainShaftUpdate();
+        }
+    }
+
+
+    main_shaft_timer->step(t, dt);
+
+    revers_shaft_timer->step(t, dt);
+
+    brake_shaft_timer->step(t, dt);
 }
 
 //------------------------------------------------------------------------------
@@ -196,4 +264,44 @@ void ControllerKM84::init_brake_shaft()
 
     set_shaft_contacts_state(brake_shaft_state[K_39_40], true);
     brake_shaft_state[K_39_40][BRAKE_POS_0] = false;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ControllerKM84::slotMainShaftUpdate()
+{
+    if (revers_pos == REVERS_POS_0)
+    {
+        return;
+    }
+
+    main_pos += main_shaft_dir;
+
+    main_pos = cut(main_pos, static_cast<int>(POS_BV), static_cast<int>(POS_AP));
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ControllerKM84::slotReversShaftUpdate()
+{
+    if ( (revers_pos == REVERS_POS_BACKWARD) && (main_pos != POS_0) )
+    {
+        return;
+    }
+
+    revers_pos += revers_shaft_dir;
+
+    revers_pos = cut(revers_pos,
+                     static_cast<int>(REVERS_POS_BACKWARD),
+                     static_cast<int>(REVERS_POS_OP3));
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ControllerKM84::slotBrakeShaftUpdate()
+{
+
 }

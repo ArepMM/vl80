@@ -15,8 +15,11 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     // Свзь с секцией 2
     shield_210->setInputVoltage(S210_E62, 0.0);
     shield_210->setInputVoltage(S210_E66, 0.0);
-    shield_210->setVoltageAC(380.0);
-    shield_210->setLoadCurrent(battery->getChargeCurrent() + 10.0);
+
+    // Напряжение от обмотки собственных нужд тягового трансформатора
+    shield_210->setVoltageAC(0.0);
+
+    shield_210->setLoadCurrent(10.0);
     shield_210->step(t, dt);
 
     // Панель автоматов (щиток 215)
