@@ -124,6 +124,10 @@ public:
 
     void init();
 
+    float getMainHandlePos() const;
+
+    float getReversHandlePos() const;
+
 private:
 
     /// Развертка главного вала (состояние контактов в зависиомсти от положения вала)
@@ -187,7 +191,7 @@ private:
     /// Инициализация развертки тормозного вала
     void init_brake_shaft();
 
-private:
+private slots:
 
     void slotMainShaftUpdate();
 

@@ -70,6 +70,7 @@ void VL80s::initialization()
 
     // Контроллер машиниста
     km->init();
+    km->read_config("km-84", custom_cfg_dir);
 }
 
 //------------------------------------------------------------------------------
@@ -103,6 +104,9 @@ void VL80s::step(double t, double dt)
 
     // Отладочная строка
     stepDebugPrint(t, dt);
+
+    km->setControl(keys);
+    km->step(t, dt);
 }
 
 GET_VEHICLE(VL80s)

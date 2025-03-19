@@ -37,6 +37,32 @@ void ControllerKM84::init()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+float ControllerKM84::getMainHandlePos() const
+{
+    if (main_pos < POS_0)
+    {
+        return static_cast<float>(main_pos - 2) / 2.0f;
+    }
+
+    return static_cast<float>(main_pos - 2) / 5.0f;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+float ControllerKM84::getReversHandlePos() const
+{
+    if (revers_pos < 0)
+    {
+        return static_cast<float>(revers_pos - 2);
+    }
+
+    return static_cast<float>(revers_pos - 1) / 4.0f;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void ControllerKM84::preStep(state_vector_t &Y, double t)
 {
 
@@ -87,7 +113,8 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     }
     else
     {
-        main_shaft_timer->stop();
+        if (main_shaft_dir > 0)
+            main_shaft_timer->stop();
 
         // Самовозврат из положения АП
         if (main_pos == POS_AP)
@@ -118,7 +145,8 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     }
     else
     {
-        main_shaft_timer->stop();
+        if (main_shaft_dir < 0)
+            main_shaft_timer->stop();
 
         // Самовозврат из положения БВ
         if (main_pos == POS_BV)
@@ -128,6 +156,35 @@ void ControllerKM84::stepKeysControl(double t, double dt)
         }
     }
 
+    // Реверсивка от себя
+    if (getKeyState(KEY_W))
+    {
+        if (!revers_shaft_timer->isStarted())
+        {
+            revers_shaft_dir = 1;
+            revers_shaft_timer->start();
+        }
+    }
+    else
+    {
+        if (revers_shaft_dir > 0)
+            revers_shaft_timer->stop();
+    }
+
+    // Реверсивка на себя
+    if (getKeyState(KEY_S))
+    {
+        if (!revers_shaft_timer->isStarted())
+        {
+            revers_shaft_dir = -1;
+            revers_shaft_timer->start();
+        }
+    }
+    else
+    {
+        if (revers_shaft_dir < 0)
+            revers_shaft_timer->stop();
+    }
 
     main_shaft_timer->step(t, dt);
 

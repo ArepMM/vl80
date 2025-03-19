@@ -59,11 +59,11 @@ void VL80s::stepSignalsOutput(double t, double dt)
     analogSignal[SIG_LIGHT_VU1] = static_cast<float>(!motor_fans[MV1]->isReady() || !motor_fans[MV2]->isReady());
     analogSignal[SIG_LIGHT_VU2] = static_cast<float>(!motor_fans[MV5]->isReady() || !motor_fans[MV6]->isReady());
     analogSignal[SIG_LIGHT_TD] = isLineContactorsOff();
-
-    analogSignal[KONTROLLER] = controller->getMainHandlePos();
-    analogSignal[REVERS] = controller->getReversHandlePos();
-    analogSignal[STRELKA_SELSIN] = main_controller->getSelsinPosition();
 */
+    analogSignal[KONTROLLER] = km->getMainHandlePos();
+    analogSignal[REVERS] = km->getReversHandlePos();
+    //analogSignal[STRELKA_SELSIN] = main_controller->getSelsinPosition();
+
     // Положение рукоятки комбинированного крана
     analogSignal[KRAN_KOMBIN] = brake_lock->getCombCranePosition();
     // Положение рукоятки УБТ

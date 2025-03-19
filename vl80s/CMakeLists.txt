@@ -2,6 +2,12 @@ set (TARGET vl80s)
 
 project (${TARGET})
 
+# Qt-шное барахло для запуска метообъектного компилятора
+# сборки ресурсов и генерации кода UI при работе с формами
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
 set (LIBRARY_OUTPUT_PATH "../../modules/${TARGET}")
 
 set (CMAKE_SHARED_MODULE_PREFIX "")
