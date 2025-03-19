@@ -45,7 +45,16 @@ void Shield_210::step(double t, double dt)
 //------------------------------------------------------------------------------
 void Shield_210::preStep(state_vector_t &Y, double t)
 {
+    // Провод Н116 ("+" АКБ)
+    bool is_N116_ON = switch_2R.getState();
 
+    // ЭДС выпрямителя зарядного агрегата
+    double E = cut( K_u * (U_ref - U_rect), 0.0, K_rect * Uac);
+
+    // Напряжение на выходе выпрямителя зарядного агрегата
+    U_rect = E - r * I_load;
+
+    output_wire[S210_N116] = U_rect * static_cast<double>(is_N116_ON);
 }
 
 //------------------------------------------------------------------------------
@@ -55,8 +64,7 @@ void Shield_210::ode_system(const state_vector_t &Y,
                             state_vector_t &dYdt,
                             double t)
 {
-    // Провод Н116 ("+" АКБ)
-    bool is_N116_ON = switch_2R.getState();
+
 }
 
 //------------------------------------------------------------------------------

@@ -6,7 +6,7 @@
 void VL80s::stepPowerControlCircuit(double t, double dt)
 {
     // АКБ
-    battery->setChargeVoltage(0.0);
+    battery->setChargeVoltage(shield_210->getOutputVoltage(S210_N116));
     battery->step(t, dt);
 
     // Распределительный щит 210 питания ЦУ
@@ -14,6 +14,8 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     // Свзь с секцией 2
     shield_210->setInputVoltage(S210_E62, 0.0);
     shield_210->setInputVoltage(S210_E66, 0.0);
+    shield_210->setVoltageAC(380.0);
+    shield_210->setLoadCurrent(battery->getChargeCurrent());
     shield_210->step(t, dt);
 
     // Панель автоматов (щиток 215)
