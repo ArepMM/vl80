@@ -121,6 +121,10 @@ void ControllerKM84::preStep(state_vector_t &Y, double t)
         input_wire[KM84_N04] *
         static_cast<double>(main_shaft_state[K_59_60][main_pos]);
 
+    output_wire[KM84_E13] =
+        input_wire[KM84_N88] *
+        static_cast<double>(main_shaft_state[K_61_62][main_pos]);
+
     // Цепи тормозного вала
     output_wire[KM84_N302] =
         input_wire[KM84_N1] *
