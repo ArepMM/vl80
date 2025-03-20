@@ -174,6 +174,16 @@ public:
         return brake_pos_name[brake_pos];
     }
 
+    QString getReversPosName() const
+    {
+        return revers_pos_name[revers_pos];
+    }
+
+    QString getMainPosName() const
+    {
+        return main_pos_name[main_pos];
+    }
+
 private:
 
     /// Развертка главного вала (состояние контактов в зависиомсти от положения вала)
@@ -220,6 +230,12 @@ private:
 
     /// Скорость вращения тормозной рукоятки
     double selsin_omega = 0.0;
+
+    /// Названия позиций главной рукоятки
+    std::vector<QString> main_pos_name = {"БВ", "0", "АВ", "РВ", "ФВ", "ФП", "РП", "АП"};
+
+    /// Названия позиций реверсивной рукоятки
+    std::vector<QString> revers_pos_name = {"ППН", "0", "ППВ", "ОП1", "ОП2", "ОП3"};
 
     /// Назавания положений позиций тормозной рукоятки
     std::vector<QString> brake_pos_name = {"0", "П", "ПТ", "Т"};

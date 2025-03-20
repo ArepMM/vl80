@@ -459,7 +459,14 @@ void ControllerKM84::init_brake_shaft()
 //------------------------------------------------------------------------------
 void ControllerKM84::slotMainShaftUpdate()
 {
+    // Блокировка поворота главной рукоятки при нулевом положении реверсивной
     if (revers_pos == REVERS_POS_0)
+    {
+        return;
+    }
+
+    // Блокировка поворота главной рукоятки при ненулевом положении тормозной
+    if (brake_pos != BRAKE_POS_0)
     {
         return;
     }
@@ -481,9 +488,11 @@ void ControllerKM84::slotMainShaftUpdate()
 //------------------------------------------------------------------------------
 void ControllerKM84::slotReversShaftUpdate()
 {
+    // Исключение постановки реверса в 0 при ненулевом положении главной
+    // и тормозной рукояток
     if (revers_shaft_dir > 0)
     {
-        if ( (revers_pos == REVERS_POS_BACKWARD) && (main_pos != POS_0) )
+        if ( (revers_pos == REVERS_POS_BACKWARD) && ( (main_pos != POS_0) || (brake_pos != BRAKE_POS_0) ) )
         {
             return;
         }
@@ -491,10 +500,16 @@ void ControllerKM84::slotReversShaftUpdate()
 
     if (revers_shaft_dir < 0)
     {
-        if ( (revers_pos == REVERS_POS_FORWARD) && (main_pos != POS_0) )
+        if ( (revers_pos == REVERS_POS_FORWARD) && ( (main_pos != POS_0) || (brake_pos != BRAKE_POS_0) ) )
         {
             return;
         }
+    }
+
+    // Блокировка положений ОП1 - ОП3 при ненулевом положении тормозной рукоятки
+    if ( ( (revers_pos == REVERS_POS_FORWARD) || (revers_pos == REVERS_POS_BACKWARD) ) && (brake_pos != BRAKE_POS_0) )
+    {
+        return;
     }
 
     int revers_pos_old = revers_pos;
@@ -516,6 +531,18 @@ void ControllerKM84::slotReversShaftUpdate()
 //------------------------------------------------------------------------------
 void ControllerKM84::slotBrakeShaftUpdate()
 {
+    // Блокировка поворота тормозной рукоятки при нулевом положении реверсивной
+    if (revers_pos == REVERS_POS_0)
+    {
+        return;
+    }
+
+    // Блокировка поворота при ненулевом положении главной рукоятки
+    if (main_pos != POS_0)
+    {
+        return;
+    }
+
     int brake_pos_old = brake_pos;
 
     brake_pos += brake_shaft_dir;
