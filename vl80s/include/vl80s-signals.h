@@ -1,5 +1,5 @@
-#ifndef     VL60K_SIGNALS_H
-#define     VL60K_SIGNALS_H
+#ifndef     VL80S_SIGNALS_H
+#define     VL80S_SIGNALS_H
 
 enum
 {
@@ -200,4 +200,4 @@ enum
     SIG_LIGHT_PSS_PROPUSK = 300
 };
 
-#endif // VL60K_SIGNALS_H
+#endif // VL80S_SIGNALS_H
