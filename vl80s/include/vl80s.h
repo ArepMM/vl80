@@ -172,7 +172,7 @@ private:
     std::array<BrakeMech *, NUM_TROLLEYS> brake_mech;
 
     /// Контроллер машиниста КМ-84
-    ControllerKM84 *km = new ControllerKM84;
+    ControllerKM84 *km = new ControllerKM84(KM84_NUM_INPUTS, KM84_OUTPUTS_NUM);
 
     /// Распеределительный щит 210
     Shield_210 *shield_210 = new Shield_210(S210_INPUTS_NUM, S210_OUTPUT_NUM);

@@ -91,7 +91,81 @@ float ControllerKM84::getSoundSignal(size_t idx) const
 //------------------------------------------------------------------------------
 void ControllerKM84::preStep(state_vector_t &Y, double t)
 {
+    // Цепи главного вала
+    output_wire[KM84_N2] =
+        input_wire[KM84_N1] *
+        static_cast<double>(main_shaft_state[K_69_70][main_pos]) *
+        static_cast<double>(main_shaft_state[K_63_64][main_pos]);
 
+    output_wire[KM84_N415] =
+        output_wire[KM84_N414] *
+        static_cast<double>(main_shaft_state[K_65_66][main_pos]);
+
+    output_wire[KM84_E115] =
+        output_wire[KM84_N414] *
+        static_cast<double>(main_shaft_state[K_67_68][main_pos]);
+
+    output_wire[KM84_E8] =
+        input_wire[KM84_N04] *
+        static_cast<double>(main_shaft_state[K_51_52][main_pos]);
+
+    output_wire[KM84_E10] =
+        input_wire[KM84_N04] *
+        static_cast<double>(main_shaft_state[K_55_56][main_pos]);
+
+    output_wire[KM84_E11] =
+        input_wire[KM84_N04] *
+        static_cast<double>(main_shaft_state[K_57_58][main_pos]);
+
+    output_wire[KM84_E12] =
+        input_wire[KM84_N04] *
+        static_cast<double>(main_shaft_state[K_59_60][main_pos]);
+
+    // Цепи тормозного вала
+    output_wire[KM84_N302] =
+        input_wire[KM84_N1] *
+        static_cast<double>(brake_shaft_state[K_39_40][brake_pos]);
+
+    output_wire[KM84_E56] =
+        input_wire[KM84_N03] *
+        static_cast<double>(brake_shaft_state[K_31_32][brake_pos]);
+
+    output_wire[KM84_E60] =
+        input_wire[KM84_N03] *
+        static_cast<double>(brake_shaft_state[K_33_34][brake_pos]);
+
+    output_wire[KM84_E59] =
+        input_wire[KM84_N03] *
+        static_cast<double>(brake_shaft_state[K_35_36][brake_pos]);
+
+    // Цепи реверсивного вала
+    output_wire[KM84_E2] =
+        input_wire[KM84_N306] *
+        static_cast<double>(revers_shaft_state[K_11_12][revers_pos]);
+
+    output_wire[KM84_E3] =
+        input_wire[KM84_N306] *
+        static_cast<double>(revers_shaft_state[K_9_10][revers_pos]);
+
+    output_wire[KM84_E4] =
+        input_wire[KM84_N03] *
+        static_cast<double>(revers_shaft_state[K_1_2][revers_pos]);
+
+    output_wire[KM84_E5] =
+        input_wire[KM84_N03] *
+        static_cast<double>(revers_shaft_state[K_3_4][revers_pos]);
+
+    output_wire[KM84_E6] =
+        input_wire[KM84_N03] *
+        static_cast<double>(revers_shaft_state[K_5_6][revers_pos]);
+
+    output_wire[KM84_N414] =
+        input_wire[KM84_N05] *
+        static_cast<double>(revers_shaft_state[K_13_14][revers_pos]);
+
+    output_wire[KM84_E119] =
+        input_wire[KM84_N05] *
+        static_cast<double>(revers_shaft_state[K_15_16][revers_pos]);
 }
 
 //------------------------------------------------------------------------------
