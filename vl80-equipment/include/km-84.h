@@ -128,6 +128,18 @@ public:
 
     float getReversHandlePos() const;
 
+    enum
+    {
+        NUM_SOUNDS = 3,
+        REVERS_CHANGE_POS_SOUND = 0,
+        MAIN_CHANGE_POS_SOUND = 1,
+        BRAKE_CHANGE_POS_SOUND = 2
+    };
+
+    sound_state_t getSoundState(size_t idx = REVERS_CHANGE_POS_SOUND) const;
+
+    float getSoundSignal(size_t idx = REVERS_CHANGE_POS_SOUND) const;
+
 private:
 
     /// Развертка главного вала (состояние контактов в зависиомсти от положения вала)
@@ -168,6 +180,9 @@ private:
 
     /// Направление вращения тормозного вала
     int brake_shaft_dir = 1;
+
+    /// Счетчик и состояние звуков
+    std::array<sound_state_t, NUM_SOUNDS> sounds;
 
     void preStep(state_vector_t &Y, double t) override;
 

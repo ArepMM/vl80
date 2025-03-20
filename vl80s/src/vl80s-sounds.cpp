@@ -14,11 +14,11 @@ void VL80s::stepSoundSignalsOutput(double t, double dt)
     // Свисток и тифон
     analogSignal[SOUND_SVISTOK] = horn->getSoundSignal(TrainHorn::SVISTOK_SOUND);
     analogSignal[SOUND_TIFON] = horn->getSoundSignal(TrainHorn::TIFON_SOUND);
-
+*/
     // Реверсор и контроллер
-    analogSignal[SOUND_REVERSOR] = controller->getSoundSignal(ControllerKME_60_044::REVERS_CHANGE_POS_SOUND);
-    analogSignal[SOUND_CONTROLLER] = controller->getSoundSignal(ControllerKME_60_044::MAIN_CHANGE_POS_SOUND);
-
+    analogSignal[SOUND_REVERSOR] = km->getSoundSignal(ControllerKM84::REVERS_CHANGE_POS_SOUND);
+    analogSignal[SOUND_CONTROLLER] = km->getSoundSignal(ControllerKM84::MAIN_CHANGE_POS_SOUND);
+/*
     // Серводвигатель ЭКГ, ручное и автоматическое движение
     analogSignal[SOUND_EKG_ONE] = main_controller->getSoundSignal(EKG_8G::CHANGE_POS_ONE_SOUND);
     analogSignal[SOUND_EKG_AUTO] = main_controller->getSoundSignal(EKG_8G::CHANGE_POS_AUTO_SOUND);

@@ -63,6 +63,32 @@ float ControllerKM84::getReversHandlePos() const
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+sound_state_t ControllerKM84::getSoundState(size_t idx) const
+{
+    if (idx < sounds.size())
+    {
+        return sounds[idx];
+    }
+
+    return Device::getSoundState();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+float ControllerKM84::getSoundSignal(size_t idx) const
+{
+    if (idx < sounds.size())
+    {
+        return sounds[idx].createSoundSignal();
+    }
+
+    return Device::getSoundSignal();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void ControllerKM84::preStep(state_vector_t &Y, double t)
 {
 
@@ -132,6 +158,7 @@ void ControllerKM84::stepKeysControl(double t, double dt)
             if (main_pos != POS_0)
             {
                 main_pos = POS_0;
+                sounds[MAIN_CHANGE_POS_SOUND].play();
             }
         }
         else
@@ -333,9 +360,16 @@ void ControllerKM84::slotMainShaftUpdate()
         return;
     }
 
+    int main_pos_old = main_pos;
+
     main_pos += main_shaft_dir;
 
     main_pos = cut(main_pos, static_cast<int>(POS_BV), static_cast<int>(POS_AP));
+
+    if (main_pos != main_pos_old)
+    {
+        sounds[MAIN_CHANGE_POS_SOUND].play();
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -359,11 +393,18 @@ void ControllerKM84::slotReversShaftUpdate()
         }
     }
 
+    int revers_pos_old = revers_pos;
+
     revers_pos += revers_shaft_dir;
 
     revers_pos = cut(revers_pos,
                      static_cast<int>(REVERS_POS_BACKWARD),
                      static_cast<int>(REVERS_POS_OP3));
+
+    if (revers_pos != revers_pos_old)
+    {
+        sounds[REVERS_CHANGE_POS_SOUND].play();
+    }
 }
 
 //------------------------------------------------------------------------------
