@@ -184,6 +184,11 @@ public:
         return main_pos_name[main_pos];
     }
 
+    double getBrakeShaftAngle() const
+    {
+        return brake_shaft_angle;
+    }
+
 private:
 
     /// Развертка главного вала (состояние контактов в зависиомсти от положения вала)
@@ -225,11 +230,20 @@ private:
     /// Направление вращения тормозного вала
     int brake_shaft_dir = 1;
 
-    /// Направление вращение сельсина-задатчика скорости торможения
-    int selsin_dir = 0;
+    /// Угол поворота тормозного вала
+    double brake_shaft_angle = 0.0;
 
-    /// Скорость вращения тормозной рукоятки
-    double selsin_omega = 0.0;
+    /// Скорость вращения тормозного вала
+    double brake_shaft_omega = 0.0;
+
+    /// Максимальный угол поворота тормозного вала
+    double brake_shaft_angle_max = 270.0;
+
+    /// Максимальное напряжение сельсин-задатчика скорости
+    double selsin_Umax = 24.0;
+
+    /// Углы поворота тормозного вала на дискрретных позициях
+    std::array<double, BRAKE_NUM_POS> bs_angles = {0, 20.0, 40.0, 60.0};
 
     /// Названия позиций главной рукоятки
     std::vector<QString> main_pos_name = {"БВ", "0", "АВ", "РВ", "ФВ", "ФП", "РП", "АП"};

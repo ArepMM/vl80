@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
 	<Device>
+		<!-- Интервал времени переключения позиций -->
 		<SwtichTimeout>0.3</SwtichTimeout>
-	</Device>	
+		<!-- Скорость поворота тормозного вала -->
+		<BrakeShaftOmega>66.7</BrakeShaftOmega>
+		<!-- Максимальный угол поворота тормозного вала -->
+		<BrakeShaftMaxAngle>270.0</BrakeShaftMaxAngle>
+		<!-- Максимальное напряжение с сельсин-задатчика -->
+		<Selsin_Umax>24.0</Selsin_Umax>
+	</Device>
+
+	<!-- "0" -->
+	<BrakePos>
+		<Pos>0</Pos>
+		<Angle>0</Angle>
+	</BrakePos>
+
+	<!-- "П" -->
+	<BrakePos>
+		<Pos>1</Pos>
+		<Angle>20</Angle>
+	</BrakePos>
+
+	<!-- "ПТ" -->
+	<BrakePos>
+		<Pos>2</Pos>
+		<Angle>40</Angle>
+	</BrakePos>
+
+	<!-- "Т" -->
+	<BrakePos>
+		<Pos>3</Pos>
+		<Angle>60</Angle>
+	</BrakePos>
+
 </Config>

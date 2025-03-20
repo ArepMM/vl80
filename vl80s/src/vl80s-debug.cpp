@@ -67,10 +67,11 @@ void VL80s::stepDebugPrint(double t, double dt)
 
     DebugMsg += QString("\n");
 
-    DebugMsg += QString("Реверс.: %1 | Глав.: %2 | Торм. вал КМ: %3")
+    DebugMsg += QString("Реверс.: %1 | Глав.: %2 | Торм. вал КМ: %3 | Угол: %4")
                     .arg(km->getReversPosName(), 3)
                     .arg(km->getMainPosName(), 3)
-                    .arg(km->getBrakePosName(), 3);
+                    .arg(km->getBrakePosName(), 3)
+                    .arg(km->getBrakeShaftAngle(), 5, 'f', 0);
 /*
     DebugMsg += QString("\n");
     DebugMsg += QString("FWD Speed limit %1 km/h | Next %2 km/h (%3 m)")

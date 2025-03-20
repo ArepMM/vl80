@@ -175,7 +175,7 @@ void ControllerKM84::ode_system(const state_vector_t &Y,
                                 state_vector_t &dYdt,
                                 double t)
 {
-    dYdt[0] = selsin_omega * selsin_dir;
+
 }
 
 //------------------------------------------------------------------------------
@@ -195,6 +195,21 @@ void ControllerKM84::load_config(CfgReader &cfg)
 
     brake_shaft_timer = new Timer(switch_timeout);
     connect(brake_shaft_timer, &Timer::process, this, &ControllerKM84::slotBrakeShaftUpdate);
+
+    cfg.getDouble(secName, "BrakeShaftOmega", brake_shaft_omega);
+    cfg.getDouble(secName, "BrakeShaftMaxAngle", brake_shaft_angle_max);
+    cfg.getDouble(secName, "Selsin_Umax", selsin_Umax);
+
+    QDomNode secNode = cfg.getFirstSection("BrakePos");
+
+    while (!secNode.isNull())
+    {
+        int pos = 0;
+        cfg.getInt(secNode, "Pos", pos);
+        cfg.getDouble(secNode, "Angle", bs_angles[pos]);
+
+        secNode = cfg.getNextSection();
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -545,11 +560,30 @@ void ControllerKM84::slotBrakeShaftUpdate()
 
     int brake_pos_old = brake_pos;
 
-    brake_pos += brake_shaft_dir;
+    // Переключение позиции только если вал не находися в зоне
+    // работы задатчика скорости
+    if (brake_shaft_angle <= bs_angles[BRAKE_POS_T])
+    {
+        brake_pos += brake_shaft_dir;
+    }
 
     brake_pos = cut(brake_pos,
                     static_cast<int>(BRAKE_POS_0),
                     static_cast<int>(BRAKE_POS_T));
+
+    // До позиции "Т" поворачиваем вал дискретно
+    if (brake_pos != BRAKE_POS_T)
+    {
+        brake_shaft_angle = bs_angles[brake_pos];
+    }
+    else // При "Т" - непрерывно
+    {
+        brake_shaft_angle += brake_shaft_omega * brake_shaft_dir * switch_timeout;
+
+        brake_shaft_angle = cut(brake_shaft_angle,
+                                bs_angles[BRAKE_POS_T],
+                                brake_shaft_angle_max);
+    }
 
     if (brake_pos != brake_pos_old)
     {
