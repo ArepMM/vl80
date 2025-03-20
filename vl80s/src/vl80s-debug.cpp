@@ -64,6 +64,10 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(anglecock_il_bwd->isOpened() ? "\\" : "|")
                     .arg(hose_il_bwd->isConnected() ? "_" : " ")
                     .arg(hose_il_bwd->isLinked() ? "/" : " ");
+
+    DebugMsg += QString("\n");
+
+    DebugMsg += QString("Торм. вал КМ: %1").arg(km->getBrakePosName(), 2);
 /*
     DebugMsg += QString("\n");
     DebugMsg += QString("FWD Speed limit %1 km/h | Next %2 km/h (%3 m)")

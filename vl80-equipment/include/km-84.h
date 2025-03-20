@@ -136,9 +136,14 @@ public:
         BRAKE_CHANGE_POS_SOUND = 2
     };
 
-    sound_state_t getSoundState(size_t idx = REVERS_CHANGE_POS_SOUND) const;
+    sound_state_t getSoundState(size_t idx = REVERS_CHANGE_POS_SOUND) const override;
 
-    float getSoundSignal(size_t idx = REVERS_CHANGE_POS_SOUND) const;
+    float getSoundSignal(size_t idx = REVERS_CHANGE_POS_SOUND) const override;
+
+    QString getBrakePosName() const
+    {
+        return brake_pos_name[brake_pos];
+    }
 
 private:
 
@@ -180,6 +185,15 @@ private:
 
     /// Направление вращения тормозного вала
     int brake_shaft_dir = 1;
+
+    /// Направление вращение сельсина-задатчика скорости торможения
+    int selsin_dir = 0;
+
+    /// Скорость вращения тормозной рукоятки
+    double selsin_omega = 0.0;
+
+    /// Назавания положений позиций тормозной рукоятки
+    std::vector<QString> brake_pos_name = {"0", "П", "ПТ", "Т"};
 
     /// Счетчик и состояние звуков
     std::array<sound_state_t, NUM_SOUNDS> sounds;

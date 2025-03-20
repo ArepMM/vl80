@@ -101,7 +101,7 @@ void ControllerKM84::ode_system(const state_vector_t &Y,
                                 state_vector_t &dYdt,
                                 double t)
 {
-
+    dYdt[0] = selsin_omega * selsin_dir;
 }
 
 //------------------------------------------------------------------------------
@@ -211,6 +211,36 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     {
         if (revers_shaft_dir < 0)
             revers_shaft_timer->stop();
+    }
+
+    // Тормозная рукоятка на себя
+    if (getKeyState(KEY_Q))
+    {
+        if (!brake_shaft_timer->isStarted())
+        {
+            brake_shaft_dir = 1;
+            brake_shaft_timer->start();
+        }
+    }
+    else
+    {
+        if (brake_shaft_dir > 0)
+            brake_shaft_timer->stop();
+    }
+
+    // Тормозная рукоятка от себя
+    if (getKeyState(KEY_E))
+    {
+        if (!brake_shaft_timer->isStarted())
+        {
+            brake_shaft_dir = -1;
+            brake_shaft_timer->start();
+        }
+    }
+    else
+    {
+        if (brake_shaft_dir < 0)
+            brake_shaft_timer->stop();
     }
 
     main_shaft_timer->step(t, dt);
@@ -412,5 +442,16 @@ void ControllerKM84::slotReversShaftUpdate()
 //------------------------------------------------------------------------------
 void ControllerKM84::slotBrakeShaftUpdate()
 {
+    int brake_pos_old = brake_pos;
 
+    brake_pos += brake_shaft_dir;
+
+    brake_pos = cut(brake_pos,
+                    static_cast<int>(BRAKE_POS_0),
+                    static_cast<int>(BRAKE_POS_T));
+
+    if (brake_pos != brake_pos_old)
+    {
+        sounds[BRAKE_CHANGE_POS_SOUND].play();
+    }
 }
