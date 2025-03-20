@@ -580,9 +580,19 @@ void ControllerKM84::slotBrakeShaftUpdate()
     {
         brake_shaft_angle += brake_shaft_omega * brake_shaft_dir * switch_timeout;
 
-        brake_shaft_angle = cut(brake_shaft_angle,
-                                bs_angles[BRAKE_POS_T],
-                                brake_shaft_angle_max);
+        // Недопускаем "залипание" рукоятки в положении "Т"
+        // при возврате в дискретную зону
+        if (brake_shaft_angle < bs_angles[BRAKE_POS_T])
+        {
+            brake_pos += brake_shaft_dir;
+            brake_shaft_angle = bs_angles[brake_pos];
+        }
+        else
+        {
+            brake_shaft_angle = cut(brake_shaft_angle,
+                                    bs_angles[BRAKE_POS_T],
+                                    brake_shaft_angle_max);
+        }
     }
 
     if (brake_pos != brake_pos_old)
