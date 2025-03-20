@@ -343,9 +343,20 @@ void ControllerKM84::slotMainShaftUpdate()
 //------------------------------------------------------------------------------
 void ControllerKM84::slotReversShaftUpdate()
 {
-    if ( (revers_pos == REVERS_POS_BACKWARD) && (main_pos != POS_0) )
+    if (revers_shaft_dir > 0)
     {
-        return;
+        if ( (revers_pos == REVERS_POS_BACKWARD) && (main_pos != POS_0) )
+        {
+            return;
+        }
+    }
+
+    if (revers_shaft_dir < 0)
+    {
+        if ( (revers_pos == REVERS_POS_FORWARD) && (main_pos != POS_0) )
+        {
+            return;
+        }
     }
 
     revers_pos += revers_shaft_dir;
