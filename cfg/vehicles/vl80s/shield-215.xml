@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
-	<Device>
+
+	<!-- Токоприемники -->
+	<AZV>
+		<Number>0</Number>
 		<InitState>1</InitState>
-	</Device>	
+	</AZV>
+
+	<!-- Цепи управления -->
+	<AZV>
+		<Number>1</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Цепь торможения -->
+	<AZV>
+		<Number>2</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Главный контроллер -->
+	<AZV>
+		<Number>3</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Переключатели -->
+	<AZV>
+		<Number>4</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Локомотивная сигнализация -->
+	<AZV>
+		<Number>5</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<AZV>
+		<Number>6</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Радиосвязь -->
+	<AZV>
+		<Number>7</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Фазоращепитель -->
+	<AZV>
+		<Number>8</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Вспомогательные машины -->
+	<AZV>
+		<Number>9</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Прожектор -->
+	<AZV>
+		<Number>10</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Фонари буферные -->
+	<AZV>
+		<Number>11</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Освещение и обогрев кабины -->
+	<AZV>
+		<Number>12</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Тифон, свисток, песок, резервуары -->
+	<AZV>
+		<Number>13</Number>
+		<InitState>1</InitState>
+	</AZV>	
 </Config>
