@@ -177,7 +177,8 @@ private:
                                             ControllerKM84::OUTPUTS_NUM);
 
     /// Распеределительный щит 210
-    Shield_210 *shield_210 = new Shield_210(S210_INPUTS_NUM, S210_OUTPUT_NUM);
+    Shield_210 *shield_210 = new Shield_210(Shield_210::INPUTS_NUM,
+                                            Shield_210::OUTPUT_NUM);
 
     /// Щиток 215
     Shield_215 *shield_215 = new Shield_215(S215_INPUTS_NUM, S215_OUTPUTS_NUM);

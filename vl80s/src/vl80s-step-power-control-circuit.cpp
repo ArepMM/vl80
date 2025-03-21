@@ -6,15 +6,15 @@
 void VL80s::stepPowerControlCircuit(double t, double dt)
 {
     // АКБ
-    battery->setChargeVoltage(shield_210->getOutputVoltage(S210_N116));
+    battery->setChargeVoltage(shield_210->getOutputVoltage(Shield_210::N116));
     battery->setLoadCurrent(shield_210->getBatteryCurrent());
     battery->step(t, dt);
 
     // Распределительный щит 210 питания ЦУ
-    shield_210->setInputVoltage(S210_N113, battery->getVoltage());
+    shield_210->setInputVoltage(Shield_210::N113, battery->getVoltage());
     // Свзь с секцией 2
-    shield_210->setInputVoltage(S210_E62, 0.0);
-    shield_210->setInputVoltage(S210_E66, 0.0);
+    shield_210->setInputVoltage(Shield_210::E62, 0.0);
+    shield_210->setInputVoltage(Shield_210::E66, 0.0);
 
     // Напряжение от обмотки собственных нужд тягового трансформатора
     shield_210->setVoltageAC(0.0);
@@ -23,8 +23,8 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_210->step(t, dt);
 
     // Панель автоматов (щиток 215)
-    shield_215->setInputVoltage(S215_N0, shield_210->getOutputVoltage(S210_N0));
-    shield_215->setInputVoltage(S215_N119, shield_210->getOutputVoltage(S210_N119));
+    shield_215->setInputVoltage(S215_N0, shield_210->getOutputVoltage(Shield_210::N0));
+    shield_215->setInputVoltage(S215_N119, shield_210->getOutputVoltage(Shield_210::N119));
     shield_215->step(t, dt);
 
     // Щиток 223 (дальний "рояль")

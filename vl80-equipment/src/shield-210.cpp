@@ -61,10 +61,10 @@ void Shield_210::preStep(state_vector_t &Y, double t)
     // Напряжение на выходе выпрямителя зарядного агрегата
     U_rect = pf(Y[0] - r * I);
 
-    output_wire[S210_N116] = U_rect * static_cast<double>(is_N116_ON);
+    output_wire[N116] = U_rect * static_cast<double>(is_N116_ON);
 
     // Напряжение аккумуляторной батареи
-    double U_bat = input_wire[S210_N113];
+    double U_bat = input_wire[N113];
 
     // Напряжение на проводе Э61
     double U_E61 = max(U_rect, U_bat * static_cast<double>(K->getContactState(K_31_32)));
@@ -73,17 +73,17 @@ void Shield_210::preStep(state_vector_t &Y, double t)
     double u_fault = static_cast<double>(switch_3R.getState());
 
     // Расчет напряжения на выходах щита 210
-    output_wire[S210_N0] = U_E61 * (1.0 - u_fault) + input_wire[S210_E62] * u_fault;
-    output_wire[S210_N49] = output_wire[S210_N0];
-    output_wire[S210_N401] = output_wire[S210_N0];
-    output_wire[S210_N402] = output_wire[S210_N0];
-    output_wire[S210_N66] = output_wire[S210_N0];
+    output_wire[N0] = U_E61 * (1.0 - u_fault) + input_wire[E62] * u_fault;
+    output_wire[N49] = output_wire[N0];
+    output_wire[N401] = output_wire[N0];
+    output_wire[N402] = output_wire[N0];
+    output_wire[N66] = output_wire[N0];
 
-    output_wire[S210_N119] = U_rect * (1.0 - u_fault) + input_wire[S210_E66] * u_fault;
+    output_wire[N119] = U_rect * (1.0 - u_fault) + input_wire[E66] * u_fault;
 
     // Аварийное питание 2 секции
-    output_wire[S210_E61] = U_E61;
-    output_wire[S210_E65] = U_rect;
+    output_wire[E61] = U_E61;
+    output_wire[E65] = U_rect;
 }
 
 //------------------------------------------------------------------------------
