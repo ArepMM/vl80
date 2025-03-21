@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+	<!-- Локомотивная сигнализация -->
+	<Tumbler>
+		<Number>0</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Проверка АЛСН -->
+	<Tumbler>
+		<Number>1</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Фонарь буферный правый -->
+	<Tumbler>
+		<Number>2</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Фонарь буферный левый -->
+	<Tumbler>
+		<Number>3</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Освещение измерительных приборов -->
+	<Tumbler>
+		<Number>4</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Освещение тележек  -->
+	<Tumbler>
+		<Number>5</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Яркое освещение кабины -->
+	<Tumbler>
+		<Number>6</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Тусклое освещение кабины -->
+	<Tumbler>
+		<Number>7</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Обогрев кабины 2 печи -->
+	<Tumbler>
+		<Number>8</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Обогрев кабины 3 печи -->
+	<Tumbler>
+		<Number>9</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Свисток -->
+	<Tumbler>
+		<Number>10</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Тифон -->
+	<Tumbler>
+		<Number>11</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Освещение документов -->
+	<Tumbler>
+		<Number>12</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Освещение документов -->
+	<Tumbler>
+		<Number>13</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Освещение зеленый свет -->
+	<Tumbler>
+		<Number>14</Number>
+		<InitState>0</InitState>
+	</Tumbler>	
+
+</Config>
