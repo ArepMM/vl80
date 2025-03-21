@@ -24,9 +24,9 @@ public:
     /// Вернуть состояние автомата (для возможной анимации)
     bool getCircuitBreakerState(size_t cb_idx) const
     {
-        if (cb_idx < circuit_breaker.size())
+        if (cb_idx < azv.size())
         {
-            return circuit_breaker[cb_idx].getState();
+            return azv[cb_idx].getState();
         }
 
         return false;
@@ -75,7 +75,7 @@ public:
     enum
     {
         /// Общее число автоматов
-        CB_NUM = 14,
+        AVZ_NUM = 14,
         /// Токоприемники
         VA1 = 0,
         /// Цепи управления
@@ -108,7 +108,7 @@ public:
 private:    
 
     /// Автоматические защитные выключатели
-    std::array<Trigger, CB_NUM> circuit_breaker;
+    std::array<Trigger, AVZ_NUM> azv;
 
     void preStep(state_vector_t &Y, double t) override;
 
