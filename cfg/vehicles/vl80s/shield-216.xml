@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+	<!-- Обогрев санузла -->
+	<AZV>
+		<Number>0</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Освещение тележек -->
+	<AZV>
+		<Number>1</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Освещение ВВК -->
+	<AZV>
+		<Number>2</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Освещение кузова -->
+	<AZV>
+		<Number>3</Number>
+		<InitState>1</InitState>
+	</AZV>
+
+	<!-- Включение РЩ -->
+	<AZV>
+		<Number>4</Number>
+		<InitState>1</InitState>
+	</AZV>	
+</Config>

@@ -28,6 +28,10 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_215->setInputVoltage(Shield_215::N113, battery->getVoltage());
     shield_215->step(t, dt);
 
+    // Панель автоматов (щиток 216)
+    shield_216->setInputVoltage(Shield_216::N0, shield_210->getOutputVoltage(Shield_210::N0));
+    shield_216->step(t, dt);
+
     // Щиток 223 (дальний "рояль")
     shield_223->setInputVoltage(Shield_223::N01, shield_215->getOutputVoltage(Shield_215::N01));
     shield_223->setInputVoltage(Shield_223::N02, shield_215->getOutputVoltage(Shield_215::N02));
@@ -48,7 +52,7 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_225->setInputVoltage(Shield_225::N012, shield_215->getOutputVoltage(Shield_215::N012));
     shield_225->setInputVoltage(Shield_225::N013, shield_215->getOutputVoltage(Shield_215::N013));
     shield_225->setInputVoltage(Shield_225::N014, shield_215->getOutputVoltage(Shield_215::N014));
-    shield_225->setInputVoltage(Shield_225::N033, 0.0); // !!! ПОДКЛЮЧИТЬ С ЩИТКА 216 !!!
+    shield_225->setInputVoltage(Shield_225::N033, shield_216->getOutputVoltage(Shield_216::N033));
     shield_225->setControl(keys);
     shield_225->step(t, dt);
 

@@ -7,6 +7,7 @@
 #include    <battery.h>
 #include    <shield-210.h>
 #include    <shield-215.h>
+#include    <shield-216.h>
 #include    <shield-223.h>
 #include    <shield-224.h>
 #include    <shield-225.h>
@@ -185,6 +186,10 @@ private:
     /// Щиток 215
     Shield_215 *shield_215 = new Shield_215(Shield_215::INPUTS_NUM,
                                             Shield_215::OUTPUTS_NUM);
+
+    /// Щиток 216
+    Shield_216 *shield_216 = new Shield_216(Shield_216::INPUTS_NUM,
+                                            Shield_216::OUTPUTS_NUM);
 
     /// АКБ
     Battery *battery = new Battery;
