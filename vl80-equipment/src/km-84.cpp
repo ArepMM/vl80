@@ -22,7 +22,7 @@ ControllerKM84::~ControllerKM84()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ControllerKM84::init()
+void ControllerKM84::init(const QString &custom_cfg_dir)
 {
     // Инициализируем развертку главного вала
     init_main_shaft();
@@ -32,6 +32,8 @@ void ControllerKM84::init()
 
     // Инициализитуем развертку тормозного вала
     init_brake_shaft();
+
+    selsyn->read_config("BD-404A", custom_cfg_dir);
 }
 
 //------------------------------------------------------------------------------
@@ -84,6 +86,20 @@ float ControllerKM84::getSoundSignal(size_t idx) const
     }
 
     return Device::getSoundSignal();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ControllerKM84::step(double t, double dt)
+{
+    ElectricModule::step(t, dt);
+
+    main_shaft_timer->step(t, dt);
+    revers_shaft_timer->step(t, dt);
+    brake_shaft_timer->step(t, dt);
+
+    selsyn->step(t, dt);
 }
 
 //------------------------------------------------------------------------------
@@ -202,7 +218,6 @@ void ControllerKM84::load_config(CfgReader &cfg)
 
     cfg.getDouble(secName, "BrakeShaftOmega", brake_shaft_omega);
     cfg.getDouble(secName, "BrakeShaftMaxAngle", brake_shaft_angle_max);
-    cfg.getDouble(secName, "Selsin_Umax", selsin_Umax);
 
     QDomNode secNode = cfg.getFirstSection("BrakePos");
 
@@ -334,13 +349,7 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     {
         if (brake_shaft_dir < 0)
             brake_shaft_timer->stop();
-    }
-
-    main_shaft_timer->step(t, dt);
-
-    revers_shaft_timer->step(t, dt);
-
-    brake_shaft_timer->step(t, dt);
+    }    
 }
 
 //------------------------------------------------------------------------------

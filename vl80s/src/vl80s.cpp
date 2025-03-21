@@ -69,7 +69,7 @@ void VL80s::initialization()
     initPowerControlCircuit(modules_dir, custom_cfg_dir);
 
     // Контроллер машиниста
-    km->init();
+    km->init(custom_cfg_dir);
     km->read_config("km-84", custom_cfg_dir);
 }
 

@@ -6,9 +6,7 @@
 		<!-- Скорость поворота тормозного вала -->
 		<BrakeShaftOmega>66.7</BrakeShaftOmega>
 		<!-- Максимальный угол поворота тормозного вала -->
-		<BrakeShaftMaxAngle>270.0</BrakeShaftMaxAngle>
-		<!-- Максимальное напряжение с сельсин-задатчика -->
-		<Selsin_Umax>24.0</Selsin_Umax>
+		<BrakeShaftMaxAngle>270.0</BrakeShaftMaxAngle>		
 	</Device>
 
 	<!-- "0" -->
