@@ -37,6 +37,12 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_223->step(t, dt);
 
     // Контроллер машиниста
+    double U_N1 = shield_223->getOutputVoltage(Shield_223::E1) * static_cast<double>(brake_lock->isUnlocked());
+    km->setInputVoltage(ControllerKM84::N1, U_N1);
+    km->setInputVoltage(ControllerKM84::N03, shield_215->getOutputVoltage(Shield_215::N03));
+    km->setInputVoltage(ControllerKM84::N05, shield_215->getOutputVoltage(Shield_215::N05));
+    km->setInputVoltage(ControllerKM84::N88, shield_223->getOutputVoltage(Shield_223::N88));
+    km->setInputVoltage(ControllerKM84::N306, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
     km->setControl(keys);
     km->step(t, dt);
 }
