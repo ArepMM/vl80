@@ -26,4 +26,8 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_215->setInputVoltage(S215_N0, shield_210->getOutputVoltage(S210_N0));
     shield_215->setInputVoltage(S215_N119, shield_210->getOutputVoltage(S210_N119));
     shield_215->step(t, dt);
+
+    // Щиток 223 (дальний "рояль")
+    shield_223->setInputSignal(Shield_223::N01, shield_215->getOutputSignal(S215_N01));
+    shield_223->step(t, dt);
 }
