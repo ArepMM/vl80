@@ -70,6 +70,12 @@ void Shield_215::load_config(CfgReader &cfg)
         bool state = false;
 
         cfg.getInt(secNode, "Number", number);
+
+        if (number >= circuit_breaker.size())
+        {
+            continue;
+        }
+
         cfg.getBool(secNode, "InitState", state);
 
         if (state)

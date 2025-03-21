@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+	<!-- Выключение ГВ -->
+	<Tumbler>
+		<Number>0</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Включение ГВ и возврат защиты -->
+	<Tumbler>
+		<Number>1</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Токоприемники -->
+	<Tumbler>
+		<Number>2</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Токоприемник передний -->
+	<Tumbler>
+		<Number>3</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Токоприемник задний -->
+	<Tumbler>
+		<Number>4</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Цепи управления -->
+	<Tumbler>
+		<Number>5</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Прожектор тускло -->
+	<Tumbler>
+		<Number>6</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Прожектор ярко -->
+	<Tumbler>
+		<Number>7</Number>
+		<InitState>0</InitState>
+	</Tumbler>	
+
+</Config>
