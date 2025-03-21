@@ -1,9 +1,9 @@
-#include    <selsyn-BD-404A.h>
+#include    <selsyn.h>
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-Selsyn_BD_404A::Selsyn_BD_404A(size_t input_wires_num,
+Selsyn::Selsyn(size_t input_wires_num,
                                size_t output_wires_num,
                                QObject *parent)
     : ElectricModule(input_wires_num, output_wires_num, parent)
@@ -14,7 +14,7 @@ Selsyn_BD_404A::Selsyn_BD_404A(size_t input_wires_num,
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-Selsyn_BD_404A::~Selsyn_BD_404A()
+Selsyn::~Selsyn()
 {
 
 }
@@ -22,7 +22,7 @@ Selsyn_BD_404A::~Selsyn_BD_404A()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Selsyn_BD_404A::preStep(state_vector_t &Y, double t)
+void Selsyn::preStep(state_vector_t &Y, double t)
 {
 
 }
@@ -30,7 +30,7 @@ void Selsyn_BD_404A::preStep(state_vector_t &Y, double t)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Selsyn_BD_404A::ode_system(const state_vector_t &Y,
+void Selsyn::ode_system(const state_vector_t &Y,
                                 state_vector_t &dYdt,
                                 double t)
 {
@@ -40,7 +40,7 @@ void Selsyn_BD_404A::ode_system(const state_vector_t &Y,
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Selsyn_BD_404A::load_config(CfgReader &cfg)
+void Selsyn::load_config(CfgReader &cfg)
 {
 
 }

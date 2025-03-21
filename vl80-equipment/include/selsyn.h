@@ -1,5 +1,5 @@
-#ifndef     SELSYN_BD_404A_H
-#define     SELSYN_BD_404A_H
+#ifndef     SELSYN_H
+#define     SELSYN_H
 
 #include    <electric-module.h>
 
@@ -10,15 +10,15 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-class Selsyn_BD_404A : public ElectricModule
+class Selsyn : public ElectricModule
 {
 public:
 
-    Selsyn_BD_404A(size_t input_wires_num = 1,
+    Selsyn(size_t input_wires_num = 1,
                    size_t output_wires_num = 1,
                    QObject *parent = Q_NULLPTR);
 
-    ~Selsyn_BD_404A();
+    ~Selsyn();
 
 private:
 
@@ -31,4 +31,4 @@ private:
     void load_config(CfgReader &cfg) override;
 };
 
-#endif // SELSYN_BD_404A_H
+#endif // SELSYN_H

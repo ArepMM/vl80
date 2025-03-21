@@ -3,7 +3,7 @@
 
 #include    <electric-module.h>
 #include    <timer.h>
-#include    <selsyn-BD-404A.h>
+#include    <selsyn.h>
 
 //------------------------------------------------------------------------------
 //
@@ -250,7 +250,7 @@ private:
     double brake_shaft_angle_max = 270.0;
 
     /// Сельсин-задатчик скорости торможения
-    Selsyn_BD_404A *selsyn = new Selsyn_BD_404A;
+    Selsyn *selsyn = new Selsyn;
 
     /// Углы поворота тормозного вала на дискрретных позициях
     std::array<double, BRAKE_NUM_POS> bs_angles = {0, 20.0, 40.0, 60.0};
