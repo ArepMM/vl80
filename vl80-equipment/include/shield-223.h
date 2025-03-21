@@ -22,7 +22,7 @@ public:
 
     enum S223_InputWires
     {
-        S223_INPUTS_NUM = 5,
+        INPUTS_NUM = 5,
         N01 = 0,
         N02 = 1,
         N011 = 2,
@@ -32,7 +32,7 @@ public:
 
     enum S223_OutputWires
     {
-        S223_OUTPUTS_NUM = 8,
+        OUTPUTS_NUM = 8,
         N88 = 0,
         E14 = 1,
         E15 = 2,

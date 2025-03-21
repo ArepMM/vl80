@@ -8,6 +8,7 @@
 #include    <shield-210.h>
 #include    <shield-215.h>
 #include    <shield-223.h>
+#include    <shield-224.h>
 
 //------------------------------------------------------------------------------
 //
@@ -188,8 +189,12 @@ private:
     Battery *battery = new Battery;
 
     /// Щиток 223
-    Shield_223 *shield_223 = new Shield_223(Shield_223::S223_INPUTS_NUM,
-                                            Shield_223::S223_OUTPUTS_NUM);
+    Shield_223 *shield_223 = new Shield_223(Shield_223::INPUTS_NUM,
+                                            Shield_223::OUTPUTS_NUM);
+
+    /// Щиток 223
+    Shield_224 *shield_224 = new Shield_224(Shield_224::INPUTS_NUM,
+                                            Shield_224::OUTPUTS_NUM);
 
     // Инициализация:
     /// Инициализация подсистем секции электровоза
