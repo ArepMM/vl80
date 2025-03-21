@@ -65,6 +65,14 @@ float ControllerKM84::getReversHandlePos() const
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+float ControllerKM84::getBrakeHandlePos() const
+{
+    return static_cast<float>(brake_shaft_angle / brake_shaft_angle_max);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 sound_state_t ControllerKM84::getSoundState(size_t idx) const
 {
     if (idx < sounds.size())

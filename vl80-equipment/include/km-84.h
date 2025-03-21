@@ -156,9 +156,14 @@ public:
 
     void init(const QString &custom_cfg_dir);
 
+    /// Положение главной рукоятки
     float getMainHandlePos() const;
 
+    /// Положение реверсивной рукоятки
     float getReversHandlePos() const;
+
+    /// Положение тормозной рукоятки
+    float getBrakeHandlePos() const;
 
     enum
     {
