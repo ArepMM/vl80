@@ -42,7 +42,32 @@ void Shield_224::ode_system(const state_vector_t &Y,
 //------------------------------------------------------------------------------
 void Shield_224::load_config(CfgReader &cfg)
 {
+    QDomNode secNode = cfg.getFirstSection("Tumbler");
 
+    while (!secNode.isNull())
+    {
+        int number = 0;
+        cfg.getInt(secNode, "Number", number);
+
+        if (number >= tumbler.size())
+        {
+            break;
+        }
+
+        bool state = false;
+        cfg.getBool(secNode, "InitState", state);
+
+        if (state)
+        {
+            tumbler[number].set();
+        }
+        else
+        {
+            tumbler[number].reset();
+        }
+
+        secNode = cfg.getNextSection();
+    }
 }
 
 //------------------------------------------------------------------------------

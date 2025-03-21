@@ -1,51 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
 
-	<!-- Выключение ГВ -->
+	<!-- Вспомогательные машины -->
 	<Tumbler>
 		<Number>0</Number>
 		<InitState>0</InitState>
 	</Tumbler>
 
-	<!-- Включение ГВ и возврат защиты -->
+	<!-- Фазоращепитель -->
 	<Tumbler>
 		<Number>1</Number>
 		<InitState>0</InitState>
 	</Tumbler>
 
-	<!-- Токоприемники -->
+	<!-- Компрессоры -->
 	<Tumbler>
 		<Number>2</Number>
 		<InitState>0</InitState>
 	</Tumbler>
 
-	<!-- Токоприемник передний -->
+	<!-- Вентилятор 1 -->
 	<Tumbler>
 		<Number>3</Number>
 		<InitState>0</InitState>
 	</Tumbler>
 
-	<!-- Токоприемник задний -->
+	<!-- Вентилятор 2 -->
 	<Tumbler>
 		<Number>4</Number>
 		<InitState>0</InitState>
 	</Tumbler>
 
-	<!-- Цепи управления -->
+	<!-- Вентилятор 3 -->
 	<Tumbler>
 		<Number>5</Number>
 		<InitState>0</InitState>
 	</Tumbler>
 
-	<!-- Прожектор тускло -->
+	<!-- Вентилятор 4 -->
 	<Tumbler>
 		<Number>6</Number>
 		<InitState>0</InitState>
 	</Tumbler>
 
-	<!-- Прожектор ярко -->
+	<!-- Сигнализация -->
 	<Tumbler>
 		<Number>7</Number>
 		<InitState>0</InitState>
 	</Tumbler>
+
+	<!-- Автоматическая подсыпка песка -->
+	<Tumbler>
+		<Number>8</Number>
+		<InitState>0</InitState>
+	</Tumbler>	
+
 </Config>

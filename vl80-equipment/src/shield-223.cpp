@@ -76,7 +76,7 @@ void Shield_223::load_config(CfgReader &cfg)
 
         if (number >= tumbler.size())
         {
-            continue;
+            break;
         }
 
         bool state = false;

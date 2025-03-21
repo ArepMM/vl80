@@ -15,6 +15,8 @@ void VL80s::initPowerControlCircuit(const QString &modules_dir,
 
     shield_223->read_config("shield-223", custom_cfg_dir);
 
+    shield_224->read_config("shield-224", custom_cfg_dir);
+
     // Контроллер машиниста
     km->init(custom_cfg_dir);
     km->read_config("km-84", custom_cfg_dir);
