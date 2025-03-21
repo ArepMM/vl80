@@ -73,13 +73,13 @@ void Shield_210::preStep(state_vector_t &Y, double t)
     double u_fault = static_cast<double>(switch_3R.getState());
 
     // Расчет напряжения на выходах щита 210
-    output_wire[N0] = U_E61 * (1.0 - u_fault) + input_wire[E62] * u_fault;
+    output_wire[N0] = U_E61 * (1.0 - u_fault) + input_wire[SME_E62] * u_fault;
     output_wire[N49] = output_wire[N0];
     output_wire[N401] = output_wire[N0];
     output_wire[N402] = output_wire[N0];
     output_wire[N66] = output_wire[N0];
 
-    output_wire[N119] = U_rect * (1.0 - u_fault) + input_wire[E66] * u_fault;
+    output_wire[N119] = U_rect * (1.0 - u_fault) + input_wire[SME_E66] * u_fault;
 
     // Аварийное питание 2 секции
     output_wire[E61] = U_E61;

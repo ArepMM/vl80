@@ -13,8 +13,8 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     // Распределительный щит 210 питания ЦУ
     shield_210->setInputVoltage(Shield_210::N113, battery->getVoltage());
     // Свзь с секцией 2
-    shield_210->setInputVoltage(Shield_210::E62, 0.0);
-    shield_210->setInputVoltage(Shield_210::E66, 0.0);
+    shield_210->setInputVoltage(Shield_210::SME_E62, 0.0); // !!! СМЕ ДОБАВИТЬ !!!
+    shield_210->setInputVoltage(Shield_210::SME_E66, 0.0); // !!! СМЕ ДОБАВИТЬ !!!
 
     // Напряжение от обмотки собственных нужд тягового трансформатора
     shield_210->setVoltageAC(0.0);
@@ -28,7 +28,11 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_215->step(t, dt);
 
     // Щиток 223 (дальний "рояль")
-    shield_223->setInputSignal(Shield_223::N01, shield_215->getOutputSignal(Shield_215::N01));
+    shield_223->setInputVoltage(Shield_223::N01, shield_215->getOutputVoltage(Shield_215::N01));
+    shield_223->setInputVoltage(Shield_223::N02, shield_215->getOutputVoltage(Shield_215::N02));
+    shield_223->setInputVoltage(Shield_223::N011, shield_215->getOutputVoltage(Shield_215::N011));
+    shield_223->setInputVoltage(Shield_223::SME_E16, 0.0); // !!! СМЕ ДОБАВИТЬ !!!
+    shield_223->setInputVoltage(Shield_223::SME_E17, 0.0); // !!! СМЕ ДОБАВИТЬ !!!
     shield_223->step(t, dt);
 
     // Контроллер машиниста
