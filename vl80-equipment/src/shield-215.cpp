@@ -60,17 +60,28 @@ void Shield_215::ode_system(const state_vector_t &Y, state_vector_t &dYdt, doubl
 //------------------------------------------------------------------------------
 void Shield_215::load_config(CfgReader &cfg)
 {
-    QString secName = "Device";
+    QString secName = "AZV";
 
-    bool init_state = false;
-    cfg.getBool(secName, "InitState", init_state);
+    QDomNode secNode = cfg.getFirstSection(secName);
 
-    if (init_state)
+    while (!secNode.isNull())
     {
-        for (size_t i = 0; i < circuit_breaker.size(); ++i)
+        int number = 0;
+        bool state = false;
+
+        cfg.getInt(secNode, "Number", number);
+        cfg.getBool(secNode, "InitState", state);
+
+        if (state)
         {
-            circuit_breaker[i].set();
+            circuit_breaker[number].set();
         }
+        else
+        {
+            circuit_breaker[number].reset();
+        }
+
+        secNode = cfg.getNextSection();
     }
 }
 
