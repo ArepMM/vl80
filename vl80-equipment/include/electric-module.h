@@ -41,6 +41,12 @@ public:
         return 0.0;
     }
 
+    /// Вернуть ток, потребляемый модулем
+    double getCurrent() const
+    {
+        return Icc;
+    }
+
 protected:
 
     /// Входные электрические линии
@@ -48,6 +54,9 @@ protected:
 
     /// Выходные электрические линии
     wire_t output_wire;
+
+    /// Ток, потребляемый модулем
+    double Icc = 0.0;
 
     virtual void preStep(state_vector_t &Y, double t);
 
