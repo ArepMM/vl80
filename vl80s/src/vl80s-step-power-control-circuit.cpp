@@ -30,4 +30,8 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     // Щиток 223 (дальний "рояль")
     shield_223->setInputSignal(Shield_223::N01, shield_215->getOutputSignal(Shield_215::N01));
     shield_223->step(t, dt);
+
+    // Контроллер машиниста
+    km->setControl(keys);
+    km->step(t, dt);
 }

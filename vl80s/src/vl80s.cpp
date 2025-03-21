@@ -66,11 +66,7 @@ void VL80s::initialization()
 
     initBrakesEquipment(modules_dir, custom_cfg_dir);
 
-    initPowerControlCircuit(modules_dir, custom_cfg_dir);
-
-    // Контроллер машиниста
-    km->init(custom_cfg_dir);
-    km->read_config("km-84", custom_cfg_dir);
+    initPowerControlCircuit(modules_dir, custom_cfg_dir);    
 }
 
 //------------------------------------------------------------------------------
@@ -103,10 +99,7 @@ void VL80s::step(double t, double dt)
     stepSoundSignalsOutput(t, dt);
 
     // Отладочная строка
-    stepDebugPrint(t, dt);
-
-    km->setControl(keys);
-    km->step(t, dt);
+    stepDebugPrint(t, dt);    
 }
 
 GET_VEHICLE(VL80s)
