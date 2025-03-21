@@ -20,16 +20,19 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_210->setVoltageAC(0.0);
 
     shield_210->setLoadCurrent(10.0);
+    shield_210->setControl(keys);
     shield_210->step(t, dt);
 
     // Панель автоматов (щиток 215)
     shield_215->setInputVoltage(Shield_215::N0, shield_210->getOutputVoltage(Shield_210::N0));
     shield_215->setInputVoltage(Shield_215::N119, shield_210->getOutputVoltage(Shield_210::N119));
     shield_215->setInputVoltage(Shield_215::N113, battery->getVoltage());
+    shield_215->setControl(keys);
     shield_215->step(t, dt);
 
     // Панель автоматов (щиток 216)
     shield_216->setInputVoltage(Shield_216::N0, shield_210->getOutputVoltage(Shield_210::N0));
+    shield_216->setControl(keys);
     shield_216->step(t, dt);
 
     // Щиток 223 (дальний "рояль")

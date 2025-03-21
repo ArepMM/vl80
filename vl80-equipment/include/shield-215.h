@@ -22,11 +22,11 @@ public:
     ~Shield_215();
 
     /// Вернуть состояние автомата (для возможной анимации)
-    bool getCircuitBreakerState(size_t cb_idx) const
+    bool get_AZV_State(size_t azv_idx) const
     {
-        if (cb_idx < azv.size())
+        if (azv_idx < azv.size())
         {
-            return azv[cb_idx].getState();
+            return azv[azv_idx].getState();
         }
 
         return false;

@@ -78,6 +78,17 @@ public:
         N145 = 12
     };
 
+    /// Вернуть положение тумблеров
+    float getTumblerPos(size_t idx) const
+    {
+        if (idx >= tumbler.size())
+        {
+            return 0.0f;
+        }
+
+        return static_cast<float>(tumbler[idx].getState());
+    }
+
 private:
 
     /// Тумблеры на щитке

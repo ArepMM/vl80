@@ -16,6 +16,17 @@ public:
 
     ~Shield_216();
 
+    /// Вернуть состояние автомата (для возможной анимации)
+    bool get_AZV_State(size_t azv_idx) const
+    {
+        if (azv_idx < azv.size())
+        {
+            return azv[azv_idx].getState();
+        }
+
+        return false;
+    }
+
     enum S216_InputWires
     {
         INPUTS_NUM = 1,
