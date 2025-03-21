@@ -181,7 +181,8 @@ private:
                                             Shield_210::OUTPUT_NUM);
 
     /// Щиток 215
-    Shield_215 *shield_215 = new Shield_215(S215_INPUTS_NUM, S215_OUTPUTS_NUM);
+    Shield_215 *shield_215 = new Shield_215(Shield_215::INPUTS_NUM,
+                                            Shield_215::OUTPUTS_NUM);
 
     /// АКБ
     Battery *battery = new Battery;
