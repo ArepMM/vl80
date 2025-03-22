@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+	<!-- Песок -->
+	<Tumbler>
+		<Number>0</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+</Config>

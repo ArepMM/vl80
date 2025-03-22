@@ -77,6 +77,16 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_227->setControl(keys);
     shield_227->step(t, dt);
 
+    // Щиток 228
+    shield_228->setInputVoltage(Shield_228::N014, shield_215->getOutputVoltage(Shield_215::N014));
+    shield_228->setControl(keys);
+    shield_228->step(t, dt);
+
+    // Щиток 229
+    shield_229->setInputVoltage(Shield_229::N014, shield_215->getOutputVoltage(Shield_215::N014));
+    shield_229->setControl(keys);
+    shield_229->step(t, dt);
+
     // Контроллер машиниста
     double U_N1 = shield_223->getOutputVoltage(Shield_223::E1) * static_cast<double>(brake_lock->isUnlocked());
     km->setInputVoltage(ControllerKM84::N1, U_N1);

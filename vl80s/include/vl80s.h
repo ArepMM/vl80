@@ -13,6 +13,8 @@
 #include    <shield-225.h>
 #include    <shield-226.h>
 #include    <shield-227.h>
+#include    <shield-228.h>
+#include    <shield-229.h>
 
 //------------------------------------------------------------------------------
 //
@@ -215,6 +217,14 @@ private:
     /// Щиток 227
     Shield_227 *shield_227 = new Shield_227(Shield_227::INPUTS_NUM,
                                             Shield_227::OUTPUTS_NUM);
+
+    /// Щиток 228
+    Shield_228 *shield_228 = new Shield_228(Shield_228::INPUTS_NUM,
+                                            Shield_228::OUTPUTS_NUM);
+
+    /// Щиток 229
+    Shield_229 *shield_229 = new Shield_229(Shield_229::INPUTS_NUM,
+                                            Shield_229::OUTPUTS_NUM);
 
     // Инициализация:
     /// Инициализация подсистем секции электровоза

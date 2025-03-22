@@ -1,5 +1,5 @@
-#ifndef     SHIELD_226_H
-#define     SHIELD_226_H
+#ifndef     SHIELD_228_H
+#define     SHIELD_228_H
 
 #include    <electric-module.h>
 #include    <trigger.h>
@@ -7,38 +7,36 @@
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-class Shield_226 : public ElectricModule
+class Shield_228 : public ElectricModule
 {
 public:
 
-    Shield_226(size_t input_wires_num = 1,
+    Shield_228(size_t input_wires_num = 1,
                size_t output_wires_num = 1,
                QObject *parent = Q_NULLPTR);
 
-    ~Shield_226();
+    ~Shield_228();
 
     enum
     {
         TUMBLERS_NUM = 3,
-        TUMBLER_COMPRESSOR = 0,
-        TUMBLER_FAN2 = 1,
-        TUMBLER_FAN4 = 2,
+        TUMBLER_SVISTOK = 0,
+        TUMBLER_TIFON = 1,
+        TUMBLER_SAND = 2,
     };
 
-    enum S226_InputWires
+    enum S228_InputWires
     {
-        INPUTS_NUM = 3,
-        N010 = 0,
-        N512 = 1,
-        N514 = 2
+        INPUTS_NUM = 1,
+        N014 = 0
     };
 
-    enum S226_OutputWires
+    enum S228_OutputWires
     {
         OUTPUTS_NUM = 3,
-        N104 = 0,
-        N128 = 1,
-        N132 = 2
+        N178 = 0,
+        E57 = 1,
+        E36 = 2
     };
 
     /// Вернуть положение тумблеров
@@ -68,4 +66,5 @@ private:
     void stepKeysControl(double t, double dt) override;
 };
 
-#endif // SHIELD_226_H
+#endif // SHIELD_228_H
+

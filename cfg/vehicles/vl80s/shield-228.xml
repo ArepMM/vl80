@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+	<!-- Свисток -->
+	<Tumbler>
+		<Number>0</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Тифон -->
+	<Tumbler>
+		<Number>1</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Песок -->
+	<Tumbler>
+		<Number>2</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+</Config>
