@@ -124,7 +124,7 @@ void Shield_224::stepKeysControl(double t, double dt)
     }
 
     // Компрессоры
-    if (getKeyState(KEY_C))
+    if (getKeyState(KEY_5))
     {
         if (isShift())
         {
@@ -177,7 +177,7 @@ void Shield_224::stepKeysControl(double t, double dt)
     }
 
     // Сигнализация
-    if (getKeyState(KEY_5))
+    if (getKeyState(KEY_6))
     {
         if (isShift())
         {
