@@ -190,7 +190,7 @@ void Shield_224::stepKeysControl(double t, double dt)
     }
 
     // Автоматическая подсыпка песка
-    if (getKeyState(KEY_6))
+    if (getKeyState(KEY_7))
     {
         if (isShift())
         {
