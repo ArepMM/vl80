@@ -1,9 +1,9 @@
-#include    <panel-1.h>
+#include    <panel-2.h>
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-Panel_1::Panel_1(size_t input_wires_num,
+Panel_2::Panel_2(size_t input_wires_num,
                  size_t output_wires_num,
                  QObject *parent)
     : ElectricModule(input_wires_num, output_wires_num, parent)
@@ -14,7 +14,7 @@ Panel_1::Panel_1(size_t input_wires_num,
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-Panel_1::~Panel_1()
+Panel_2::~Panel_2()
 {
 
 }
@@ -22,26 +22,7 @@ Panel_1::~Panel_1()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Panel_1::step(double t, double dt)
-{
-    ElectricModule::step(t, dt);
-}
-
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
-void Panel_1::init(const QString &custom_cfg_dir)
-{
-    K119->read_config("mk-69", custom_cfg_dir);
-    K119->setInitContactState(K119_N107_N103, false);
-    K119->setInitContactState(K119_C101_C130, false);
-    K119->setInitContactState(K119_C302_C303, false);
-}
-
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
-void Panel_1::preStep(state_vector_t &Y, double t)
+void Panel_2::step(double t, double dt)
 {
 
 }
@@ -49,9 +30,7 @@ void Panel_1::preStep(state_vector_t &Y, double t)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Panel_1::ode_system(const state_vector_t &Y,
-                         state_vector_t &dYdt,
-                         double t)
+void Panel_2::init(const QString &custom_cfg_dir)
 {
 
 }
@@ -59,7 +38,7 @@ void Panel_1::ode_system(const state_vector_t &Y,
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Panel_1::load_config(CfgReader &cfg)
+void Panel_2::preStep(state_vector_t &Y, double t)
 {
 
 }
@@ -67,7 +46,23 @@ void Panel_1::load_config(CfgReader &cfg)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Panel_1::stepKeysControl(double t, double dt)
+void Panel_2::ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t)
+{
+
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Panel_2::load_config(CfgReader &cfg)
+{
+
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Panel_2::stepKeysControl(double t, double dt)
 {
 
 }

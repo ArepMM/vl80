@@ -21,6 +21,16 @@ public:
 
     void init(const QString &custom_cfg_dir);
 
+    enum P1_InputWires
+    {
+        INPUTS_NUM = 1
+    };
+
+    enum P1_OutputWires
+    {
+        OUTPUTS_NUM = 1
+    };
+
 private:
 
     /// Контакты К160

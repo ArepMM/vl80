@@ -34,4 +34,32 @@ void VL80s::initPowerControlCircuit(const QString &modules_dir,
     // Контроллер машиниста
     km->init(custom_cfg_dir);
     km->read_config("km-84", custom_cfg_dir);
+
+    panel_1->read_config("panel-1", custom_cfg_dir);
+    panel_1->init(custom_cfg_dir);
+    panel_1->setAnalogSignalsPtr(&analogSignal);
+
+    panel_2->read_config("panel-2", custom_cfg_dir);
+    panel_2->init(custom_cfg_dir);
+    panel_2->setAnalogSignalsPtr(&analogSignal);
+
+    panel_3->read_config("panel-3", custom_cfg_dir);
+    panel_3->init(custom_cfg_dir);
+    panel_3->setAnalogSignalsPtr(&analogSignal);
+
+    panel_4->read_config("panel-4", custom_cfg_dir);
+    panel_4->init(custom_cfg_dir);
+    panel_4->setAnalogSignalsPtr(&analogSignal);
+
+    panel_5->read_config("panel-5", custom_cfg_dir);
+    panel_5->init(custom_cfg_dir);
+    panel_5->setAnalogSignalsPtr(&analogSignal);
+
+    panel_6->read_config("panel-6", custom_cfg_dir);
+    panel_6->init(custom_cfg_dir);
+    panel_6->setAnalogSignalsPtr(&analogSignal);
+
+    panel_7->read_config("panel-7", custom_cfg_dir);
+    panel_7->init(custom_cfg_dir);
+    panel_7->setAnalogSignalsPtr(&analogSignal);
 }

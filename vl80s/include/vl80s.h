@@ -15,6 +15,13 @@
 #include    <shield-227.h>
 #include    <shield-228.h>
 #include    <shield-229.h>
+#include    <panel-1.h>
+#include    <panel-2.h>
+#include    <panel-3.h>
+#include    <panel-4.h>
+#include    <panel-5.h>
+#include    <panel-6.h>
+#include    <panel-7.h>
 
 //------------------------------------------------------------------------------
 //
@@ -225,6 +232,27 @@ private:
     /// Щиток 229
     Shield_229 *shield_229 = new Shield_229(Shield_229::INPUTS_NUM,
                                             Shield_229::OUTPUTS_NUM);
+
+    /// Панель 1
+    Panel_1 *panel_1 = new Panel_1(Panel_1::INPUTS_NUM, Panel_1::OUTPUTS_NUM);
+
+    /// Панель 2
+    Panel_2 *panel_2 = new Panel_2(Panel_2::INPUTS_NUM, Panel_2::OUTPUTS_NUM);
+
+    /// Панель 3
+    Panel_3 *panel_3 = new Panel_3(Panel_3::INPUTS_NUM, Panel_3::OUTPUTS_NUM);
+
+    /// Панель 4
+    Panel_4 *panel_4 = new Panel_4(Panel_4::INPUTS_NUM, Panel_4::OUTPUTS_NUM);
+
+    /// Панель 5
+    Panel_5 *panel_5 = new Panel_5(Panel_5::INPUTS_NUM, Panel_5::OUTPUTS_NUM);
+
+    /// Панель 6
+    Panel_6 *panel_6 = new Panel_6(Panel_6::INPUTS_NUM, Panel_6::OUTPUTS_NUM);
+
+    /// Панель 7
+    Panel_7 *panel_7 = new Panel_7(Panel_7::INPUTS_NUM, Panel_7::OUTPUTS_NUM);
 
     // Инициализация:
     /// Инициализация подсистем секции электровоза

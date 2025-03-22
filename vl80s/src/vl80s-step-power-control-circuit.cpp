@@ -96,4 +96,25 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     km->setInputVoltage(ControllerKM84::N306, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
     km->setControl(keys);
     km->step(t, dt);
+
+    panel_1->setControl(keys);
+    panel_1->step(t, dt);
+
+    panel_2->setControl(keys);
+    panel_2->step(t, dt);
+
+    panel_3->setControl(keys);
+    panel_3->step(t, dt);
+
+    panel_4->setControl(keys);
+    panel_4->step(t, dt);
+
+    panel_5->setControl(keys);
+    panel_5->step(t, dt);
+
+    panel_6->setControl(keys);
+    panel_6->step(t, dt);
+
+    panel_7->setControl(keys);
+    panel_7->step(t, dt);
 }
