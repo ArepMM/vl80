@@ -29,6 +29,17 @@ void Panel_1::step(double t, double dt)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+void Panel_1::init(const QString &custom_cfg_dir)
+{
+    K119->read_config("mk-69", custom_cfg_dir);
+    K119->setInitContactState(K119_N107_N103, false);
+    K119->setInitContactState(K119_C101_C130, false);
+    K119->setInitContactState(K119_C302_C303, false);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void Panel_1::preStep(state_vector_t &Y, double t)
 {
 
