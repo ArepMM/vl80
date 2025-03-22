@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+	<!-- Без фазоращепитела -->
+	<Tumbler>
+		<Number>0</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Фазоращепитель -->
+	<Tumbler>
+		<Number>1</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+
+	<!-- Вентилятор 1 -->
+	<Tumbler>
+		<Number>2</Number>
+		<InitState>1</InitState>
+	</Tumbler>
+
+	<!-- Вентилятор 3 -->
+	<Tumbler>
+		<Number>3</Number>
+		<InitState>1</InitState>
+	</Tumbler>
+
+	<!-- Маслонасос -->
+	<Tumbler>
+		<Number>4</Number>
+		<InitState>1</InitState>
+	</Tumbler>
+
+	<!-- Низкая температура масла -->
+	<Tumbler>
+		<Number>5</Number>
+		<InitState>0</InitState>
+	</Tumbler>
+	
+</Config>

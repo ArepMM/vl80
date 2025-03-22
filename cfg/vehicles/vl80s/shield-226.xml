@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+	<!-- Компрессор -->
+	<Tumbler>
+		<Number>0</Number>
+		<InitState>1</InitState>
+	</Tumbler>
+
+	<!-- Вентилятор 2 -->
+	<Tumbler>
+		<Number>1</Number>
+		<InitState>1</InitState>
+	</Tumbler>
+
+	<!-- Вентилятор 4 -->
+	<Tumbler>
+		<Number>2</Number>
+		<InitState>1</InitState>
+	</Tumbler>
+
+</Config>

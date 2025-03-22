@@ -23,15 +23,16 @@ public:
 
     enum S224_InputWires
     {
-        INPUTS_NUM = 3,
+        INPUTS_NUM = 4,
         N09 = 0,
         N010 = 1,
-        N05 = 2
+        N05 = 2,
+        N014 = 3
     };
 
     enum S224_OutputWires
     {
-        OUTPUTS_NUM = 8,
+        OUTPUTS_NUM = 9,
         E18 = 0,
         E9 = 1,
         N102 = 2,
@@ -39,7 +40,8 @@ public:
         E22 = 4,
         E23 = 5,
         E24 = 6,
-        N400 = 7
+        N400 = 7,
+        E50 = 8
     };
 
     enum

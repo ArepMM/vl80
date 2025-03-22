@@ -48,6 +48,7 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_224->setInputVoltage(Shield_224::N05, shield_215->getOutputVoltage(Shield_215::N05));
     shield_224->setInputVoltage(Shield_224::N09, shield_215->getOutputVoltage(Shield_215::N09));
     shield_224->setInputVoltage(Shield_224::N010, shield_215->getOutputVoltage(Shield_215::N010));
+    shield_224->setInputVoltage(Shield_224::N014, shield_215->getOutputVoltage(Shield_215::N014));
     shield_224->setControl(keys);
     shield_224->step(t, dt);
 
@@ -58,6 +59,23 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_225->setInputVoltage(Shield_225::N033, shield_216->getOutputVoltage(Shield_216::N033));
     shield_225->setControl(keys);
     shield_225->step(t, dt);
+
+    // Щиток 226
+    shield_226->setInputVoltage(Shield_226::N010, shield_215->getOutputVoltage(Shield_215::N010));
+    shield_226->setInputVoltage(Shield_226::N512, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
+    shield_226->setInputVoltage(Shield_226::N514, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
+    shield_226->setControl(keys);
+    shield_226->step(t, dt);
+
+    // Щиток 227
+    shield_227->setInputVoltage(Shield_227::N010, shield_215->getOutputVoltage(Shield_215::N010));
+    shield_227->setInputVoltage(Shield_227::E18, shield_224->getOutputVoltage(Shield_224::E18));
+    shield_227->setInputVoltage(Shield_227::N511, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
+    shield_227->setInputVoltage(Shield_227::N513, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
+    shield_227->setInputVoltage(Shield_227::N505, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
+    shield_227->setInputVoltage(Shield_227::N101, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
+    shield_227->setControl(keys);
+    shield_227->step(t, dt);
 
     // Контроллер машиниста
     double U_N1 = shield_223->getOutputVoltage(Shield_223::E1) * static_cast<double>(brake_lock->isUnlocked());

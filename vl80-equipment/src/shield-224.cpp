@@ -24,7 +24,32 @@ Shield_224::~Shield_224()
 //------------------------------------------------------------------------------
 void Shield_224::preStep(state_vector_t &Y, double t)
 {
+    output_wire[E18] =
+        input_wire[N09] * static_cast<double>(tumbler[TUMBLER_AUX_MASHINES].getState());
 
+    output_wire[E9] =
+        input_wire[N09] * static_cast<double>(tumbler[TUMBLER_PHASE_SPLITTER].getState());
+
+    output_wire[N102] =
+        input_wire[N010] * static_cast<double>(tumbler[TUMBLER_COMPRESSORS].getState());
+
+    output_wire[E21] =
+        input_wire[N010] * static_cast<double>(tumbler[TUMBLER_FAN1].getState());
+
+    output_wire[E22] =
+        input_wire[N010] * static_cast<double>(tumbler[TUMBLER_FAN2].getState());
+
+    output_wire[E23] =
+        input_wire[N010] * static_cast<double>(tumbler[TUMBLER_FAN3].getState());
+
+    output_wire[E24] =
+        input_wire[N010] * static_cast<double>(tumbler[TUMBLER_FAN4].getState());
+
+    output_wire[N400] =
+        input_wire[N05] * static_cast<double>(tumbler[TUMBLER_SIGNAL_LIGHTS].getState());
+
+    output_wire[E50] =
+        input_wire[N010] * static_cast<double>(tumbler[TUMBLER_SAND_AUTO].getState());
 }
 
 //------------------------------------------------------------------------------
