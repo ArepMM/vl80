@@ -47,6 +47,8 @@ public:
         return Icc;
     }
 
+    virtual void step(double t, double dt);
+
 protected:
 
     /// Входные электрические линии

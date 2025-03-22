@@ -1,25 +1,11 @@
-#include    <electric-module.h>
+#include    <panel-1.h>
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-ElectricModule::ElectricModule(size_t input_wires_num,
-                               size_t output_wires_num,
-                               QObject *parent)
-    : Device(parent)
-{
-    input_wire.resize(input_wires_num);
-    std::fill(input_wire.begin(), input_wire.end(), 0.0);
-
-    output_wire.resize(output_wires_num);
-
-    std::fill(output_wire.begin(), output_wire.end(), 0.0);
-}
-
-//------------------------------------------------------------------------------
-//
-//------------------------------------------------------------------------------
-ElectricModule::~ElectricModule()
+Panel_1::Panel_1(size_t input_wires_num,
+                 size_t output_wires_num,
+                 QObject *parent)
 {
 
 }
@@ -27,44 +13,49 @@ ElectricModule::~ElectricModule()
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ElectricModule::step(double t, double dt)
+Panel_1::~Panel_1()
 {
-    Device::step(t, dt);
+
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ElectricModule::preStep(state_vector_t &Y, double t)
+void Panel_1::step(double t, double dt)
 {
-    Q_UNUSED(Y)
-    Q_UNUSED(t)
+    ElectricModule::step(t, dt);
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ElectricModule::ode_system(const state_vector_t &Y,
-                                state_vector_t &dYdt,
-                                double t)
+void Panel_1::preStep(state_vector_t &Y, double t)
 {
-    Q_UNUSED(Y)
-    Q_UNUSED(dYdt)
-    Q_UNUSED(t)
+
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ElectricModule::load_config(CfgReader &cfg)
+void Panel_1::ode_system(const state_vector_t &Y,
+                         state_vector_t &dYdt,
+                         double t)
 {
-    Q_UNUSED(cfg)
+
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void ElectricModule::stepKeysControl(double t, double dt)
+void Panel_1::load_config(CfgReader &cfg)
+{
+
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Panel_1::stepKeysControl(double t, double dt)
 {
 
 }
