@@ -16,8 +16,10 @@ void VL80s::initPowerControlCircuit(const QString &modules_dir,
     shield_210->init(custom_cfg_dir);
 
     shield_223->read_config("shield-223", custom_cfg_dir);
+    shield_223->setAnalogSignalsPtr(&analogSignal);
 
     shield_224->read_config("shield-224", custom_cfg_dir);
+    shield_224->setAnalogSignalsPtr(&analogSignal);
 
     shield_225->read_config("shield-225", custom_cfg_dir);
 

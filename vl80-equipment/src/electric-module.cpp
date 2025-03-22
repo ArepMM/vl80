@@ -30,6 +30,15 @@ ElectricModule::~ElectricModule()
 void ElectricModule::step(double t, double dt)
 {
     Device::step(t, dt);
+
+    if (analogSignal == nullptr)
+    {
+        return;
+    }
+
+    stepSoundsSignals(t, dt);
+
+    stepAnimationsSignals(t, dt);
 }
 
 //------------------------------------------------------------------------------
@@ -66,5 +75,24 @@ void ElectricModule::load_config(CfgReader &cfg)
 //------------------------------------------------------------------------------
 void ElectricModule::stepKeysControl(double t, double dt)
 {
+    Q_UNUSED(t)
+    Q_UNUSED(dt)
+}
 
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ElectricModule::stepSoundsSignals(double t, double dt)
+{
+    Q_UNUSED(t)
+    Q_UNUSED(dt)
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ElectricModule::stepAnimationsSignals(double t, double dt)
+{
+    Q_UNUSED(t)
+    Q_UNUSED(dt)
 }

@@ -2,11 +2,17 @@
 #define     ELECTRIC_MODULE_H
 
 #include    <device.h>
+#include    <vehicle-signals.h>
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
 using wire_t = std::vector<double>;
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+using analog_signals_t = std::array<float, MAX_ANALOG_SIGNALS>;
 
 //------------------------------------------------------------------------------
 //
@@ -49,6 +55,11 @@ public:
 
     virtual void step(double t, double dt);
 
+    void setAnalogSignalsPtr(const analog_signals_t *analogSignal)
+    {
+        this->analogSignal = analogSignal;
+    }
+
 protected:
 
     /// Входные электрические линии
@@ -60,6 +71,9 @@ protected:
     /// Ток, потребляемый модулем
     double Icc = 0.0;
 
+    /// Указатель на массив аналоговых сигналов
+    const analog_signals_t *analogSignal = nullptr;
+
     virtual void preStep(state_vector_t &Y, double t);
 
     virtual void ode_system(const state_vector_t &Y,
@@ -69,6 +83,12 @@ protected:
     virtual void load_config(CfgReader &cfg);
 
     virtual void stepKeysControl(double t, double dt);
+
+    /// Вывод сигналов для воспроизведения звуков
+    virtual void stepSoundsSignals(double t, double dt);
+
+    /// Вывод сигналов для воспроизведения анимаций
+    virtual void stepAnimationsSignals(double t, double dt);
 };
 
 #endif // ELECTRIC_MODULE_H
