@@ -7,6 +7,7 @@ void VL80s::stepBrakesEquipment(double t, double dt)
 {
     // Тормозная магистраль
     double BP_flow = 0.0;
+    BP_flow += shutoff_ad_bp->getFlowToPipe();
     BP_flow += brake_lock->getBPflow();
 
     anglecock_bp_fwd->setHoseFlow(hose_bp_fwd->getFlow());
@@ -18,9 +19,21 @@ void VL80s::stepBrakesEquipment(double t, double dt)
     brakepipe->setFlow(BP_flow);
     brakepipe->step(t, dt);
 
+    // Разобщительный кран воздухораспределителя и тормозной магистрали
+    shutoff_ad_bp->setPipePressure(brakepipe->getPressure());
+    shutoff_ad_bp->setDeviceFlow(air_dist->getBPflow());
+    shutoff_ad_bp->setControl(keys);
+    shutoff_ad_bp->step(t, dt);
+
+    // Разобщительный кран воздухораспределителя и импульсной магистрали
+    shutoff_ad_il->setPipePressure(impulse_line->getPressure());
+    shutoff_ad_il->setDeviceFlow(air_dist->getBCflow());
+    shutoff_ad_il->setControl(keys);
+    shutoff_ad_il->step(t, dt);
+
     // Воздухораспределитель
-    air_dist->setBPpressure(brakepipe->getPressure());
-    air_dist->setBCpressure(impulse_line->getPressure());
+    air_dist->setBPpressure(shutoff_ad_bp->getPressureToDevice());
+    air_dist->setBCpressure(shutoff_ad_il->getPressureToDevice());
     air_dist->setSRpressure(supply_reservoir->getPressure());
     air_dist->step(t, dt);
 

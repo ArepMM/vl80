@@ -18,6 +18,8 @@ void VL80s::stepPneumoSupply(double t, double dt)
     // Питательная магистраль
     double FL_flow = 0.0;
     FL_flow += motor_compressor->getFLflow();
+    FL_flow += brake_lock->getFLflow();
+    FL_flow += bc_pressure_relay->getFLflow();
 
     anglecock_fl_fwd->setHoseFlow(hose_fl_fwd->getFlow());
     FL_flow += anglecock_fl_fwd->getFlowToPipe();

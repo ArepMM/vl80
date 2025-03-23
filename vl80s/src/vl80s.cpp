@@ -35,6 +35,8 @@ void VL80s::loadConfig(QString cfg_path)
         cfg.getDouble(secName, "MainReservoirFlow", main_reservoir_leak_flow);
         cfg.getBool(secName, "BrakeLockState", brake_lock_init_state);
         cfg.getInt(secName, "CombineCranePos", combine_crane_init_pos);
+        cfg.getBool(secName, "ShutoffValveADBPpos", shutoff_ad_bp_init_state);
+        cfg.getBool(secName, "ShutoffValveADILpos", shutoff_ad_il_init_state);
         cfg.getString(secName, "BrakeCraneModule", brake_crane_module_name);
         cfg.getString(secName, "BrakeCraneConfig", brake_crane_config_name);
         cfg.getInt(secName, "BrakeCraneInitPos", brake_crane_init_pos);

@@ -38,13 +38,13 @@ void VL80s::initBrakesControl(const QString &modules_dir, const QString &custom_
     // Концевой кран импульсной магистрали сзади
     anglecock_il_bwd = new PneumoAngleCock();
     anglecock_il_bwd->setKeyCode(KEY_9);
-    anglecock_il_bwd->read_config("pneumo-anglecock-IL", custom_cfg_dir);
+    anglecock_il_bwd->read_config("pneumo-anglecock-IL", custom_cfg_dir); // Потом перенести конфиг в дефолтные и читать оттуда
 
     // Рукав импульсной магистрали сзади
     hose_il_bwd = new PneumoHose();
     hose_il_bwd->setKeyCode(KEY_0);
     hose_il_bwd->setCustomConfigDir(config_dir);
-    hose_il_bwd->read_config("pneumo-hose-IL", custom_cfg_dir);
+    hose_il_bwd->read_config("pneumo-hose-IL", custom_cfg_dir); // Потом перенести конфиг в дефолтные и читать оттуда
     backward_connectors.push_back(hose_il_bwd);
 
     // Концевые краны магистрали тормозных цилиндров
