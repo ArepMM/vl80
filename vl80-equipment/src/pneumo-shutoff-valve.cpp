@@ -54,7 +54,7 @@ bool PneumoShutoffValve::isOpened() const
 //------------------------------------------------------------------------------
 double PneumoShutoffValve::getHandlePosition() const
 {
-    return getY(0);
+    return getY(STATE);
 }
 
 //------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ void PneumoShutoffValve::setPipePressure(double value)
 //------------------------------------------------------------------------------
 double PneumoShutoffValve::getPressureToDevice() const
 {
-    return getY(1);
+    return getY(PRESSURE);
 }
 
 //------------------------------------------------------------------------------
@@ -86,7 +86,9 @@ void PneumoShutoffValve::setDeviceFlow(double value)
 //------------------------------------------------------------------------------
 double PneumoShutoffValve::getFlowToPipe() const
 {
-    return getY(0) * Q;
+    if (is_opened)
+        return getY(STATE) * Q;
+    return 0.0;
 }
 
 //------------------------------------------------------------------------------
@@ -116,11 +118,11 @@ void PneumoShutoffValve::preStep(state_vector_t &Y, double t)
 {
     (void) t;
 
-    if (Y[0] < 0.05)
+    if (Y[STATE] < 0.05)
     {
         is_opened = false;
         atm_flow_sound.state = 1;
-        atm_flow_sound.volume = K_sound * cbrt(Q);
+        atm_flow_sound.volume = K_sound * cbrt(getY(STATE) * Q);
     }
     else
     {
@@ -141,27 +143,27 @@ void PneumoShutoffValve::ode_system(const state_vector_t &Y,
 
     // Перемещение рукоятки
     double ref_pos = static_cast<double>(ref_state.getState());
-    double delta = ref_pos - Y[0];
+    double delta = ref_pos - Y[STATE];
     if (abs(delta) > 0.05)
     {
-        dYdt[0] = sign(delta) / switch_time;
+        dYdt[STATE] = sign(delta) / switch_time;
     }
     else
     {
-        dYdt[0] = 20.0 * delta / switch_time;
+        dYdt[STATE] = 20.0 * delta / switch_time;
     }
 
     // Давление в трубах между краном и оборудованием
-    if (Y[0] > 0.95)
+    if (Y[STATE] > 0.95)
     {
-        setY(1, p);
-        dYdt[1] = 0.0;
+        setY(PRESSURE, p);
+        dYdt[PRESSURE] = 0.0;
     }
     else
     {
-        double flow_device = (1.0 - Y[0]) * Q;
-        double flow_atm = (1.0 - Y[0]) * Y[1] * K_atm;
-        dYdt[1] = (flow_device - flow_atm) / V0;
+        double flow_device = (1.0 - Y[STATE]) * Q;
+        double flow_atm = (1.0 - Y[STATE]) * Y[PRESSURE] * K_atm;
+        dYdt[PRESSURE] = (flow_device - flow_atm) / V0;
     }
 }
 
@@ -171,6 +173,10 @@ void PneumoShutoffValve::ode_system(const state_vector_t &Y,
 void PneumoShutoffValve::load_config(CfgReader &cfg)
 {
     QString secName = "Device";
+
+    bool state = false;
+    cfg.getBool(secName, "IsOpened", state);
+    state ? ref_state.set() : ref_state.reset();
 
     double tmp = 0.0;
     cfg.getDouble(secName, "V0", tmp);

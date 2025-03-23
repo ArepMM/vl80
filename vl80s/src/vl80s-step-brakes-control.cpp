@@ -17,7 +17,7 @@ void VL80s::stepBrakesControl(double t, double dt)
 
     // Импульсная магистраль
     double il_flow = 0.0;
-    il_flow += air_dist->getBCflow();
+    il_flow += shutoff_ad_il->getFlowToPipe();
     il_flow += loco_crane->getILflow();
 
     anglecock_il_bwd->setHoseFlow(hose_il_bwd->getFlow());

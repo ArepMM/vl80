@@ -3,6 +3,9 @@
 
 #include    <vehicle-api.h>
 
+// Потом перенести в движок и в vehicle-api.h
+#include    <pneumo-shutoff-valve.h>
+
 #include    <km-84.h>
 #include    <battery.h>
 #include    <shield-210.h>
@@ -57,10 +60,15 @@ private:
     double main_reservoir_leak_flow = 1.0e-6;
 
     /// Начальное состояние блокировки тормозов
-    bool brake_lock_init_state = 0;
+    bool brake_lock_init_state = false;
 
     /// Начальное положение комбинированного крана
     int combine_crane_init_pos = 0;
+
+    /// Положение разобщительного крана воздухораспределителя и тормозной магистрали КН8
+    bool shutoff_ad_bp_init_state = false;
+    /// Положение разобщительного крана воздухораспределителя и импульсной магистрали КН20
+    bool shutoff_ad_il_init_state = false;
 
     /// Имя модуля поездного крана
     QString brake_crane_module_name = "krm395";
@@ -97,25 +105,25 @@ private:
     /// Расцепной рычаг сзади
     OperatingRod *oper_rod_bwd = nullptr;
 
-    /// Мотор-компрессор
+    /// Мотор-компрессор КМ1
     ACMotorCompressor *motor_compressor = nullptr;
 
-    /// Регулятор давления в ГР
+    /// Регулятор давления в главном резервуаре РГД
     PressureRegulator *press_reg = nullptr;
 
-    /// Главный резервуар
+    /// Главный резервуар РС1,РС2,РС3
     Reservoir   *main_reservoir = nullptr;
 
-    /// Концевой кран питательной магистрали спереди
+    /// Концевой кран питательной магистрали спереди КНК1
     PneumoAngleCock *anglecock_fl_fwd = nullptr;
 
-    /// Концевой кран питательной магистрали сзади
+    /// Концевой кран питательной магистрали сзади КН47
     PneumoAngleCock *anglecock_fl_bwd = nullptr;
 
-    /// Рукав питательной  магистрали спереди
+    /// Рукав питательной  магистрали спереди РУ1
     PneumoHose      *hose_fl_fwd = nullptr;
 
-    /// Рукав питательной  магистрали сзади
+    /// Рукав питательной  магистрали сзади РУ7
     PneumoHose      *hose_fl_bwd = nullptr;
 
     /// Блокировочное устройство УБТ усл.№367м
@@ -130,49 +138,55 @@ private:
     /// Тормозная магистраль
     Reservoir   *brakepipe = nullptr;
 
-    /// Концевой кран тормозной магистрали спереди
+    /// Концевой кран тормозной магистрали спереди КНК2
     PneumoAngleCock *anglecock_bp_fwd = nullptr;
 
-    /// Концевой кран тормозной магистрали сзади
+    /// Концевой кран тормозной магистрали сзади КНК3
     PneumoAngleCock *anglecock_bp_bwd = nullptr;
 
-    /// Рукав тормозной магистрали спереди
+    /// Рукав тормозной магистрали спереди РУ2
     PneumoHose  *hose_bp_fwd = nullptr;
 
-    /// Рукав тормозной магистрали сзади
+    /// Рукав тормозной магистрали сзади РУ3
     PneumoHose  *hose_bp_bwd = nullptr;
 
-    /// Воздухораспределитель
+    /// Разобщительный кран воздухораспределителя и тормозной магистрали КН8
+    PneumoShutoffValve *shutoff_ad_bp = nullptr;
+
+    /// Разобщительный кран воздухораспределителя и импульсной магистрали КН20
+    PneumoShutoffValve *shutoff_ad_il = nullptr;
+
+    /// Воздухораспределитель ВР
     AirDistributor  *air_dist = nullptr;
 
-    /// Запасный резервуар
+    /// Запасный резервуар РС4
     Reservoir   *supply_reservoir = nullptr;
 
     /// Импульсная магистраль
     Reservoir   *impulse_line = nullptr;
 
-    /// Концевой кран импульсной магистрали сзади
+    /// Концевой кран импульсной магистрали сзади КН48
     PneumoAngleCock  *anglecock_il_bwd = nullptr;
 
-    /// Рукав  импульсной магистрали сзади
+    /// Рукав  импульсной магистрали сзади РУ5
     PneumoHose  *hose_il_bwd = nullptr;
 
     /// Магистраль тормозных цилиндров (модуль-пневмотройник для потоков в ТЦ)
     PneumoSplitter   *bc_line = nullptr;
 
-    /// Концевой кран магистрали тормозных цилиндров спереди
+    /// Концевой кран магистрали тормозных цилиндров спереди КН50
     PneumoAngleCock  *anglecock_bc_fwd = nullptr;
 
-    /// Концевой кран магистрали тормозных цилиндров сзади
+    /// Концевой кран магистрали тормозных цилиндров сзади КН51
     PneumoAngleCock  *anglecock_bc_bwd = nullptr;
 
-    /// Рукав магистрали тормозных цилиндров спереди
+    /// Рукав магистрали тормозных цилиндров спереди РУ4
     PneumoHose  *hose_bc_fwd = nullptr;
 
-    /// Рукав магистрали тормозных цилиндров сзади
+    /// Рукав магистрали тормозных цилиндров сзади РУ6
     PneumoHose  *hose_bc_bwd = nullptr;
 
-    /// Повторительное реле давления для ТЦ задней тележки усл.№304
+    /// Повторительное реле давления РД для ТЦ задней тележки усл.№304
     PneumoRelay *bc_pressure_relay = nullptr;
 
     enum
@@ -185,6 +199,9 @@ private:
 
     /// Тормозные механизмы тележек
     std::array<BrakeMech *, NUM_TROLLEYS> brake_mech;
+
+    /// АКБ
+    Battery *battery = new Battery;
 
     /// Контроллер машиниста КМ-84
     ControllerKM84 *km = new ControllerKM84(ControllerKM84::INPUTS_NUM,
@@ -201,9 +218,6 @@ private:
     /// Щиток 216
     Shield_216 *shield_216 = new Shield_216(Shield_216::INPUTS_NUM,
                                             Shield_216::OUTPUTS_NUM);
-
-    /// АКБ
-    Battery *battery = new Battery;
 
     /// Щиток 223
     Shield_223 *shield_223 = new Shield_223(Shield_223::INPUTS_NUM,
