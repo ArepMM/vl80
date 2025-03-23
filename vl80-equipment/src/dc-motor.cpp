@@ -21,7 +21,12 @@ DCMotor::~DCMotor()
 //------------------------------------------------------------------------------
 void DCMotor::preStep(state_vector_t &Y, double t)
 {
+    if (field_mode == SERIES)
+    {
+        Y[1] = Y[0] * beta;
+    }
 
+    M = Y[0] * cPhi(Y[1]);
 }
 
 //------------------------------------------------------------------------------
@@ -29,7 +34,37 @@ void DCMotor::preStep(state_vector_t &Y, double t)
 //------------------------------------------------------------------------------
 void DCMotor::ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t)
 {
+    switch (field_mode)
+    {
+    case SERIES:
+        {
+            double R = Ra + beta * Rf;
 
+            dYdt[0] = (Ua - R * Y[0] - omega * cPhi(beta * Y[0])) / (Ta * Ra + Tf * Rf);
+
+            dYdt[1] = 0.0;
+
+            break;
+        }
+
+    case PARALLEL:
+        {
+            dYdt[0] = (Ua - Ra * Y[0] - omega * cPhi(Y[1])) / Ta / Ra;
+
+            dYdt[1] = (Ua - Rf * Y[1]) / Tf / Rf;
+
+            break;
+        }
+
+    case INDEPENDENT:
+        {
+            dYdt[0] = (Ua - Ra * Y[0] - omega * cPhi(Y[1])) / Ta / Ra;
+
+            dYdt[1] = (Uf - Rf * Y[1]) / Tf / Rf;
+
+            break;
+        }
+    }
 }
 
 //------------------------------------------------------------------------------

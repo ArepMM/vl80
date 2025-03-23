@@ -26,8 +26,52 @@ public:
         /// Параллельное
         PARALLEL = 1,
         /// Независимое
-        IDEPENDENT = 2
+        INDEPENDENT = 2
     };
+
+    void setAncorVoltage(double Ua)
+    {
+        this->Ua = Ua;
+    }
+
+    void setFieldVoltage(double Uf)
+    {
+        this->Uf = Uf;
+    }
+
+    void setAncorOmega(double omega)
+    {
+        this->omega = omega;
+    }
+
+    void setFieldWeak(double beta)
+    {
+        this->beta = cut(beta, 0.0, 1.0);
+    }
+
+    double getTorquie() const
+    {
+        return M;
+    }
+
+    void setFieldMode(FieldMode field_mode)
+    {
+        // Гасим токи обмоток при смене режима
+        setY(0, 0.0);
+        setY(1, 0.0);
+
+        this->field_mode = field_mode;
+    }
+
+    double getAncorCurrent() const
+    {
+        return getY(0);
+    }
+
+    double getFieldCurrent() const
+    {
+        return getY(1);
+    }
 
 protected:
 
@@ -61,6 +105,12 @@ protected:
     /// Номинальный ток
     double Inom = 2.0;
 
+    /// Степень ослабления возбуждения
+    double beta = 1.0;
+
+    /// Электромагнитный момент, развиваемый на валу якоря
+    double M = 0.0;
+
     /// Порядок аппроксимирующего полинома кривой намагничивания
     enum
     {
@@ -71,6 +121,8 @@ protected:
     /// полиномом 5-го порядка (нормированы к номинальным параметрам)
     std::array<double, APPROX_ORDER> a = {2.61, -3.00, 1.97, -0.66, 0.09};
 
+    /// Режим возбуждения
+    FieldMode field_mode = INDEPENDENT;
 
     void preStep(state_vector_t &Y, double t) override;
 
