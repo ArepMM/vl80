@@ -100,7 +100,7 @@ protected:
     double omega = 0.0;
 
     /// Номинальное напряжение
-    double U_nom = 10.0;
+    double Unom = 10.0;
 
     /// Номинальный ток
     double Inom = 2.0;

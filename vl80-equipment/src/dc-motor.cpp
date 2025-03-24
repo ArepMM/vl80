@@ -72,7 +72,15 @@ void DCMotor::ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t
 //------------------------------------------------------------------------------
 void DCMotor::load_config(CfgReader &cfg)
 {
+    QString secName = "Device";
 
+    cfg.getDouble(secName, "Ra", Ra);
+    cfg.getDouble(secName, "Rf", Rf);
+    cfg.getDouble(secName, "Ta", Ta);
+    cfg.getDouble(secName, "Tf", Tf);
+    cfg.getDouble(secName, "cPhi_nom", cPhi_nom);
+    cfg.getDouble(secName, "Unom", Unom);
+    cfg.getDouble(secName, "Inom", Inom);
 }
 
 //------------------------------------------------------------------------------
