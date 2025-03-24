@@ -49,4 +49,6 @@ void VL80s::initPneumoSupply(const QString &modules_dir, const QString &custom_c
 
     K135->read_config("mk-69", custom_cfg_dir);
     K135->setInitContactState(K135_ON_AUX_COMPRESSOR, false);
+
+    ps1->read_config("pneumo-splitter");
 }

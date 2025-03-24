@@ -278,11 +278,17 @@ private:
     /// Вспомогательный компрессор
     Compressor *aux_compr = new Compressor;
 
-    /// Резервуар управления
-    Reservoir *pant_res = new Reservoir(0.032);
+    /// Резервуар токоприемника
+    Reservoir *pant_res = new Reservoir(0.150);
+
+    /// РЕзервуар ГВ
+    Reservoir *main_switch_res = new Reservoir(0.032);
 
     /// ПВУ7 - контроль давления в резервуаре управления
     PressContactSensor *pvu7 = new PressContactSensor;
+
+    /// Тройник от впомогательного компрессора к резервуарам ТП и ГВ
+    PneumoSplitter *ps1 = new PneumoSplitter;
 
     enum
     {
