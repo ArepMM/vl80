@@ -27,6 +27,8 @@
 #include    <panel-7.h>
 #include    <dc-motor.h>
 #include    <compressor.h>
+#include    <relay.h>
+#include    <pressure-contact-sensor.h>
 
 //------------------------------------------------------------------------------
 //
@@ -278,6 +280,18 @@ private:
 
     /// Резервуар управления
     Reservoir *pant_res = new Reservoir(0.032);
+
+    /// ПВУ7 - контроль давления в резервуаре управления
+    PressContactSensor *pvu7 = new PressContactSensor;
+
+    enum
+    {
+        K135_NUM_CONTACTS = 1,
+        K135_ON_AUX_COMPRESSOR = 0
+    };
+
+    /// Контактор пуска вспомогательного компрессора
+    Relay *K135 = new Relay(K135_NUM_CONTACTS);
 
     // Инициализация:
     /// Инициализация подсистем секции электровоза

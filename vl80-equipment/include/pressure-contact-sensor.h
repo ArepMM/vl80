@@ -20,6 +20,11 @@ public:
         this->p = p;
     }
 
+    bool getState() const
+    {
+        return state;
+    }
+
 private:
 
     /// Текущее контролируемое давление
@@ -33,6 +38,12 @@ private:
 
     /// Признак нормально разомкнутых контактов
     bool is_normal_off = true;
+
+    /// Состояние контактор
+    bool state = !is_normal_off;
+
+    /// Функция, задающая гистерезис срабатывания датчика
+    Hysteresis hysteresis;
 
     void preStep(state_vector_t &Y, double t) override;
 

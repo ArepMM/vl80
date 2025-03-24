@@ -53,7 +53,12 @@ void VL80s::stepPneumoSupply(double t, double dt)
     hose_fl_bwd->step(t, dt);
 
     // Вспомогательный компрессор (Компрессор токоприемника)
-    aux_compr_motor->setAncorVoltage(shield_227->getOutputVoltage(Shield_227::N67));
+
+    // Питание на двигатель через контактор 135
+    double U_aux_compr = shield_210->getOutputVoltage(Shield_210::N66) *
+                         static_cast<double>(K135->getContactState(K135_ON_AUX_COMPRESSOR));
+
+    aux_compr_motor->setAncorVoltage(U_aux_compr);
     aux_compr_motor->setAncorOmega(aux_compr->getOmega());
     aux_compr_motor->step(t, dt);
 
@@ -62,5 +67,17 @@ void VL80s::stepPneumoSupply(double t, double dt)
     aux_compr->step(t, dt);
 
     pant_res->setFlow(aux_compr->getQ_out());
+    pant_res->setLeakCoeff(1e-5);
     pant_res->step(t, dt);
+
+    pvu7->setPressure(pant_res->getPressure());
+    pvu7->step(t, dt);
+
+    // Питание на контактор 135 через тумблер "Компрессор токоприемника"
+    // и замыкающие контакты ПВУ7
+    double U_N134 = shield_227->getOutputVoltage(Shield_227::N67) *
+                    static_cast<double>(pvu7->getState());
+
+    K135->setVoltage(U_N134);
+    K135->step(t, dt);
 }

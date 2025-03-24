@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<Device>
+		<p_min>0.40</p_min>
+		<p_max>0.70</p_max>
+		<IsNormalOFF>0</IsNormalOFF>
+	</Device>
+</Config>
+

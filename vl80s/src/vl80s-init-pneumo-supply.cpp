@@ -43,4 +43,10 @@ void VL80s::initPneumoSupply(const QString &modules_dir, const QString &custom_c
     // Вспомогательный компрессор
     aux_compr_motor->read_config("P11M", custom_cfg_dir);
     aux_compr->read_config("KB-1V", custom_cfg_dir);
+
+    // ПВУ7 - контроль давления в резервуаре управления
+    pvu7->read_config("PVU7", custom_cfg_dir);
+
+    K135->read_config("mk-69", custom_cfg_dir);
+    K135->setInitContactState(K135_ON_AUX_COMPRESSOR, false);
 }
