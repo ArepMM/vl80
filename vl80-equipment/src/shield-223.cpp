@@ -1,5 +1,8 @@
 #include    <shield-223.h>
 
+// Сигналы для модели вл60к
+#include    <vl80s-signals.h>
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -174,4 +177,48 @@ void Shield_223::stepKeysControl(double t, double dt)
             tumbler[TUMBLER_CTRL_CIRCUIT].reset();
         }
     }
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Shield_223::stepSoundsSignals(double t, double dt)
+{
+    // !!!Сигналы в вл60к!!!
+    (*analogSignal)[SOUND_TUMBLER_PROJECTOR2_ON] = tumbler[TUMBLER_SPOT_LIGHT_BRIGHT].getSoundSignal(Trigger::ON_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_PROJECTOR1_ON] = tumbler[TUMBLER_SPOT_LIGHT].getSoundSignal(Trigger::ON_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_RADIO_ON] = 0.0f;
+    (*analogSignal)[SOUND_TUMBLER_CTRL_CIRCUIT_ON] = tumbler[TUMBLER_CTRL_CIRCUIT].getSoundSignal(Trigger::ON_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_PANT_BWD_ON] = tumbler[TUMBLER_PANT_BWD].getSoundSignal(Trigger::ON_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_PANT_FWD_ON] = tumbler[TUMBLER_PANT_FWD].getSoundSignal(Trigger::ON_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_PANTS_ON] = tumbler[TUMBLER_PANTS].getSoundSignal(Trigger::ON_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_GV_RETURN_ON] = tumbler[TUMBLER_GV_ON].getSoundSignal(Trigger::ON_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_GV_ON] = tumbler[TUMBLER_GV_OFF].getSoundSignal(Trigger::ON_SOUND);
+
+    (*analogSignal)[SOUND_TUMBLER_PROJECTOR2_OFF] = tumbler[TUMBLER_SPOT_LIGHT_BRIGHT].getSoundSignal(Trigger::OFF_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_PROJECTOR1_OFF] = tumbler[TUMBLER_SPOT_LIGHT].getSoundSignal(Trigger::OFF_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_RADIO_OFF] = 0.0f;
+    (*analogSignal)[SOUND_TUMBLER_CTRL_CIRCUIT_OFF] = tumbler[TUMBLER_CTRL_CIRCUIT].getSoundSignal(Trigger::OFF_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_PANT_BWD_OFF] = tumbler[TUMBLER_PANT_BWD].getSoundSignal(Trigger::OFF_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_PANT_FWD_OFF] = tumbler[TUMBLER_PANT_FWD].getSoundSignal(Trigger::OFF_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_PANTS_OFF] = tumbler[TUMBLER_PANTS].getSoundSignal(Trigger::OFF_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_GV_RETURN_OFF] = tumbler[TUMBLER_GV_ON].getSoundSignal(Trigger::OFF_SOUND);
+    (*analogSignal)[SOUND_TUMBLER_GV_OFF] = tumbler[TUMBLER_GV_OFF].getSoundSignal(Trigger::OFF_SOUND);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Shield_223::stepAnimationsSignals(double t, double dt)
+{
+    // !!!Сигналы в вл60к!!!
+    //(*analogSignal)[] = static_cast<float>(tumbler[SPOT_LIGHT_BRIGHT].getState());
+    //(*analogSignal)[] = static_cast<float>(tumbler[TUMBLER_SPOT_LIGHT].getState());
+    //(*analogSignal)[] = 0.0f;
+    (*analogSignal)[TUMBLER_CU] = static_cast<float>(tumbler[TUMBLER_CTRL_CIRCUIT].getState());
+    (*analogSignal)[TUMBLER_PNT2] = static_cast<float>(tumbler[TUMBLER_PANT_BWD].getState());
+    (*analogSignal)[TUMBLER_PNT1] = static_cast<float>(tumbler[TUMBLER_PANT_FWD].getState());
+    (*analogSignal)[TUMBLER_PNT] = static_cast<float>(tumbler[TUMBLER_PANTS].getState());
+    (*analogSignal)[TUMBLER_GV_RETURN] = static_cast<float>(tumbler[TUMBLER_GV_ON].getState());
+    (*analogSignal)[TUMBLER_GV_ON_OFF] = static_cast<float>(tumbler[TUMBLER_GV_OFF].getState());
 }

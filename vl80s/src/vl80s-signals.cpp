@@ -17,27 +17,6 @@ void VL80s::stepSignalsOutput(double t, double dt)
     analogSignal[PANT1_POS] = static_cast<float>(pantographs[0]->getHeight());
     analogSignal[PANT2_POS] = static_cast<float>(pantographs[1]->getHeight());
 
-    // Состояние тумблеров на пульте машиниста
-    analogSignal[TUMBLER_PNT] = static_cast<float>(pants_tumbler.getState());
-    analogSignal[TUMBLER_PNT1] = static_cast<float>(pant1_tumbler.getState());
-    analogSignal[TUMBLER_PNT2] = static_cast<float>(pant2_tumbler.getState());
-
-    analogSignal[TUMBLER_GV_ON] = static_cast<float>(gv_return_tumbler.getState());
-    analogSignal[TUMBLER_GV_ON_OFF] = static_cast<float>(gv_tumbler.getState());
-
-    analogSignal[TUMBLER_FR] = static_cast<float>(fr_tumbler.getState());
-
-    analogSignal[TUMBLER_MV1] = static_cast<float>(mv_tumblers[MV1].getState());
-    analogSignal[TUMBLER_MV2] = static_cast<float>(mv_tumblers[MV2].getState());
-    analogSignal[TUMBLER_MV3] = static_cast<float>(mv_tumblers[MV3].getState());
-    analogSignal[TUMBLER_MV4] = static_cast<float>(mv_tumblers[MV4].getState());
-    analogSignal[TUMBLER_MV5] = static_cast<float>(mv_tumblers[MV5].getState());
-    analogSignal[TUMBLER_MV6] = static_cast<float>(mv_tumblers[MV6].getState());
-
-    analogSignal[TUMBLER_MK] = static_cast<float>(mk_tumbler.getState());
-
-    analogSignal[TUMBLER_CU] = static_cast<float>(cu_tumbler.getState());
-
     // Вольтметр КС
     analogSignal[STRELKA_KV2] = static_cast<float>(main_switch->getU_out() / 30000.0);
 

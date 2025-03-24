@@ -55,7 +55,7 @@ public:
 
     virtual void step(double t, double dt);
 
-    void setAnalogSignalsPtr(const analog_signals_t *analogSignal)
+    void setAnalogSignalsPtr(analog_signals_t *analogSignal)
     {
         this->analogSignal = analogSignal;
     }
@@ -72,7 +72,7 @@ protected:
     double Icc = 0.0;
 
     /// Указатель на массив аналоговых сигналов
-    const analog_signals_t *analogSignal = nullptr;
+    analog_signals_t *analogSignal = nullptr;
 
     virtual void preStep(state_vector_t &Y, double t);
 

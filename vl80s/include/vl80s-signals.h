@@ -31,7 +31,7 @@ enum
     TUMBLER_PNT2 = 33,
 
     TUMBLER_CU = 34,
-    TUMBLER_GV_ON = 35,
+    TUMBLER_GV_RETURN = 35,
     TUMBLER_GV_ON_OFF = 36,
 
     SIG_LIGHT_PSS_L = 50,

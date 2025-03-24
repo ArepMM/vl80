@@ -46,7 +46,7 @@ public:
     enum
     {
         /// Общее число автоматов
-        AVZ_NUM = 5,
+        AZV_NUM = 5,
         VA32 = 0,
         VA33 = 1,
         VA34 = 2,
@@ -57,7 +57,7 @@ public:
 private:
 
     /// Автоматические защитные выключатели
-    std::array<Trigger, AVZ_NUM> azv;
+    std::array<Trigger, AZV_NUM> azv;
 
     void preStep(state_vector_t &Y, double t) override;
 

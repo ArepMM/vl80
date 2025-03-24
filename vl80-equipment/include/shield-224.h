@@ -97,6 +97,12 @@ private:
     void load_config(CfgReader &cfg) override;
 
     void stepKeysControl(double t, double dt) override;
+
+    /// Вывод сигналов для воспроизведения звуков
+    void stepSoundsSignals(double t, double dt) override;
+
+    /// Вывод сигналов для воспроизведения анимаций
+    void stepAnimationsSignals(double t, double dt) override;
 };
 
 #endif // SHIELD_224_H

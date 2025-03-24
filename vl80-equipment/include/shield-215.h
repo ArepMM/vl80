@@ -75,7 +75,7 @@ public:
     enum
     {
         /// Общее число автоматов
-        AVZ_NUM = 14,
+        AZV_NUM = 14,
         /// Токоприемники
         VA1 = 0,
         /// Цепи управления
@@ -108,7 +108,7 @@ public:
 private:    
 
     /// Автоматические защитные выключатели
-    std::array<Trigger, AVZ_NUM> azv;
+    std::array<Trigger, AZV_NUM> azv;
 
     void preStep(state_vector_t &Y, double t) override;
 

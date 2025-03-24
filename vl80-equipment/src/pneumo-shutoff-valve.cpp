@@ -46,15 +46,15 @@ void PneumoShutoffValve::open()
 //------------------------------------------------------------------------------
 bool PneumoShutoffValve::isOpened() const
 {
-    return is_opened;
+    return ref_state.getState();
 }
 
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-double PneumoShutoffValve::getHandlePosition() const
+float PneumoShutoffValve::getHandlePosition() const
 {
-    return getY(STATE);
+    return static_cast<float>(ref_state.getState());
 }
 
 //------------------------------------------------------------------------------
@@ -86,8 +86,8 @@ void PneumoShutoffValve::setDeviceFlow(double value)
 //------------------------------------------------------------------------------
 double PneumoShutoffValve::getFlowToPipe() const
 {
-    if (is_opened)
-        return getY(STATE) * Q;
+    if (ref_state.getState())
+        return Q;
     return 0.0;
 }
 
@@ -118,17 +118,17 @@ void PneumoShutoffValve::preStep(state_vector_t &Y, double t)
 {
     (void) t;
 
-    if (Y[STATE] < 0.05)
+    if (ref_state.getState())
     {
-        is_opened = false;
-        atm_flow_sound.state = 1;
-        atm_flow_sound.volume = K_sound * cbrt(getY(STATE) * Q);
+        Q_atm = 0.0;
+        atm_flow_sound.state = 0;
+        atm_flow_sound.volume = 0.0f;
     }
     else
     {
-        is_opened = true;
-        atm_flow_sound.state = 0;
-        atm_flow_sound.volume = 0.0f;
+        Q_atm = K_atm * Y[PRESSURE];
+        atm_flow_sound.state = 1;
+        atm_flow_sound.volume = K_sound * cbrt(Q_atm);
     }
 }
 
@@ -141,29 +141,14 @@ void PneumoShutoffValve::ode_system(const state_vector_t &Y,
 {
     (void) t;
 
-    // Перемещение рукоятки
-    double ref_pos = static_cast<double>(ref_state.getState());
-    double delta = ref_pos - Y[STATE];
-    if (abs(delta) > 0.05)
-    {
-        dYdt[STATE] = sign(delta) / switch_time;
-    }
-    else
-    {
-        dYdt[STATE] = 20.0 * delta / switch_time;
-    }
-
-    // Давление в трубах между краном и оборудованием
-    if (Y[STATE] > 0.95)
+    if (ref_state.getState())
     {
         setY(PRESSURE, p);
         dYdt[PRESSURE] = 0.0;
     }
     else
     {
-        double flow_device = (1.0 - Y[STATE]) * Q;
-        double flow_atm = (1.0 - Y[STATE]) * Y[PRESSURE] * K_atm;
-        dYdt[PRESSURE] = (flow_device - flow_atm) / V0;
+        dYdt[PRESSURE] = (Q - Q_atm) / V0;
     }
 }
 
