@@ -38,10 +38,10 @@ void Compressor::ode_system(const state_vector_t &Y,
     double cos_beta = sqrt(1 - sin_beta * sin_beta);
 
     // Текущее  избыточное давление
-    double p = Physics::pA * (pow(ksi, gamma) - 1.0);
+    double p = Physics::pA * (pow(ksi, gamma) - 1.0) * hs_p(Y[0]);
 
     // Момент сопротивления движению
-    double Mc = Physics::fricForce(Mxx, Y[0]) + 0.5 * p * S * h * (sin(Y[1]) + cos(Y[1]) * sin_beta / cos_beta);
+    double Mc = Physics::fricForce(Mxx, 0.1 * Y[0]);
 
     Q_out = K_flow * pf(p / Physics::MPa - p_out);
 
