@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<Device>
+		<Order>2</Order>
+		<SubStepNum>1</SubStepNum>
+		<Solver>euler</Solver>
+
+		<Ra>0.32</Ra>
+		<Rf>30.0</Rf>
+		<Ta>0.5</Ta>
+		<Tf>0.5</Tf>
+		<cPhi_nom>0.15</cPhi_nom>
+		<Unom>50.0</Unom>
+		<Inom>1.67</Inom>
+		<FieldMode>1</FieldMode>
+	</Device>
+</Config>

@@ -81,6 +81,11 @@ void DCMotor::load_config(CfgReader &cfg)
     cfg.getDouble(secName, "cPhi_nom", cPhi_nom);
     cfg.getDouble(secName, "Unom", Unom);
     cfg.getDouble(secName, "Inom", Inom);
+
+    int mode = 0;
+    cfg.getInt(secName, "FieldMode", mode);
+
+    setFieldMode(static_cast<FieldMode>(mode));
 }
 
 //------------------------------------------------------------------------------

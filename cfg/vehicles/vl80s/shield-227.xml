@@ -36,5 +36,11 @@
 		<Number>5</Number>
 		<InitState>0</InitState>
 	</Tumbler>
+
+	<!-- Компрессор токоприемника -->
+	<Tumbler>
+		<Number>6</Number>
+		<InitState>0</InitState>
+	</Tumbler>
 	
 </Config>

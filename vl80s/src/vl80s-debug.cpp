@@ -77,6 +77,13 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(km->getMainPosName(), 3)
                     .arg(km->getBrakePosName(), 3)
                     .arg(km->getBrakeShaftAngle(), 5, 'f', 0);
+
+    DebugMsg += QString("\n");
+
+    DebugMsg += QString("Всп. компр.: %1 об/мин | Q: %2 | Рез. упр.: %3 кгс/см2")
+                    .arg(aux_compr->getOmega() * 30.0 / Physics::PI, 7, 'f', 2)
+                    .arg(aux_compr->getQ_out(), 4, 'f', 2)
+                    .arg(pant_res->getPressure() * Physics::g, 4, 'f', 2);
 /*
     DebugMsg += QString("\n");
     DebugMsg += QString("FWD Speed limit %1 km/h | Next %2 km/h (%3 m)")

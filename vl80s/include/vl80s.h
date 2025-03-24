@@ -25,6 +25,8 @@
 #include    <panel-5.h>
 #include    <panel-6.h>
 #include    <panel-7.h>
+#include    <dc-motor.h>
+#include    <compressor.h>
 
 //------------------------------------------------------------------------------
 //
@@ -267,6 +269,15 @@ private:
 
     /// Панель 7
     Panel_7 *panel_7 = new Panel_7(Panel_7::INPUTS_NUM, Panel_7::OUTPUTS_NUM);
+
+    /// Двигатель вспомогательного компрессора
+    DCMotor *aux_compr_motor = new DCMotor;
+
+    /// Вспомогательный компрессор
+    Compressor *aux_compr = new Compressor;
+
+    /// Резервуар управления
+    Reservoir *pant_res = new Reservoir(0.032);
 
     // Инициализация:
     /// Инициализация подсистем секции электровоза
