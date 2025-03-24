@@ -4,12 +4,13 @@
 		<Order>2</Order>
 		<SubStepNum>1</SubStepNum>
 		<Solver>euler</Solver>
-		
-		<eps>8.0</eps>
+
+		<eps>15.0</eps>
 		<S>2.5e-4</S>
 		<h>0.045</h>
 		<J>0.5</J>
-		<Mxx>0.0</Mxx>
+		<Mxx>50.0</Mxx>
 		<ip>6.2</ip>
+		<K_flow>3e-4</K_flow>
 	</Device>
 </Config>

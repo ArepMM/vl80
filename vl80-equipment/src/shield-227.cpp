@@ -6,6 +6,7 @@
 Shield_227::Shield_227(size_t input_wires_num,
                        size_t output_wires_num,
                        QObject *parent)
+    : ElectricModule(input_wires_num, output_wires_num, parent)
 {
 
 }

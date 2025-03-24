@@ -19,7 +19,9 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     // Напряжение от обмотки собственных нужд тягового трансформатора
     shield_210->setVoltageAC(0.0);
 
-    shield_210->setLoadCurrent(10.0);
+    double Icc = pf(aux_compr_motor->getAncorCurrent()) + pf(aux_compr_motor->getFieldCurrent());
+
+    shield_210->setLoadCurrent(Icc);
     shield_210->setControl(keys);
     shield_210->step(t, dt);
 

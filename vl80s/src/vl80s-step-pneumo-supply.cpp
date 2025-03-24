@@ -51,4 +51,16 @@ void VL80s::stepPneumoSupply(double t, double dt)
     hose_fl_bwd->setShiftSide(anglecock_fl_bwd->getShiftSide());
     hose_fl_bwd->setControl(keys);
     hose_fl_bwd->step(t, dt);
+
+    // Вспомогательный компрессор (Компрессор токоприемника)
+    aux_compr_motor->setAncorVoltage(shield_227->getOutputVoltage(Shield_227::N67));
+    aux_compr_motor->setAncorOmega(aux_compr->getOmega());
+    aux_compr_motor->step(t, dt);
+
+    aux_compr->setActorTorque(aux_compr_motor->getTorquie());
+    aux_compr->setOutputPressure(pant_res->getPressure());
+    aux_compr->step(t, dt);
+
+    pant_res->setFlow(aux_compr->getQ_out());
+    pant_res->step(t, dt);
 }

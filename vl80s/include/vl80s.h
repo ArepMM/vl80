@@ -276,6 +276,9 @@ private:
     /// Вспомогательный компрессор
     Compressor *aux_compr = new Compressor;
 
+    /// Резервуар управления
+    Reservoir *pant_res = new Reservoir(0.032);
+
     // Инициализация:
     /// Инициализация подсистем секции электровоза
     void initialization() override;
