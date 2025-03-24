@@ -94,7 +94,7 @@ void Shield_227::load_config(CfgReader &cfg)
 //------------------------------------------------------------------------------
 void Shield_227::stepKeysControl(double t, double dt)
 {
-    if (getKeyState(KEY_0))
+    if (getKeyState(KEY_8))
     {
         if (isShift())
         {
