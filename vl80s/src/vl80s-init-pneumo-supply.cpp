@@ -39,4 +39,8 @@ void VL80s::initPneumoSupply(const QString &modules_dir, const QString &custom_c
     hose_fl_bwd->setKeyCode(KEY_F8);
     hose_fl_bwd->read_config("pneumo-hose-FL");
     backward_connectors.push_back(hose_fl_bwd);
+
+    // Вспомогательный компрессор
+    aux_compr_motor->read_config("P11M", custom_cfg_dir);
+    aux_compr->read_config("KB-1V", custom_cfg_dir);
 }

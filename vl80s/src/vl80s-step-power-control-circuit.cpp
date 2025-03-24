@@ -74,6 +74,7 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_227->setInputVoltage(Shield_227::N513, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
     shield_227->setInputVoltage(Shield_227::N505, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
     shield_227->setInputVoltage(Shield_227::N101, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
+    shield_227->setInputVoltage(Shield_227::N66, shield_210->getOutputVoltage(Shield_210::N66));
     shield_227->setControl(keys);
     shield_227->step(t, dt);
 

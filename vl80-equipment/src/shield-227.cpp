@@ -50,6 +50,9 @@ void Shield_227::ode_system(const state_vector_t &Y,
 
     output_wire[N426] =
         input_wire[N010] * static_cast<double>(tumbler[TUMBLER_LOW_OIL_TEMPERATURE].getState());
+
+    output_wire[N67] =
+        input_wire[N66] * static_cast<double>(tumbler[TUMBLER_AUX_COMPRESSOR].getState());
 }
 
 //------------------------------------------------------------------------------
@@ -90,5 +93,15 @@ void Shield_227::load_config(CfgReader &cfg)
 //------------------------------------------------------------------------------
 void Shield_227::stepKeysControl(double t, double dt)
 {
-
+    if (getKeyState(KEY_0))
+    {
+        if (isShift())
+        {
+            tumbler[TUMBLER_AUX_COMPRESSOR].set();
+        }
+        else
+        {
+            tumbler[TUMBLER_AUX_COMPRESSOR].reset();
+        }
+    }
 }

@@ -19,35 +19,45 @@ public:
 
     enum
     {
-        TUMBLERS_NUM = 6,
+        TUMBLERS_NUM = 7,
+        /// Без фазоращепителя
         TUMBLER_WITHOUT_PHASE_SPLITTER = 0,
+        /// Фазоращепитель
         TUMBLER_PHASE_SPLITTER = 1,
+        /// Вентилятор 1
         TUMBLER_FAN1 = 2,
+        /// Вентилятор 3
         TUMBLER_FAN3 = 3,
+        /// Маслонасос
         TUMBLER_OILPUMP = 4,
-        TUMBLER_LOW_OIL_TEMPERATURE = 5
+        /// Низкая температура масла
+        TUMBLER_LOW_OIL_TEMPERATURE = 5,
+        /// Компрессор токоприемника
+        TUMBLER_AUX_COMPRESSOR = 6
     };
 
     enum S227_InputWires
     {
-        INPUTS_NUM = 6,
+        INPUTS_NUM = 7,
         E18 = 0,
         N511 = 1,
         N513 = 2,
         N505 = 3,
         N010 = 4,
         N101 = 5,
+        N66 = 6
     };
 
     enum S227_OutputWires
     {
-        OUTPUTS_NUM = 6,
+        OUTPUTS_NUM = 7,
         N169 = 0,
         N127 = 1,
         N131 = 2,
         N121 = 3,
         N426 = 4,
-        N103 = 5
+        N103 = 5,
+        N67 = 6
     };
 
     /// Вернуть положение тумблеров
