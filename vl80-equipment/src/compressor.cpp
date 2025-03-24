@@ -32,10 +32,7 @@ void Compressor::ode_system(const state_vector_t &Y,
                             double t)
 {
     // Текущая степень сжатия воздуха
-    double ksi = eps / (1 + 0.5 * (eps - 1) * (1 - cos(Y[1]) + lambda - sqrt(lambda * lambda - pow(sin(Y[1]), 2.0))));
-
-    double sin_beta = sin(Y[1]) / lambda;
-    double cos_beta = sqrt(1 - sin_beta * sin_beta);
+    double ksi = eps / (1 + 0.5 * (eps - 1) * (1 - cos(Y[1]) + lambda - sqrt(lambda * lambda - pow(sin(Y[1]), 2.0))));    
 
     // Текущее  избыточное давление
     double p = Physics::pA * (pow(ksi, gamma) - 1.0) * hs_p(Y[0]);

@@ -10,7 +10,7 @@ void VL80s::stepPneumoSupply(double t, double dt)
     press_reg->step(t, dt);
 
     // Мотор-компрессор
-    double U_power = 380.0 * press_reg->getState(); // TODO
+    double U_power = 0.0;//380.0 * press_reg->getState(); // TODO
     motor_compressor->setFLpressure(main_reservoir->getPressure());
     motor_compressor->setPowerVoltage(U_power);
     motor_compressor->step(t, dt);
@@ -26,6 +26,11 @@ void VL80s::stepPneumoSupply(double t, double dt)
 
     anglecock_fl_bwd->setHoseFlow(hose_fl_bwd->getFlow());
     FL_flow += anglecock_fl_bwd->getFlowToPipe();
+
+    // Поток воздуха из ПМ в резервуары ТП и ГВ
+    double K_pm_aux = 4e-3;
+    double Q_pm_aux = K_pm_aux * pf(main_reservoir->getPressure() - ps1->getInputPressure());
+    FL_flow -= Q_pm_aux;
 
     main_reservoir->setFlow(FL_flow);
     main_reservoir->step(t, dt);
@@ -63,14 +68,26 @@ void VL80s::stepPneumoSupply(double t, double dt)
     aux_compr_motor->step(t, dt);
 
     aux_compr->setActorTorque(aux_compr_motor->getTorquie());
-    aux_compr->setOutputPressure(pant_res->getPressure());
-    aux_compr->step(t, dt);
+    aux_compr->setOutputPressure(ps1->getInputPressure());
+    aux_compr->step(t, dt);    
 
-    pant_res->setFlow(aux_compr->getQ_out());
-    pant_res->setLeakCoeff(1e-5);
+    // Поток воздуха, отпитывающий резервуары ТП и ГВ
+    double Q_aux = aux_compr->getQ_out() + Q_pm_aux;
+
+    ps1->setInputFlow(Q_aux);
+    ps1->setPipePressure1(pant_res->getPressure());
+    ps1->setPipePressure2(main_switch_res->getPressure());
+    ps1->step(t, dt);
+
+    pant_res->setFlow(ps1->getPipeFlow1());
+    pant_res->setLeakCoeff(5e-6);
     pant_res->step(t, dt);
 
-    pvu7->setPressure(pant_res->getPressure());
+    main_switch_res->setFlow(ps1->getPipeFlow2());
+    main_switch_res->setLeakCoeff(5e-6);
+    main_switch_res->step(t, dt);
+
+    pvu7->setPressure(ps1->getInputPressure());
     pvu7->step(t, dt);
 
     // Питание на контактор 135 через тумблер "Компрессор токоприемника"

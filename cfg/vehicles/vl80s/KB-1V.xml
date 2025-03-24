@@ -11,6 +11,6 @@
 		<J>0.5</J>
 		<Mxx>32.5</Mxx>
 		<ip>6.2</ip>
-		<K_flow>6e-4</K_flow>
+		<K_flow>30e-4</K_flow>
 	</Device>
 </Config>

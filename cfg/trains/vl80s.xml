@@ -5,9 +5,9 @@
 		<!-- Зарядное давление, МПа -->
 		<ChargingPressure>0.52</ChargingPressure>
 		<!-- Начальное давление в ГР, МПа -->
-		<InitMainResPressure>0.9</InitMainResPressure>
+		<InitMainResPressure>0.0</InitMainResPressure>
 		<!-- Поезд без воздуха (1 - без воздуха, 0 - полностью заряженный) -->
-		<NoAir>0</NoAir>
+		<NoAir>1</NoAir>
 
 		<Title>ВЛ80с (резервом)</Title>
 		<Description>Грузовой электровоз переменного тока</Description>

@@ -65,5 +65,5 @@ void VL80s::initBrakesEquipment(const QString &modules_dir, const QString &custo
     hose_bp_bwd = new PneumoHose();
     hose_bp_bwd->setKeyCode(KEY_F4);
     hose_bp_bwd->read_config("pneumo-hose-BP");
-    backward_connectors.push_back(hose_bp_bwd);
+    backward_connectors.push_back(hose_bp_bwd);    
 }
