@@ -6,6 +6,7 @@
 void VL80s::stepBrakesControl(double t, double dt)
 {
     // Блокировочное устройство
+    // TODO // Запрет на включение в неактивной кабине
     brake_lock->setFLpressure(main_reservoir->getPressure());
     brake_lock->setBPpressure(brakepipe->getPressure());
     brake_lock->setBCpressure(bc_line->getInputPressure());

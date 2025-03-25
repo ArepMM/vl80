@@ -64,6 +64,12 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(anglecock_il_bwd->isOpened() ? "\\" : "|")
                     .arg(hose_il_bwd->isConnected() ? "_" : " ")
                     .arg(hose_il_bwd->isLinked() ? "/" : " ");
+    DebugMsg += QString("  |  ");
+    DebugMsg += QString("%1%2=-SME-=%3%4")
+                    .arg(sme_fwd->isLinked() ? "=" : " ")
+                    .arg(sme_fwd->isConnected() ? "=" : " ")
+                    .arg(sme_bwd->isConnected() ? "=" : " ")
+                    .arg(sme_bwd->isLinked() ? "=" : " ");
 
     DebugMsg += QString("  |  ");
     DebugMsg += QString("BP=%1=AD=%2=IL")

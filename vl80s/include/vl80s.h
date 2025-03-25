@@ -30,6 +30,8 @@
 #include    <relay.h>
 #include    <pressure-contact-sensor.h>
 
+#include    <vl80-sme-connector.h>
+
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
@@ -99,6 +101,11 @@ private:
     double supply_reservoir_leak_flow = 1.0e-6;
 
     // Оборудование:
+    /// Соединения для работы по системе многих единиц (СМЕ) спереди
+    VL80SME  *sme_fwd = nullptr;
+    /// Соединения для работы по системе многих единиц (СМЕ) сзади
+    VL80SME  *sme_bwd = nullptr;
+
     /// Сцепка спереди
     Coupling *coupling_fwd = nullptr;
     /// Сцепка сзади
@@ -303,6 +310,9 @@ private:
     /// Инициализация подсистем секции электровоза
     void initialization() override;
 
+    /// Инициализация связей системы многих единиц (СМЕ)
+    void initSME(const QString &modules_dir, const QString &custom_cfg_dir);
+
     /// Инициализация сцепных устройств
     void initCouplings(const QString &modules_dir, const QString &custom_cfg_dir);
 
@@ -327,6 +337,9 @@ private:
 
     /// Шаг симуляции всех систем электровоза
     void step(double t, double dt) override;
+
+    /// Моделирование сигналов системы многих единиц (СМЕ)
+    void stepSME(double t, double dt);
 
     /// Моделирование сцепных устройств
     void stepCouplings(double t, double dt);
