@@ -114,6 +114,21 @@ public:
 
     void init(const QString &custom_cfg_dir);
 
+    /// Вставить/извлечь реверсивную рукоятку
+    void insertReversHandle(bool insert);
+
+    /// Задать положение главной рукоятки
+    void setMainHandlePos(int pos);
+
+    /// Задать положение реверсивной рукоятки
+    void setReversHandlePos(int pos);
+
+    /// Задать положение тормозной рукоятки
+    void setBrakeHandlePos(int pos, double pos_T_level = 0.0);
+
+    /// Признак вставленной реверсивной рукоятки
+    bool isReversHandle() const;
+
     /// Положение главной рукоятки
     float getMainHandlePos() const;
 
@@ -204,6 +219,9 @@ private:
     /// Развертка тормозного вала
     std::array<km84_contact_state_t, KM84_BrakeShaft::BS_NUM_CONTACTS> brake_shaft_state;
 
+    /// Признак реверсивной рукоятки
+    Trigger is_revers_handle;
+
     /// Положение главного вала
     int main_pos = KM84_Position::POS_0;
 
@@ -238,7 +256,7 @@ private:
     double brake_shaft_angle = 0.0;
 
     /// Скорость вращения тормозного вала
-    double brake_shaft_omega = 0.0;
+    double brake_shaft_omega = 33.3;
 
     /// Максимальный угол поворота тормозного вала
     double brake_shaft_angle_max = 270.0;

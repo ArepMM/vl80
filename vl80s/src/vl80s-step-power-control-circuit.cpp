@@ -38,7 +38,6 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_216->step(t, dt);
 
     // Щиток 223 (дальний "рояль")
-    // TODO // Запреты на включение тумблеров в неактивной кабине
     shield_223->setInputVoltage(Shield_223::N01, shield_215->getOutputVoltage(Shield_215::N01));
     shield_223->setInputVoltage(Shield_223::N02, shield_215->getOutputVoltage(Shield_215::N02));
     shield_223->setInputVoltage(Shield_223::N011, shield_215->getOutputVoltage(Shield_215::N011));
@@ -48,7 +47,6 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_223->step(t, dt);
 
     // Щиток 224 (ближний "рояль")
-    // TODO // Запреты на включение тумблеров в неактивной кабине
     shield_224->setInputVoltage(Shield_224::N05, shield_215->getOutputVoltage(Shield_215::N05));
     shield_224->setInputVoltage(Shield_224::N09, shield_215->getOutputVoltage(Shield_215::N09));
     shield_224->setInputVoltage(Shield_224::N010, shield_215->getOutputVoltage(Shield_215::N010));

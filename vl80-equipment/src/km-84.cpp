@@ -8,7 +8,8 @@ ControllerKM84::ControllerKM84(size_t input_wires_num,
                                QObject *parent)
     : ElectricModule(input_wires_num, output_wires_num, parent)
 {
-
+    // Временно
+    is_revers_handle.set();
 }
 
 //------------------------------------------------------------------------------
@@ -34,6 +35,134 @@ void ControllerKM84::init(const QString &custom_cfg_dir)
     init_brake_shaft();
 
     selsyn->read_config("BD-404A", custom_cfg_dir);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ControllerKM84::insertReversHandle(bool insert)
+{
+    if (insert)
+    {
+        // Вставляем реверсивную рукоятку
+        is_revers_handle.set();
+        return;
+    }
+
+    // Извлечение реверсивной рукоятки только в нулевом положении
+    if (revers_pos == REVERS_POS_0)
+    {
+        is_revers_handle.reset();
+    }
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ControllerKM84::setMainHandlePos(int pos)
+{
+    if ((pos < POS_BV) || (pos > POS_AP))
+        return;
+
+    // Блокировка поворота главной рукоятки при нулевом положении реверсивной
+    if (revers_pos == REVERS_POS_0)
+        pos = POS_0;
+
+    // Блокировка поворота главной рукоятки при ненулевом положении тормозной
+    if (brake_pos != BRAKE_POS_0)
+        pos = POS_0;
+
+    if (main_pos == pos)
+        return;
+
+    main_pos = pos;
+    sounds[MAIN_CHANGE_POS_SOUND].play();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ControllerKM84::setReversHandlePos(int pos)
+{
+    // При извлечённой реверсивной рукоятке реверсивный вал всегда в нуле
+    if (!is_revers_handle.getState())
+    {
+        revers_pos = REVERS_POS_0;
+        return;
+    }
+
+    if ((pos < REVERS_POS_BACKWARD) || (pos > REVERS_POS_OP3))
+        return;
+
+    // При ненулевом положении тормозной рукоятки реверс заблокирован (вперёд)
+    if (brake_pos != BRAKE_POS_0)
+        pos = REVERS_POS_FORWARD;
+
+    // При ненулевом положении главной рукоятки реверс не переключается через 0
+    if (main_pos != POS_0)
+    {
+        if (revers_pos == REVERS_POS_BACKWARD)
+            return;
+
+        if ((revers_pos >= REVERS_POS_FORWARD) && (pos < REVERS_POS_FORWARD))
+            return;
+    }
+
+    if (revers_pos == pos)
+        return;
+
+    revers_pos = pos;
+    sounds[REVERS_CHANGE_POS_SOUND].play();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ControllerKM84::setBrakeHandlePos(int pos, double pos_T_level)
+{
+    if ((pos < BRAKE_POS_0) || (pos > BRAKE_POS_T))
+        return;
+
+    // Поворот тормозной рукоятки разблокирован только при реверсивной "Вперёд"
+    if (revers_pos != REVERS_POS_FORWARD)
+        pos = BRAKE_POS_0;
+
+    // Блокировка поворота при ненулевом положении главной рукоятки
+    if (main_pos != POS_0)
+        pos = BRAKE_POS_0;
+
+    // Дискретные положения тормозного вала до позиции "Т"
+    if (pos < BRAKE_POS_T)
+    {
+        if (brake_pos == pos)
+            return;
+
+        brake_pos = pos;
+        sounds[BRAKE_CHANGE_POS_SOUND].play();
+
+        // Поворот тормозного вала по дискретным позициям
+        brake_shaft_angle = bs_angles[brake_pos];
+        return;
+    }
+
+    // Позиция "Т" тормозного вала
+    if (brake_pos != BRAKE_POS_T)
+    {
+        brake_pos = BRAKE_POS_T;
+        sounds[BRAKE_CHANGE_POS_SOUND].play();
+    }
+
+    // Поворот вала в непрерывном секторе позиции "Т"
+    brake_shaft_angle = bs_angles[BRAKE_POS_T] +
+                        cut(pos_T_level, 0.0, 1.0) * (brake_shaft_angle_max - bs_angles[BRAKE_POS_T]);
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+bool ControllerKM84::isReversHandle() const
+{
+    return is_revers_handle.getState();
 }
 
 //------------------------------------------------------------------------------
@@ -261,8 +390,7 @@ void ControllerKM84::stepKeysControl(double t, double dt)
         // Самовозврат из положения АП
         if (main_pos == POS_AP)
         {
-            main_shaft_dir = -1;
-            slotMainShaftUpdate();
+            setMainHandlePos(POS_RP);
         }
     }
 
@@ -271,11 +399,7 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     {
         if (getKeyState(KEY_Control_L) || getKeyState(KEY_Control_R))
         {
-            if (main_pos != POS_0)
-            {
-                main_pos = POS_0;
-                sounds[MAIN_CHANGE_POS_SOUND].play();
-            }
+            setMainHandlePos(POS_0);
         }
         else
         {
@@ -294,13 +418,12 @@ void ControllerKM84::stepKeysControl(double t, double dt)
         // Самовозврат из положения БВ
         if (main_pos == POS_BV)
         {
-            main_shaft_dir = 1;
-            slotMainShaftUpdate();
+            setMainHandlePos(POS_0);
         }
     }
 
     // Реверсивка от себя
-    if (getKeyState(KEY_W))
+    if (getKeyState(KEY_W) && is_revers_handle.getState())
     {
         if (!revers_shaft_timer->isStarted())
         {
@@ -315,7 +438,7 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     }
 
     // Реверсивка на себя
-    if (getKeyState(KEY_S))
+    if (getKeyState(KEY_S) && is_revers_handle.getState())
     {
         if (!revers_shaft_timer->isStarted())
         {
@@ -495,28 +618,7 @@ void ControllerKM84::init_brake_shaft()
 //------------------------------------------------------------------------------
 void ControllerKM84::slotMainShaftUpdate()
 {
-    // Блокировка поворота главной рукоятки при нулевом положении реверсивной
-    if (revers_pos == REVERS_POS_0)
-    {
-        return;
-    }
-
-    // Блокировка поворота главной рукоятки при ненулевом положении тормозной
-    if (brake_pos != BRAKE_POS_0)
-    {
-        return;
-    }
-
-    int main_pos_old = main_pos;
-
-    main_pos += main_shaft_dir;
-
-    main_pos = cut(main_pos, static_cast<int>(POS_BV), static_cast<int>(POS_AP));
-
-    if (main_pos != main_pos_old)
-    {
-        sounds[MAIN_CHANGE_POS_SOUND].play();
-    }
+    setMainHandlePos(main_pos + main_shaft_dir);
 }
 
 //------------------------------------------------------------------------------
@@ -524,42 +626,7 @@ void ControllerKM84::slotMainShaftUpdate()
 //------------------------------------------------------------------------------
 void ControllerKM84::slotReversShaftUpdate()
 {
-    // Исключение постановки реверса в 0 при ненулевом положении главной
-    // и тормозной рукояток
-    if (revers_shaft_dir > 0)
-    {
-        if ( (revers_pos == REVERS_POS_BACKWARD) && ( (main_pos != POS_0) || (brake_pos != BRAKE_POS_0) ) )
-        {
-            return;
-        }
-    }
-
-    if (revers_shaft_dir < 0)
-    {
-        if ( (revers_pos == REVERS_POS_FORWARD) && ( (main_pos != POS_0) || (brake_pos != BRAKE_POS_0) ) )
-        {
-            return;
-        }
-    }
-
-    // Блокировка положений ОП1 - ОП3 при ненулевом положении тормозной рукоятки
-    if ( ( (revers_pos == REVERS_POS_FORWARD) || (revers_pos == REVERS_POS_BACKWARD) ) && (brake_pos != BRAKE_POS_0) )
-    {
-        return;
-    }
-
-    int revers_pos_old = revers_pos;
-
-    revers_pos += revers_shaft_dir;
-
-    revers_pos = cut(revers_pos,
-                     static_cast<int>(REVERS_POS_BACKWARD),
-                     static_cast<int>(REVERS_POS_OP3));
-
-    if (revers_pos != revers_pos_old)
-    {
-        sounds[REVERS_CHANGE_POS_SOUND].play();
-    }
+    setReversHandlePos(revers_pos + revers_shaft_dir);
 }
 
 //------------------------------------------------------------------------------
@@ -567,57 +634,27 @@ void ControllerKM84::slotReversShaftUpdate()
 //------------------------------------------------------------------------------
 void ControllerKM84::slotBrakeShaftUpdate()
 {
-    // Блокировка поворота тормозной рукоятки при нулевом положении реверсивной
-    if (revers_pos == REVERS_POS_0)
+    // Кроме позиции "Т", поворачиваем вал по дискретным позициям
+    if (brake_pos < BRAKE_POS_T)
     {
+        setBrakeHandlePos(brake_pos + brake_shaft_dir);
         return;
     }
 
-    // Блокировка поворота при ненулевом положении главной рукоятки
-    if (main_pos != POS_0)
+    if (brake_shaft_dir < 0)
     {
-        return;
-    }
-
-    int brake_pos_old = brake_pos;
-
-    // Переключение позиции только если вал не находися в зоне
-    // работы задатчика скорости
-    if (brake_shaft_angle <= bs_angles[BRAKE_POS_T])
-    {
-        brake_pos += brake_shaft_dir;
-    }
-
-    brake_pos = cut(brake_pos,
-                    static_cast<int>(BRAKE_POS_0),
-                    static_cast<int>(BRAKE_POS_T));
-
-    // До позиции "Т" поворачиваем вал дискретно
-    if (brake_pos != BRAKE_POS_T)
-    {
-        brake_shaft_angle = bs_angles[brake_pos];
-    }
-    else // При "Т" - непрерывно
-    {
-        brake_shaft_angle += brake_shaft_omega * brake_shaft_dir * switch_timeout;
-
-        // Недопускаем "залипание" рукоятки в положении "Т"
-        // при возврате в дискретную зону
-        if (brake_shaft_angle < bs_angles[BRAKE_POS_T])
+        // В позиции "Т", если рукоятка в начале непрерывного сектора,
+        // вращение "от себя" возвращает к повороту вала по дискретным позициям
+        if (brake_shaft_angle - bs_angles[BRAKE_POS_T] < Physics::ZERO)
         {
-            brake_pos += brake_shaft_dir;
-            brake_shaft_angle = bs_angles[brake_pos];
-        }
-        else
-        {
-            brake_shaft_angle = cut(brake_shaft_angle,
-                                    bs_angles[BRAKE_POS_T],
-                                    brake_shaft_angle_max);
+            setBrakeHandlePos(brake_pos + brake_shaft_dir);
+            return;
         }
     }
 
-    if (brake_pos != brake_pos_old)
-    {
-        sounds[BRAKE_CHANGE_POS_SOUND].play();
-    }
+    // Непрерывный поворот вала в секторе позиции "Т"
+    brake_shaft_angle += brake_shaft_omega * brake_shaft_dir * switch_timeout;
+    double pos_T_level = (brake_shaft_angle - bs_angles[BRAKE_POS_T]) /
+                         (brake_shaft_angle_max - bs_angles[BRAKE_POS_T]);
+    setBrakeHandlePos(BRAKE_POS_T, pos_T_level);
 }
