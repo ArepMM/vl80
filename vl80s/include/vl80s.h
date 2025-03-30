@@ -65,6 +65,9 @@ private:
     /// Темп утечек из главных резервуаров
     double main_reservoir_leak_flow = 1.0e-6;
 
+    /// Начальное состояние реверсивной рукоятки
+    bool revers_handle_init_state = false;
+
     /// Начальное состояние блокировки тормозов
     bool brake_lock_init_state = false;
 
@@ -288,7 +291,7 @@ private:
     /// Резервуар токоприемника
     Reservoir *pant_res = new Reservoir(0.150);
 
-    /// РЕзервуар ГВ
+    /// Резервуар ГВ
     Reservoir *main_switch_res = new Reservoir(0.032);
 
     /// ПВУ7 - контроль давления в резервуаре управления

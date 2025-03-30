@@ -8,8 +8,7 @@ ControllerKM84::ControllerKM84(size_t input_wires_num,
                                QObject *parent)
     : ElectricModule(input_wires_num, output_wires_num, parent)
 {
-    // Временно
-    is_revers_handle.set();
+
 }
 
 //------------------------------------------------------------------------------
@@ -397,7 +396,8 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     // Главная рукоятка от себя
     if (getKeyState(KEY_D))
     {
-        if (getKeyState(KEY_Control_L) || getKeyState(KEY_Control_R))
+        // Ctrl - быстрый возврат в нулевую позицию
+        if (isControl())
         {
             setMainHandlePos(POS_0);
         }
@@ -423,12 +423,35 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     }
 
     // Реверсивка от себя
-    if (getKeyState(KEY_W) && is_revers_handle.getState())
+    if (getKeyState(KEY_W))
     {
-        if (!revers_shaft_timer->isStarted())
+        if (isShift() && (!isControl()))
         {
-            revers_shaft_dir = 1;
-            revers_shaft_timer->start();
+            // Shift - вставляем реверсивку
+            insertReversHandle(true);
+        }
+        else
+        {
+            if (isControl())
+            {
+                // Ctrl - извлекаем реверсивку
+                insertReversHandle(false);
+            }
+            else
+            {
+                if (is_revers_handle.getState())
+                {
+                    if (!revers_shaft_timer->isStarted())
+                    {
+                        revers_shaft_dir = 1;
+                        revers_shaft_timer->start();
+                    }
+                }
+                else
+                {
+                    revers_shaft_timer->stop();
+                }
+            }
         }
     }
     else
@@ -440,10 +463,18 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     // Реверсивка на себя
     if (getKeyState(KEY_S) && is_revers_handle.getState())
     {
-        if (!revers_shaft_timer->isStarted())
+        // Ctrl - быстрый возврат в нулевую позицию
+        if (isControl())
         {
-            revers_shaft_dir = -1;
-            revers_shaft_timer->start();
+            setReversHandlePos(REVERS_POS_0);
+        }
+        else
+        {
+            if (!revers_shaft_timer->isStarted())
+            {
+                revers_shaft_dir = -1;
+                revers_shaft_timer->start();
+            }
         }
     }
     else
@@ -470,10 +501,18 @@ void ControllerKM84::stepKeysControl(double t, double dt)
     // Тормозная рукоятка от себя
     if (getKeyState(KEY_E))
     {
-        if (!brake_shaft_timer->isStarted())
+        // Ctrl - быстрый возврат в нулевую позицию
+        if (isControl())
         {
-            brake_shaft_dir = -1;
-            brake_shaft_timer->start();
+            setBrakeHandlePos(BRAKE_POS_0);
+        }
+        else
+        {
+            if (!brake_shaft_timer->isStarted())
+            {
+                brake_shaft_dir = -1;
+                brake_shaft_timer->start();
+            }
         }
     }
     else

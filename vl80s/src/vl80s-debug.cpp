@@ -78,7 +78,8 @@ void VL80s::stepDebugPrint(double t, double dt)
 
     DebugMsg += QString("\n");
 
-    DebugMsg += QString("Реверс.: %1 | Глав.: %2 | Торм. вал КМ: %3 | Угол: %4")
+    DebugMsg += QString("Реверсивка: %1 | Валы КМ: Реверс %2 | Глав. %3 | Торм. %4 (Угол: %5)")
+                    .arg(km->isReversHandle())
                     .arg(km->getReversPosName(), 3)
                     .arg(km->getMainPosName(), 3)
                     .arg(km->getBrakePosName(), 3)

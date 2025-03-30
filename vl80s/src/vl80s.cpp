@@ -33,6 +33,7 @@ void VL80s::loadConfig(QString cfg_path)
         cfg.getString(secName, "CouplingConfig", coupling_config_name);
         cfg.getDouble(secName, "MainReservoirVolume", main_reservoir_volume);
         cfg.getDouble(secName, "MainReservoirFlow", main_reservoir_leak_flow);
+        cfg.getBool(secName, "ReversHandleState", revers_handle_init_state);
         cfg.getBool(secName, "BrakeLockState", brake_lock_init_state);
         cfg.getInt(secName, "CombineCranePos", combine_crane_init_pos);
         cfg.getBool(secName, "ShutoffValveADBPpos", shutoff_ad_bp_init_state);

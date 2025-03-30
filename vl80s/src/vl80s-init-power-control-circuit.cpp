@@ -34,6 +34,7 @@ void VL80s::initPowerControlCircuit(const QString &modules_dir,
     // Контроллер машиниста
     km->init(custom_cfg_dir);
     km->read_config("km-84", custom_cfg_dir);
+    km->insertReversHandle(revers_handle_init_state);
 
     panel_1->read_config("panel-1", custom_cfg_dir);
     panel_1->init(custom_cfg_dir);

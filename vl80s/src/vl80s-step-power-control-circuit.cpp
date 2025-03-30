@@ -1,4 +1,5 @@
 #include    <vl80s.h>
+#include    <vl80-sme-signals.h>
 
 //------------------------------------------------------------------------------
 //
@@ -91,14 +92,30 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     shield_229->step(t, dt);
 
     // Контроллер машиниста
-    // TODO // Запреты на включение реверсивки в неактивной кабине
     double U_N1 = shield_223->getOutputVoltage(Shield_223::E1) * static_cast<double>(brake_lock->isUnlocked());
     km->setInputVoltage(ControllerKM84::N1, U_N1);
     km->setInputVoltage(ControllerKM84::N03, shield_215->getOutputVoltage(Shield_215::N03));
     km->setInputVoltage(ControllerKM84::N05, shield_215->getOutputVoltage(Shield_215::N05));
     km->setInputVoltage(ControllerKM84::N88, shield_223->getOutputVoltage(Shield_223::N88));
     km->setInputVoltage(ControllerKM84::N306, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
-    km->setControl(keys);
+    // Проверяем запрет на включение реверсивки в неактивной кабине
+    if ((sme_bwd->getSignal(SME_NO_REVERS_HANDLE) == 1.0) ||
+        (sme_bwd->getSignal(SME_NO_REVERS_HANDLE) == 1.0))
+    {
+        if (km->isReversHandle())
+        {
+            km->setBrakeHandlePos(BRAKE_POS_0);
+            km->setMainHandlePos(POS_0);
+            km->setReversHandlePos(REVERS_POS_0);
+            km->insertReversHandle(false);
+        }
+        QMap<int, bool> empty_keys = {};
+        km->setControl(empty_keys);
+    }
+    else
+    {
+        km->setControl(keys);
+    }
     km->step(t, dt);
 
     panel_1->setControl(keys);
