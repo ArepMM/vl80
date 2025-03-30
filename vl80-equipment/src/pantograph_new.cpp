@@ -37,9 +37,9 @@ void Pantograph_new::setCurrent(double I)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-void Pantograph_new::setPneumodriveFlow(double flow)
+void Pantograph_new::setPneumodriveRefPressure(double p)
 {
-    Qc = flow;
+    pc = p;
 }
 
 //------------------------------------------------------------------------------
@@ -69,9 +69,9 @@ void Pantograph_new::setFrequency(double f)
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
-double Pantograph_new::getPneumodrivePressure() const
+double Pantograph_new::getPneumodriveFlow() const
 {
-    return getY(PRESSURE);
+    return Qc;
 }
 
 //------------------------------------------------------------------------------
@@ -136,6 +136,7 @@ void Pantograph_new::ode_system(const state_vector_t &Y, state_vector_t &dYdt, d
     (void) t;
 
     // Давление в пневмоприводе
+    Qc = (pc - Y[PRESSURE]) * Kc;
     dYdt[PRESSURE] = Qc / Vc;
 
     // Высота токоприёмника
@@ -207,12 +208,12 @@ void Pantograph_new::load_config(CfgReader &cfg)
     if (tmp > 1e-3)
         Vc = tmp;
 
+    cfg.getDouble(secName, "Kc", Kc);
     cfg.getDouble(secName, "Pmin", Pmin);
     cfg.getDouble(secName, "Pnom", Pnom);
     cfg.getDouble(secName, "MotionTime", motion_time);
     cfg.getDouble(secName, "HeightDown", height_down);
     cfg.getDouble(secName, "HeightUp", height_up);
 
-    double motion_v_nom = (height_up - height_down) / motion_time;
     setY(HEIGHT, height_down);
 }
