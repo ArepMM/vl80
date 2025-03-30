@@ -24,13 +24,13 @@ void VL80s::initBrakesEquipment(const QString &modules_dir, const QString &custo
 
     // Разобщительный кран воздухораспределителя и тормозной магистрали
     shutoff_ad_bp = new PneumoShutoffValve();
-    shutoff_ad_bp->read_config("pneumo-shutoff-valve", custom_cfg_dir); // Потом перенести конфиг в дефолтные и читать оттуда
+    shutoff_ad_bp->read_config("pneumo-shutoff-valve-atm", custom_cfg_dir); // Потом перенести конфиг в дефолтные и читать оттуда
     shutoff_ad_bp_init_state ? shutoff_ad_bp->open() : shutoff_ad_bp->close();
     shutoff_ad_bp->setKeyCode(KEY_Period); // Оба разобщительных на одну клавишу
 
     // Разобщительный кран воздухораспределителя и импульсной магистрали
     shutoff_ad_il = new PneumoShutoffValve();
-    shutoff_ad_il->read_config("pneumo-shutoff-valve", custom_cfg_dir); // Потом перенести конфиг в дефолтные и читать оттуда
+    shutoff_ad_il->read_config("pneumo-shutoff-valve-atm", custom_cfg_dir); // Потом перенести конфиг в дефолтные и читать оттуда
     shutoff_ad_il_init_state ? shutoff_ad_il->open() : shutoff_ad_il->close();
     shutoff_ad_il->setKeyCode(KEY_Period); // Оба разобщительных на одну клавишу
 

@@ -1,35 +1,29 @@
-#ifndef     PNEUMO_SHUTOFF_VALVE_H
-#define     PNEUMO_SHUTOFF_VALVE_H
+#ifndef     PNEUMO_ELECTRO_VALVE_H
+#define     PNEUMO_ELECTRO_VALVE_H
 
 #include    "device.h"
 
 //------------------------------------------------------------------------------
-// Разобщительный кран
+// Электромагнитный пневматический вентиль
 //------------------------------------------------------------------------------
-class /*DEVICE_EXPORT*/ PneumoShutoffValve : public Device
+class /*DEVICE_EXPORT*/ PneumoElectroValve : public Device
 {
 public:
 
     /// Конструктор
-    PneumoShutoffValve(int key_code = 0, QObject *parent = Q_NULLPTR);
+    PneumoElectroValve(QObject *parent = Q_NULLPTR);
 
     /// Деструктор
-    ~PneumoShutoffValve();
+    ~PneumoElectroValve();
 
-    /// Задать управляющую клавишу
-    void setKeyCode(int key_code);
-
-    /// Закрыть разобщительный кран
-    void close();
-
-    /// Открыть разобщительный кран
-    void open();
-
-    /// Cостояние разобщительного крана
+    /// Cостояние электромагнитного пневматического вентиля
     bool isOpened() const;
 
-    /// Положение рукоятки: от 0.0 (кран закрыт) до 1.0 (кран открыт)
-    float getHandlePosition() const;
+    /// Задать напряжение, подаваемое на обмотку реле, В
+    void setVoltage(double value);
+
+    /// Ток, потребляемый реле, А
+    double getCurrent() const;
 
     /// Задать давление со стороны магистрали
     void setPipePressure(double value);
@@ -45,9 +39,9 @@ public:
 
     enum {
         NUM_SOUNDS = 4,
-        CHANGE_SOUND = 0,   ///< Звук переключения разобщительного крана
-        OPEN_SOUND = 1,     ///< Звук открытия разобщительного крана
-        CLOSE_SOUND = 2,    ///< Звук перекрытия разобщительного крана
+        CHANGE_SOUND = 0,   ///< Звук переключения электромагнитного пневмовентиля
+        OPEN_SOUND = 1,     ///< Звук открытия электромагнитного пневмовентиля
+        CLOSE_SOUND = 2,    ///< Звук перекрытия электромагнитного пневмовентиля
         PIPE_DRAIN_FLOW_SOUND = 3 ///< Звук выхода воздуха через атмосферное отверстие
     };
     /// Состояние звука
@@ -59,11 +53,9 @@ public:
 private:
 
     enum {
-        PRESSURE = 0    ///< Y[0] - Давление за разобщительным краном
+        PRESSURE = 0,   ///< Y[0] - Давление за разобщительным краном
+        CURRENT = 1     ///< Y[1] - Ток в катушке электромагнитного пневмовентиля
     };
-
-    /// Код управляющей клавиши
-    int keyCode = 0;
 
     /// Давление в магистрали
     double p = 0.0;
@@ -83,8 +75,26 @@ private:
     /// Коэффициент громкости озвучки к потоку разрядки
     double K_sound = 2.0;
 
-    /// Заданное состояние крана: 0 - закрыт, 1 - открыт
-    Trigger ref_state;
+    /// Напряжение, подаваемое на обмотку
+    double  U = 0.0;
+
+    /// Номинальное рабочее напряжение
+    double  U_nom = 50.0;
+
+    /// Активное сопротивление якоря реле
+    double  R = 170.0;
+
+    /// Постоянная времени обмотки
+    double  T = 0.1;
+
+    /// Максимальный уровень отключения (0.0 - 1.0)
+    double  level_off = 0.6;
+
+    /// Минимальный уровень включения (0.0 - 1.0)
+    double  level_on = 0.7;
+
+    /// Гистерезис минимального тока включения - максимального тока отключения
+    Hysteresis *hysteresis = new Hysteresis(level_off * U_nom / R, level_on * U_nom / R, false);
 
     /// Звук выхода воздуха из оборудования через атмосферное отверстие
     sound_state_t atm_flow_sound = sound_state_t();
@@ -94,8 +104,6 @@ private:
     void ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t);
 
     void load_config(CfgReader &cfg);
-
-    void stepKeysControl(double t, double dt);
 };
 
-#endif // PNEUMO_SHUTOFF_VALVE_H
+#endif // PNEUMO_ELECTRO_VALVE_H
