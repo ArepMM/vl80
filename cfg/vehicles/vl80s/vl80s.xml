@@ -37,11 +37,6 @@
 		<!-- Конфиг автосцепного устройства -->
 		<CouplingConfig>sa3</CouplingConfig>
 
-		<!-- Объём главных резервуаров, м^3 -->
-		<MainReservoirVolume>0.9</MainReservoirVolume>
-		<!-- Темп утечек из главных резервуаров -->
-		<MainReservoirFlow>1.0e-6</MainReservoirFlow>
-
 		<!-- Состояние реверсивной рукоятки -->
 		<!-- (1 - вставлена, 0 - извлечена) -->
 		<ReversHandleState>1</ReversHandleState>
@@ -83,9 +78,24 @@
 		<!-- Конфиг воздухораспределителя -->
 		<AirDistConfig>vr483</AirDistConfig>
 
+		<!-- Объём главных резервуаров, м^3 -->
+		<MainReservoirVolume>0.9</MainReservoirVolume>
+		<!-- Темп утечек из главных резервуаров -->
+		<MainReservoirFlow>1.0e-6</MainReservoirFlow>
+
 		<!-- Объём запасного резервуара, м^3 -->
 		<SupplyReservoirVolume>0.055</SupplyReservoirVolume>
 		<!-- Темп утечек из запасного резервуара -->
 		<SupplyReservoirFlow>1.0e-6</SupplyReservoirFlow>
+
+		<!-- Объём резервуара токоприёмника, м^3 -->
+		<PantReservoirVolume>0.150</PantReservoirVolume>
+		<!-- Темп утечек из резервуара токоприёмника -->
+		<PantReservoirFlow>1.0e-6</PantReservoirFlow>
+
+		<!-- Объём резервуара главного выключателя, м^3 -->
+		<SwitchReservoirVolume>0.032</SwitchReservoirVolume>
+		<!-- Темп утечек из резервуара главного выключателя -->
+		<SwitchReservoirFlow>1.0e-6</SwitchReservoirFlow>
 	</Settings>
 </Config>

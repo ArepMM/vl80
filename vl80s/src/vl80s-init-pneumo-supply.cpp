@@ -8,7 +8,39 @@ void VL80s::initPneumoSupply(const QString &modules_dir, const QString &custom_c
     (void) modules_dir;
     (void) custom_cfg_dir;
 
-    // Мотор-компрессор
+    // ПВУ7 - контроль давления в резервуаре управления
+    pvu7->read_config("PVU7", custom_cfg_dir);
+
+    // Контактор пуска вспомогательного компрессора
+    K135->read_config("mk-69", custom_cfg_dir);
+    K135->setInitContactState(K135_ON_AUX_COMPRESSOR, false);
+
+    // Двигатель вспомогательного компрессора
+    aux_compr_motor->read_config("P11M", custom_cfg_dir);
+
+    // Вспомогательный компрессор
+    aux_compr = new Compressor();
+    aux_compr->read_config("KB-1V", custom_cfg_dir);
+
+    // Резервуар главного выключателя
+    switch_reservoir = new Reservoir(switch_reservoir_volume);
+    switch_reservoir->setLeakCoeff(switch_reservoir_leak_flow);
+
+    // Пневморедуктор к резервуару токоприёмника
+    pneumoreducer_pant = new PneumoReducer();
+    pneumoreducer_pant->read_config("pneumo-reducer");
+
+    // Разобщительный кран резервуара токоприёмника
+    shutoff_pant = new PneumoShutoffValve();
+    shutoff_pant->read_config("pneumo-shutoff-valve", custom_cfg_dir); // Потом перенести конфиг в дефолтные и читать оттуда
+    shutoff_pant->open();
+    shutoff_pant->setKeyCode(KEY_Backslash);
+
+    // Резервуар токоприемника
+    pant_reservoir = new Reservoir(pant_reservoir_volume);
+    pant_reservoir->setLeakCoeff(pant_reservoir_leak_flow);
+
+    // Регулятор давления в главных резервуарах
     press_reg = new PressureRegulator();
     press_reg->read_config("pressure-regulator");
 
@@ -39,16 +71,4 @@ void VL80s::initPneumoSupply(const QString &modules_dir, const QString &custom_c
     hose_fl_bwd->setKeyCode(KEY_F8);
     hose_fl_bwd->read_config("pneumo-hose-FL");
     backward_connectors.push_back(hose_fl_bwd);
-
-    // Вспомогательный компрессор
-    aux_compr_motor->read_config("P11M", custom_cfg_dir);
-    aux_compr->read_config("KB-1V", custom_cfg_dir);
-
-    // ПВУ7 - контроль давления в резервуаре управления
-    pvu7->read_config("PVU7", custom_cfg_dir);
-
-    K135->read_config("mk-69", custom_cfg_dir);
-    K135->setInitContactState(K135_ON_AUX_COMPRESSOR, false);
-
-    ps1->read_config("pneumo-splitter");
 }

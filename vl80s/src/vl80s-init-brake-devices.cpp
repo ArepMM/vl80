@@ -28,9 +28,9 @@ void VL80s::initBrakeDevices(double p0, double pBP, double pFL)
 
     supply_reservoir->setY(0, pBP);
 
-    // Инициализация давлений в РУ токоприемника и ГВ
-    pant_res->setY(0, pFL);
-    main_switch_res->setY(0, pFL);
+    // Инициализация давлений в резервуарах токоприемника и ГВ
+    switch_reservoir->setY(0, pFL);
+    pant_reservoir->setY(0, min(0.5, pFL));
 
     // Состояние рукава и концевого крана импульсной магистрали сзади
     if (hose_il_bwd->isLinked())

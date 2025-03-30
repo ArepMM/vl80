@@ -60,11 +60,6 @@ private:
     /// Имя конфига сцепного устройства
     QString coupling_config_name = "sa3";
 
-    /// Объём главных резервуаров
-    double main_reservoir_volume = 0.9;
-    /// Темп утечек из главных резервуаров
-    double main_reservoir_leak_flow = 1.0e-6;
-
     /// Начальное состояние реверсивной рукоятки
     bool revers_handle_init_state = false;
 
@@ -98,10 +93,25 @@ private:
     /// Имя конфига воздухорапределителя
     QString airdist_config_name = "vr483";
 
+    /// Объём главных резервуаров
+    double main_reservoir_volume = 0.9;
+    /// Темп утечек из главных резервуаров
+    double main_reservoir_leak_flow = 1.0e-6;
+
     /// Объём запасного резервуара
     double supply_reservoir_volume = 0.055;
     /// Темп утечек из запасного резервуара
     double supply_reservoir_leak_flow = 1.0e-6;
+
+    /// Объём резервуара токоприёмника
+    double pant_reservoir_volume = 0.9;
+    /// Темп утечек из резервуара токоприёмника
+    double pant_reservoir_leak_flow = 1.0e-6;
+
+    /// Объём резервуара главного выключателя
+    double switch_reservoir_volume = 0.9;
+    /// Темп утечек из резервуара главного выключателя
+    double switch_reservoir_leak_flow = 1.0e-6;
 
     // Оборудование:
     /// Соединения для работы по системе многих единиц (СМЕ) спереди
@@ -118,6 +128,21 @@ private:
     OperatingRod *oper_rod_fwd = nullptr;
     /// Расцепной рычаг сзади
     OperatingRod *oper_rod_bwd = nullptr;
+
+    /// Вспомогательный компрессор
+    Compressor *aux_compr = nullptr;
+
+    /// Резервуар главного выключателя РС6
+    Reservoir *switch_reservoir = nullptr;
+
+    /// Пневморедуктор к резервуару токоприёмника КР2
+    PneumoReducer *pneumoreducer_pant = nullptr;
+
+    /// Разобщительный кран резервуара токоприёмника КН17
+    PneumoShutoffValve *shutoff_pant = nullptr;
+
+    /// Резервуар токоприемника РС5
+    Reservoir *pant_reservoir = nullptr;
 
     /// Мотор-компрессор КМ1
     ACMotorCompressor *motor_compressor = nullptr;
@@ -212,7 +237,7 @@ private:
     };
 
     /// Тормозные механизмы тележек
-    std::array<BrakeMech *, NUM_TROLLEYS> brake_mech;
+    std::array<BrakeMech *, NUM_TROLLEYS> brake_mech = {nullptr, nullptr};
 
     /// АКБ
     Battery *battery = new Battery;
@@ -282,23 +307,8 @@ private:
     /// Панель 7
     Panel_7 *panel_7 = new Panel_7(Panel_7::INPUTS_NUM, Panel_7::OUTPUTS_NUM);
 
-    /// Двигатель вспомогательного компрессора
-    DCMotor *aux_compr_motor = new DCMotor;
-
-    /// Вспомогательный компрессор
-    Compressor *aux_compr = new Compressor;
-
-    /// Резервуар токоприемника
-    Reservoir *pant_res = new Reservoir(0.150);
-
-    /// Резервуар ГВ
-    Reservoir *main_switch_res = new Reservoir(0.032);
-
     /// ПВУ7 - контроль давления в резервуаре управления
-    PressContactSensor *pvu7 = new PressContactSensor;
-
-    /// Тройник от впомогательного компрессора к резервуарам ТП и ГВ
-    PneumoSplitter *ps1 = new PneumoSplitter;
+    PressContactSensor *pvu7 = new PressContactSensor();
 
     enum
     {
@@ -308,6 +318,9 @@ private:
 
     /// Контактор пуска вспомогательного компрессора
     Relay *K135 = new Relay(K135_NUM_CONTACTS);
+
+    /// Двигатель вспомогательного компрессора
+    DCMotor *aux_compr_motor = new DCMotor;
 
     // Инициализация:
     /// Инициализация подсистем секции электровоза

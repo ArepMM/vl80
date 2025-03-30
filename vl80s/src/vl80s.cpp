@@ -31,8 +31,6 @@ void VL80s::loadConfig(QString cfg_path)
         cfg.getDouble(secName, "ReductorCoeff", ip);
         cfg.getString(secName, "CouplingModule", coupling_module_name);
         cfg.getString(secName, "CouplingConfig", coupling_config_name);
-        cfg.getDouble(secName, "MainReservoirVolume", main_reservoir_volume);
-        cfg.getDouble(secName, "MainReservoirFlow", main_reservoir_leak_flow);
         cfg.getBool(secName, "ReversHandleState", revers_handle_init_state);
         cfg.getBool(secName, "BrakeLockState", brake_lock_init_state);
         cfg.getInt(secName, "CombineCranePos", combine_crane_init_pos);
@@ -46,8 +44,14 @@ void VL80s::loadConfig(QString cfg_path)
         cfg.getDouble(secName, "LocoCraneInitPos", loco_crane_init_pos);
         cfg.getString(secName, "AirDistModule", airdist_module_name);
         cfg.getString(secName, "AirDistConfig", airdist_config_name);
+        cfg.getDouble(secName, "MainReservoirVolume", main_reservoir_volume);
+        cfg.getDouble(secName, "MainReservoirFlow", main_reservoir_leak_flow);
         cfg.getDouble(secName, "SupplyReservoirVolume", supply_reservoir_volume);
         cfg.getDouble(secName, "SupplyReservoirFlow", supply_reservoir_leak_flow);
+        cfg.getDouble(secName, "PantReservoirVolume", pant_reservoir_volume);
+        cfg.getDouble(secName, "PantReservoirFlow", pant_reservoir_leak_flow);
+        cfg.getDouble(secName, "SwitchReservoirVolume", switch_reservoir_volume);
+        cfg.getDouble(secName, "SwitchReservoirFlow", switch_reservoir_leak_flow);
     }
 }
 

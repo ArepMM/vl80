@@ -13,14 +13,14 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(profile_point_data.railway_coord / 1000.0, 10, 'f', 3)
                     .arg(velocity * Physics::kmh, 6, 'f', 1);
     DebugMsg += QString("pBP%1|pIL%2|pBCf%3|pBCb%4|pSR%5|")
-                    .arg(10.0 * brakepipe->getPressure(), 6, 'f', 2)
-                    .arg(10.0 * impulse_line->getPressure(), 6, 'f', 2)
-                    .arg(10.0 * brake_mech[TROLLEY_FWD]->getBCpressure(), 6, 'f', 2)
-                    .arg(10.0 * brake_mech[TROLLEY_BWD]->getBCpressure(), 6, 'f', 2)
-                    .arg(10.0 * supply_reservoir->getPressure(), 6, 'f', 2);
+                    .arg(Physics::g * brakepipe->getPressure(), 6, 'f', 2)
+                    .arg(Physics::g * impulse_line->getPressure(), 6, 'f', 2)
+                    .arg(Physics::g * brake_mech[TROLLEY_FWD]->getBCpressure(), 6, 'f', 2)
+                    .arg(Physics::g * brake_mech[TROLLEY_BWD]->getBCpressure(), 6, 'f', 2)
+                    .arg(Physics::g * supply_reservoir->getPressure(), 6, 'f', 2);
     DebugMsg += QString("pFL%1|pER%2|395:%3|254:%4%|")
-                    .arg(10.0 * main_reservoir->getPressure(), 6, 'f', 2)
-                    .arg(10.0 * brake_crane->getERpressure(), 6, 'f', 2)
+                    .arg(Physics::g * main_reservoir->getPressure(), 6, 'f', 2)
+                    .arg(Physics::g * brake_crane->getERpressure(), 6, 'f', 2)
                     .arg(brake_crane->getPositionName(), 3)
                     .arg(loco_crane->getHandlePosition() * 100.0, 3, 'f', 0);
 
@@ -87,11 +87,15 @@ void VL80s::stepDebugPrint(double t, double dt)
 
     DebugMsg += QString("\n");
 
-    DebugMsg += QString("Всп. компр.: %1 об/мин | Q: %2 | Рез. ТП.: %3 кгс/см2 | Рез. ГВ.: %4 кгс/см2")
+    DebugMsg += QString("Всп. компр.: %1 об/мин | Q: %2 | Рез. ГВ: %3 кгс/см2 | Рез. ТП: %4(%5) кгс/см2 | КН17: %6")
                     .arg(aux_compr->getOmega() * 30.0 / Physics::PI, 7, 'f', 2)
-                    .arg(aux_compr->getQ_out(), 4, 'f', 2)
-                    .arg(pant_res->getPressure() * Physics::g, 4, 'f', 2)
-                    .arg(main_switch_res->getPressure() * Physics::g, 4, 'f', 2);
+                    .arg(aux_compr->getQ_out(), 7, 'f', 5)
+                    .arg(Physics::g * switch_reservoir->getPressure(), 5, 'f', 2)
+                    .arg(Physics::g * pant_reservoir->getPressure(), 5, 'f', 2)
+                    .arg(Physics::g * shutoff_pant->getPressureToDevice(), 5, 'f', 2)
+                    .arg(shutoff_pant->isOpened());
+    DebugMsg += QString(" | Qred: %1")
+                    .arg(pneumoreducer_pant->getInputFlow(), 7, 'f', 5);
 /*
     DebugMsg += QString("\n");
     DebugMsg += QString("FWD Speed limit %1 km/h | Next %2 km/h (%3 m)")
