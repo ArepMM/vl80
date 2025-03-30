@@ -87,15 +87,19 @@ void VL80s::stepDebugPrint(double t, double dt)
 
     DebugMsg += QString("\n");
 
-    DebugMsg += QString("Всп. компр.: %1 об/мин | Q: %2 | Рез. ГВ: %3 кгс/см2 | Рез. ТП: %4(%5) кгс/см2 | КН17: %6")
+    DebugMsg += QString("Всп. компр.: %1 об/мин | Q: %2 | Рез. ГВ: %3 кгс/см2 | Рез. ТП: %4(%5) кгс/см2 | КН17: %6 | Блок.: %7 кгс/см2 | ТП: %8 кгс/см2 (%9 м)")
                     .arg(aux_compr->getOmega() * 30.0 / Physics::PI, 7, 'f', 2)
                     .arg(aux_compr->getQ_out(), 7, 'f', 5)
                     .arg(Physics::g * switch_reservoir->getPressure(), 5, 'f', 2)
                     .arg(Physics::g * pant_reservoir->getPressure(), 5, 'f', 2)
                     .arg(Physics::g * shutoff_pant->getPressureToDevice(), 5, 'f', 2)
-                    .arg(shutoff_pant->isOpened());
-    DebugMsg += QString(" | Qred: %1")
-                    .arg(pneumoreducer_pant->getInputFlow(), 7, 'f', 5);
+                    .arg(shutoff_pant->isOpened())
+                    .arg(Physics::g * valve_vz->getPressureToDevice(), 5, 'f', 2)
+                    .arg(Physics::g * pantograph->getY(0), 5, 'f', 2)
+                    .arg(pantograph->getHeight(), 5, 'f', 3);
+    DebugMsg += QString(" | ВЗ %1 | КЭП6 %2")
+                    .arg(valve_vz->isOpened())
+                    .arg(valve_kep6->isOpened());
 /*
     DebugMsg += QString("\n");
     DebugMsg += QString("FWD Speed limit %1 km/h | Next %2 km/h (%3 m)")

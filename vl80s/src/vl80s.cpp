@@ -75,7 +75,9 @@ void VL80s::initialization()
 
     initBrakesEquipment(modules_dir, custom_cfg_dir);
 
-    initPowerControlCircuit(modules_dir, custom_cfg_dir);    
+    initPowerControlCircuit(modules_dir, custom_cfg_dir);
+
+    initPowerCircuit(modules_dir, custom_cfg_dir);
 }
 
 //------------------------------------------------------------------------------
@@ -102,6 +104,8 @@ void VL80s::step(double t, double dt)
     stepBrakesEquipment(t, dt);
 
     stepPowerControlCircuit(t, dt);
+
+    stepPowerCircuit(t, dt);
 
     // Анимации
     stepSignalsOutput(t, dt);

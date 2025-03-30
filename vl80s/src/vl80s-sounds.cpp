@@ -56,12 +56,13 @@ void VL80s::stepSoundSignalsOutput(double t, double dt)
     analogSignal[SOUND_90_100] = sound_state_t::createSoundSignal((Vkmh > 90.0) && (Vkmh <= 100.0));
     analogSignal[SOUND_100_110] = sound_state_t::createSoundSignal((Vkmh > 100.0) && (Vkmh <= 110.0));
     analogSignal[SOUND_110_X] = sound_state_t::createSoundSignal(Vkmh > 110.0);
-/*
+
     // Токоприёмники
-    analogSignal[SOUND_PANT_BWD_UP] = pantographs[1]->getSoundSignal(Pantograph::UP_SOUND);
-    analogSignal[SOUND_PANT_BWD_DOWN] = pantographs[1]->getSoundSignal(Pantograph::DOWN_SOUND);
-    analogSignal[SOUND_PANT_FWD_UP] = pantographs[0]->getSoundSignal(Pantograph::UP_SOUND);
-    analogSignal[SOUND_PANT_FWD_DOWN] = pantographs[0]->getSoundSignal(Pantograph::DOWN_SOUND);
+    analogSignal[SOUND_PANT_FWD_UP] = pantograph->getSoundSignal(Pantograph::UP_SOUND);
+    analogSignal[SOUND_PANT_FWD_DOWN] = pantograph->getSoundSignal(Pantograph::DOWN_SOUND);
+    analogSignal[SOUND_PANT_BWD_UP] = 0.0f;
+    analogSignal[SOUND_PANT_BWD_DOWN] = 0.0f;
+    /*
     // Главный выключатель
     analogSignal[SOUND_GV_ON] = main_switch->getSoundSignal(ProtectiveDevice::ON_SOUND);
     analogSignal[SOUND_GV_OFF] = main_switch->getSoundSignal(ProtectiveDevice::OFF_SOUND);

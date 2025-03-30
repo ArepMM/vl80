@@ -13,7 +13,7 @@ Pantograph_new::Pantograph_new(QObject *parent) : Device(parent)
     output_signals.resize(SIZE_OF_OUTPUTS);
 
     output_signals[OUTPUT_CURRENT] = 0.0;
-    input_signals[INPUT_WIRE_HEIGHT] = 6.0;
+    input_signals[INPUT_WIRE_HEIGHT] = 6.56;
     input_signals[INPUT_VOLTAGE] = 0.0;
     input_signals[INPUT_FREQUENCY] = 0.0;
 }
@@ -136,8 +136,8 @@ void Pantograph_new::ode_system(const state_vector_t &Y, state_vector_t &dYdt, d
     (void) t;
 
     // Давление в пневмоприводе
-    Qc = (pc - Y[PRESSURE]) * Kc;
-    dYdt[PRESSURE] = Qc / Vc;
+    Qc = (Y[PRESSURE] - pc) * Kc;
+    dYdt[PRESSURE] = -Qc / Vc;
 
     // Высота токоприёмника
     if (Y[PRESSURE] > Pmin)
@@ -180,7 +180,7 @@ void Pantograph_new::ode_system(const state_vector_t &Y, state_vector_t &dYdt, d
     {
         // Опускание токоприёмника
         // Скорость опускания токоприёмника с учётом давления в пневмоприводе, м/с
-        double motion_v = motion_v_nom * (Pmin - Y[PRESSURE]);
+        double motion_v = motion_v_nom * ((Pmin - Y[PRESSURE]) / Pmin);
 
         // Отключаем токоприёмник
         is_contact = false;
@@ -189,7 +189,7 @@ void Pantograph_new::ode_system(const state_vector_t &Y, state_vector_t &dYdt, d
         double height_delta = Y[HEIGHT] - height_down;
 
         // Токоприёмник стремится опустится
-        dYdt[HEIGHT] = -1.0 * motion_v * (max(height_delta, eps) / eps);
+        dYdt[HEIGHT] = -1.0 * motion_v * (min(height_delta, eps) / eps);
 
         // Озвучка // TODO // Переделать
         ref_state.reset();

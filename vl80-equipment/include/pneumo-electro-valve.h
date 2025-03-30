@@ -45,10 +45,10 @@ public:
         PIPE_DRAIN_FLOW_SOUND = 3 ///< Звук выхода воздуха через атмосферное отверстие
     };
     /// Состояние звука
-    virtual sound_state_t getSoundState(size_t idx = CHANGE_SOUND) const;
+    sound_state_t getSoundState(size_t idx = CHANGE_SOUND) const;
 
     /// Сигнал состояния звука
-    virtual float getSoundSignal(size_t idx = CHANGE_SOUND) const;
+    float getSoundSignal(size_t idx = CHANGE_SOUND) const;
 
 private:
 

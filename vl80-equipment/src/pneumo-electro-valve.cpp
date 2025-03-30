@@ -168,7 +168,7 @@ void PneumoElectroValve::load_config(CfgReader &cfg)
     if (tmp > 1e-3)
         V0 = tmp;
 
-    cfg.getDouble(secName, "K_atm", K_atm);
+    cfg.getDouble(secName, "Katm", K_atm);
 
-    cfg.getDouble(secName, "K_sound", K_sound);
+    cfg.getDouble(secName, "Ksound", K_sound);
 }

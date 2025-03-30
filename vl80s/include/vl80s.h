@@ -4,10 +4,14 @@
 #include    <vehicle-api.h>
 
 // Потом перенести в движок и в vehicle-api.h
+#include    <dc-motor.h>
+#include    <compressor.h>
 #include    <pneumo-shutoff-valve.h>
+#include    <pneumo-electro-valve.h>
+#include    <pressure-contact-sensor.h>
+#include    <pantograph_new.h>
 
 #include    <km-84.h>
-#include    <battery.h>
 #include    <shield-210.h>
 #include    <shield-215.h>
 #include    <shield-216.h>
@@ -25,10 +29,6 @@
 #include    <panel-5.h>
 #include    <panel-6.h>
 #include    <panel-7.h>
-#include    <dc-motor.h>
-#include    <compressor.h>
-#include    <relay.h>
-#include    <pressure-contact-sensor.h>
 
 #include    <vl80-sme-connector.h>
 
@@ -104,12 +104,12 @@ private:
     double supply_reservoir_leak_flow = 1.0e-6;
 
     /// Объём резервуара токоприёмника
-    double pant_reservoir_volume = 0.9;
+    double pant_reservoir_volume = 0.032;
     /// Темп утечек из резервуара токоприёмника
     double pant_reservoir_leak_flow = 1.0e-6;
 
     /// Объём резервуара главного выключателя
-    double switch_reservoir_volume = 0.9;
+    double switch_reservoir_volume = 0.150;
     /// Темп утечек из резервуара главного выключателя
     double switch_reservoir_leak_flow = 1.0e-6;
 
@@ -143,6 +143,12 @@ private:
 
     /// Резервуар токоприемника РС5
     Reservoir *pant_reservoir = nullptr;
+
+    /// Вентиль защиты ВЗ
+    PneumoElectroValve *valve_vz = nullptr;
+
+    /// Вентиль токоприёмника КЭП6
+    PneumoElectroValve *valve_kep6 = nullptr;
 
     /// Мотор-компрессор КМ1
     ACMotorCompressor *motor_compressor = nullptr;
@@ -322,6 +328,12 @@ private:
     /// Двигатель вспомогательного компрессора
     DCMotor *aux_compr_motor = new DCMotor;
 
+    /// ПВУ1 - контроль давления в магистрали пневмоблокировок и токоприёмника
+    PressContactSensor *pvu1 = new PressContactSensor();
+
+    /// Пантограф
+    Pantograph_new *pantograph = new Pantograph_new();
+
     // Инициализация:
     /// Инициализация подсистем секции электровоза
     void initialization() override;
@@ -343,6 +355,9 @@ private:
 
     /// Инициализация подсистемы питания цепей управления
     void initPowerControlCircuit(const QString &modules_dir, const QString &custom_cfg_dir);
+
+    /// Инициализация силовых цепей
+    void initPowerCircuit(const QString &modules_dir, const QString &custom_cfg_dir);
 
     // Симуляция:
     /// Предварительные расчёты перед симуляцией
@@ -371,6 +386,9 @@ private:
 
     /// Моделирование подсистемы питания цепей управления
     void stepPowerControlCircuit(double t, double dt);
+
+    /// Моделирование силовых цепей
+    void stepPowerCircuit(double t, double dt);
 
     /// Вывод сигналов анимаций
     void stepSignalsOutput(double t, double dt);

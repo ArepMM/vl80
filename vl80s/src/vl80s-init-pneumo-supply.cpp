@@ -40,6 +40,17 @@ void VL80s::initPneumoSupply(const QString &modules_dir, const QString &custom_c
     pant_reservoir = new Reservoir(pant_reservoir_volume);
     pant_reservoir->setLeakCoeff(pant_reservoir_leak_flow);
 
+    // Вентиль защиты ВЗ
+    valve_vz = new PneumoElectroValve();
+    valve_vz->read_config("pneumo-electro-valve-atm", custom_cfg_dir); // Потом перенести конфиг в дефолтные и читать оттуда
+
+    // Вентиль токоприёмника КЭП6
+    valve_kep6 = new PneumoElectroValve();
+    valve_kep6->read_config("pneumo-electro-valve-atm", custom_cfg_dir); // Потом перенести конфиг в дефолтные и читать оттуда
+
+    // ПВУ1 - контроль давления в магистрали пневмоблокировок и токоприёмника
+    pvu1->read_config("PVU1", custom_cfg_dir);
+
     // Регулятор давления в главных резервуарах
     press_reg = new PressureRegulator();
     press_reg->read_config("pressure-regulator");

@@ -58,10 +58,12 @@ public:
         TUMBLER_PANT_BWD = 4,
         /// Цепи управления
         TUMBLER_CTRL_CIRCUIT = 5,
+        /// РЕЗЕРВ
+        TUMBLER_RESERV = 6,
         /// Прожектор тускло
-        TUMBLER_SPOT_LIGHT = 6,
+        TUMBLER_SPOT_LIGHT = 7,
         /// Прожектор ярко
-        TUMBLER_SPOT_LIGHT_BRIGHT = 7
+        TUMBLER_SPOT_LIGHT_BRIGHT = 8
     };
 
     /// Вернуть положение тумблеров

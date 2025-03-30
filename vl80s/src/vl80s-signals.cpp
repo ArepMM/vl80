@@ -12,11 +12,12 @@ void VL80s::stepSignalsOutput(double t, double dt)
     analogSignal[WHEEL_2] = static_cast<float>(wheel_rotation_angle[1] / 2.0 / Physics::PI);
     analogSignal[WHEEL_3] = static_cast<float>(wheel_rotation_angle[2] / 2.0 / Physics::PI);
     analogSignal[WHEEL_4] = static_cast<float>(wheel_rotation_angle[3] / 2.0 / Physics::PI);
-/*
-    // Состояние токоприемников
-    analogSignal[PANT1_POS] = static_cast<float>(pantographs[0]->getHeight());
-    analogSignal[PANT2_POS] = static_cast<float>(pantographs[1]->getHeight());
 
+    // Состояние токоприемников
+    analogSignal[PANT1_POS] = pantograph->getRelativeHeight();
+    analogSignal[PANT2_POS] = 0.0f;
+
+    /*
     // Вольтметр КС
     analogSignal[STRELKA_KV2] = static_cast<float>(main_switch->getU_out() / 30000.0);
 
