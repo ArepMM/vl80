@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Config>
-    <Device>
-        <Order>1</Order>
-        <SubStepNum>1</SubStepNum>
-        <Solver>euler</Solver>
+	<Device>
+		<Order>1</Order>
+		<SubStepNum>1</SubStepNum>
+		<Solver>euler</Solver>
 
-        <U_nom>50.0</U_nom>
-        <R>48.0</R>
-        <T>0.1</T>
-        <level_off>0.6</level_off>
-        <level_on>0.7</level_on>
+		<!-- Номинальное рабочее напряжение реле, В -->
+		<U_nom>50.0</U_nom>
 
-    </Device>
+		<!-- Сопротивление катушки реле, Ом -->
+		<R>48.0</R>
+
+		<!-- Постоянная времени обмотки, с -->
+		<T>0.1</T>
+
+		<!-- Максимальный уровень отключения (0.0 - 1.0) -->
+		<level_off>0.6</level_off>
+		<!-- Минимальный уровень включения (0.0 - 1.0) -->
+		<level_on>0.7</level_on>
+
+	</Device>
 </Config>
