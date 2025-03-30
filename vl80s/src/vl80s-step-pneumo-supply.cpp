@@ -43,21 +43,23 @@ void VL80s::stepPneumoSupply(double t, double dt)
 
     // Пневморедуктор к резервуару токоприёмника
     pneumoreducer_pant->setInputPressure(switch_reservoir->getPressure());
-    pneumoreducer_pant->setOutPressure(shutoff_pant->getPressureToDevice());
+    pneumoreducer_pant->setOutFlow(shutoff_pant->getFlowToPipe() + valve_vz->getFlowToPipe());
     pneumoreducer_pant->step(t, dt);
 
     // Разобщительный кран резервуара токоприёмника
-    shutoff_pant->setPipePressure(pant_reservoir->getPressure());
-    shutoff_pant->setDeviceFlow(pneumoreducer_pant->getOutFlow() + valve_vz->getFlowToPipe());
+    double K_aux_pant = 4e-3;
+    double Q_aux_pant = K_aux_pant * (shutoff_pant->getPressureToDevice() - pant_reservoir->getPressure());
+    shutoff_pant->setPipePressure(pneumoreducer_pant->getOutPressure());
+    shutoff_pant->setDeviceFlow(-Q_aux_pant);
     shutoff_pant->setControl(keys);
     shutoff_pant->step(t, dt);
 
     // Резервуар токоприемника
-    pant_reservoir->setFlow(shutoff_pant->getFlowToPipe());
+    pant_reservoir->setFlow(Q_aux_pant);
     pant_reservoir->step(t, dt);
 
     // Вентиль защиты ВЗ
-    valve_vz->setPipePressure(shutoff_pant->getPressureToDevice());
+    valve_vz->setPipePressure(pneumoreducer_pant->getOutPressure());
     valve_vz->setDeviceFlow(valve_kep6->getFlowToPipe());
     valve_vz->setVoltage(50.0 * shield_223->getTumblerPos(Shield_223::TUMBLER_PANTS)); // TODO
     valve_vz->step(t, dt);
