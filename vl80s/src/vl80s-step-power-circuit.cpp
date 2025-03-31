@@ -17,6 +17,9 @@ void VL80s::stepPowerCircuit(double t, double dt)
     pantograph->step(t, dt);
 
     // Блоки силовых аппаратов
-    power_units->setInputVoltage(PowerUnit::E15, shield_223->getOutputVoltage(Shield_223::E15));
+    double U_E15 = max(shield_223->getOutputVoltage(Shield_223::E15),
+                       sme_bwd->getSignal(SME_E15_IN));
+    power_units->setInputVoltage(PowerUnit::E15, U_E15);
+
     power_units->step(t, dt);
 }
