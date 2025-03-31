@@ -63,4 +63,12 @@ void VL80s::initPowerControlCircuit(const QString &modules_dir,
     panel_7->read_config("panel-7", custom_cfg_dir);
     panel_7->init(custom_cfg_dir);
     panel_7->setAnalogSignalsPtr(&analogSignal);
+
+    panel_8->read_config("panel-8", custom_cfg_dir);
+    panel_8->init(custom_cfg_dir);
+    panel_8->setAnalogSignalsPtr(&analogSignal);
+
+    panel_9->read_config("panel-9", custom_cfg_dir);
+    panel_9->init(custom_cfg_dir);
+    panel_9->setAnalogSignalsPtr(&analogSignal);
 }

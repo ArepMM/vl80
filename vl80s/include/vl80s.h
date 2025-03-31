@@ -29,6 +29,8 @@
 #include    <panel-5.h>
 #include    <panel-6.h>
 #include    <panel-7.h>
+#include    <panel-8.h>
+#include    <panel-9.h>
 #include    <power-unit.h>
 
 #include    <vl80-sme-connector.h>
@@ -313,6 +315,12 @@ private:
 
     /// Панель 7
     Panel_7 *panel_7 = new Panel_7(Panel_7::INPUTS_NUM, Panel_7::OUTPUTS_NUM);
+
+    /// Панель 8
+    Panel_8 *panel_8 = new Panel_8(Panel_8::INPUTS_NUM, Panel_8::OUTPUTS_NUM);
+
+    /// Панель 9
+    Panel_9 *panel_9 = new Panel_9(Panel_9::INPUTS_NUM, Panel_9::OUTPUTS_NUM);
 
     /// ПВУ7 - контроль давления в резервуаре управления
     PressContactSensor *pvu7 = new PressContactSensor();

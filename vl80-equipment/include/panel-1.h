@@ -23,14 +23,16 @@ public:
 
     enum P1_InputWires
     {
-        INPUTS_NUM = 1,
-        E28 = 0
+        INPUTS_NUM = 2,
+        E28_IN = 0,
+        E35_IN = 1
     };
 
     enum P1_OutputWires
     {
-        OUTPUTS_NUM = 1,
-        E35 = 0
+        OUTPUTS_NUM = 2,
+        E35_OUT = 0,
+        E28_OUT = 1,
     };
 
 private:

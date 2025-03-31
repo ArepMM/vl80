@@ -121,7 +121,8 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
 
 
     // Панель 1
-    panel_1->setInputVoltage(Panel_1::E28, shield_223->getOutputVoltage(Shield_223::E16) * static_cast<double>(pvu1->getState()));
+    panel_1->setInputVoltage(Panel_1::E28_IN, shield_223->getOutputVoltage(Shield_223::E16) * static_cast<double>(pvu1->getState()));
+    panel_1->setInputVoltage(Panel_1::E35_IN, sme_bwd->getSignal(SME_E35_IN));
     panel_1->setControl(keys);
     panel_1->step(t, dt);
 
@@ -143,4 +144,13 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
 
     panel_7->setControl(keys);
     panel_7->step(t, dt);
+
+    panel_8->setControl(keys);
+    panel_8->step(t, dt);
+
+    double U_E37 = max(sme_bwd->getSignal(SME_E37_IN), panel_1->getOutputVoltage(Panel_1::E28_OUT));
+    panel_9->setInputVoltage(Panel_9::E37, U_E37);
+    panel_9->setInputVoltage(Panel_9::E16, shield_223->getOutputVoltage(Shield_223::E16));
+    panel_9->setControl(keys);
+    panel_9->step(t, dt);
 }

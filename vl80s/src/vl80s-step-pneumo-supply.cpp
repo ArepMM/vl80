@@ -67,7 +67,7 @@ void VL80s::stepPneumoSupply(double t, double dt)
     // Вентиль токоприёмника КЭП6
     valve_kep6->setPipePressure(valve_vz104->getPressureToDevice());
     valve_kep6->setDeviceFlow(pantograph->getPneumodriveFlow());
-    valve_kep6->setVoltage(50.0 * shield_223->getTumblerPos(Shield_223::TUMBLER_PANT_FWD)); // TODO
+    valve_kep6->setVoltage(panel_9->getOutputVoltage(Panel_9::N125));
     valve_kep6->step(t, dt);
 
     // ПВУ1 - контроль давления в магистрали пневмоблокировок и токоприёмника

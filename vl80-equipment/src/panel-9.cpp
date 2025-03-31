@@ -25,6 +25,9 @@ Panel_9::~Panel_9()
 void Panel_9::step(double t, double dt)
 {
     ElectricModule::step(t, dt);
+
+    K248->setVoltage(input_wire[E37]);
+    K248->step(t, dt);
 }
 
 //------------------------------------------------------------------------------
@@ -32,7 +35,7 @@ void Panel_9::step(double t, double dt)
 //------------------------------------------------------------------------------
 void Panel_9::init(const QString &custom_cfg_dir)
 {
-
+    K248->setInitContactState(K248_E16_N125, false);
 }
 
 //------------------------------------------------------------------------------
@@ -40,7 +43,8 @@ void Panel_9::init(const QString &custom_cfg_dir)
 //------------------------------------------------------------------------------
 void Panel_9::preStep(state_vector_t &Y, double t)
 {
-
+    output_wire[N125] =
+        input_wire[E16] * static_cast<double>(K248->getContactState(K248_E16_N125));
 }
 
 //------------------------------------------------------------------------------

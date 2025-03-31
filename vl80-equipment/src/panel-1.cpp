@@ -53,8 +53,11 @@ void Panel_1::ode_system(const state_vector_t &Y,
                          state_vector_t &dYdt,
                          double t)
 {
-    output_wire[E35] =
-        input_wire[E28] * static_cast<double>(S126.getState());
+    output_wire[E35_OUT] =
+        input_wire[E28_IN] * static_cast<double>(S126.getState());
+
+    output_wire[E28_OUT] =
+        input_wire[E35_IN] * static_cast<double>(S126.getState());
 }
 
 //------------------------------------------------------------------------------

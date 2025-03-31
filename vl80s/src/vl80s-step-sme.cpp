@@ -27,7 +27,13 @@ void VL80s::stepSME(double t, double dt)
     // TODO // и сделать аналогичный запрет включать УБТ в других кабинах
 
     // TODO // всё остальное взаимодействие секций вл80
+
+    // Цепи управления токоприемниками
     sme_bwd->setSignal(SME_E15_OUT, shield_223->getOutputVoltage(Shield_223::E15));
+    sme_bwd->setSignal(SME_E16_OUT, shield_223->getOutputVoltage(Shield_223::E16));
+    sme_bwd->setSignal(SME_E17_OUT, shield_223->getOutputVoltage(Shield_223::E17));
+    sme_bwd->setSignal(SME_E35_OUT, panel_1->getOutputVoltage(Panel_1::E35_OUT));
+    sme_bwd->setSignal(SME_E37_OUT, panel_1->getOutputVoltage(Panel_1::E28_OUT));
 
     // Управление
     sme_fwd->setControl(keys);
