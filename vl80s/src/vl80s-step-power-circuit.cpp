@@ -15,4 +15,8 @@ void VL80s::stepPowerCircuit(double t, double dt)
     // Пантограф
     pantograph->setPneumodriveRefPressure(valve_kep6->getPressureToDevice());
     pantograph->step(t, dt);
+
+    // Блоки силовых аппаратов
+    power_units->setInputVoltage(PowerUnit::E15, shield_223->getOutputVoltage(Shield_223::E15));
+    power_units->step(t, dt);
 }

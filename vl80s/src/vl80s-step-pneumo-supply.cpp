@@ -43,7 +43,7 @@ void VL80s::stepPneumoSupply(double t, double dt)
 
     // Пневморедуктор к резервуару токоприёмника
     pneumoreducer_pant->setInputPressure(switch_reservoir->getPressure());
-    pneumoreducer_pant->setOutFlow(shutoff_pant->getFlowToPipe() + valve_vz->getFlowToPipe());
+    pneumoreducer_pant->setOutFlow(shutoff_pant->getFlowToPipe() + valve_vz104->getFlowToPipe());
     pneumoreducer_pant->step(t, dt);
 
     // Разобщительный кран резервуара токоприёмника
@@ -59,19 +59,19 @@ void VL80s::stepPneumoSupply(double t, double dt)
     pant_reservoir->step(t, dt);
 
     // Вентиль защиты ВЗ
-    valve_vz->setPipePressure(pneumoreducer_pant->getOutPressure());
-    valve_vz->setDeviceFlow(valve_kep6->getFlowToPipe());
-    valve_vz->setVoltage(50.0 * shield_223->getTumblerPos(Shield_223::TUMBLER_PANTS)); // TODO
-    valve_vz->step(t, dt);
+    valve_vz104->setPipePressure(pneumoreducer_pant->getOutPressure());
+    valve_vz104->setDeviceFlow(valve_kep6->getFlowToPipe());
+    valve_vz104->setVoltage(power_units->getOutputVoltage(PowerUnit::N44)); // TODO
+    valve_vz104->step(t, dt);
 
     // Вентиль токоприёмника КЭП6
-    valve_kep6->setPipePressure(valve_vz->getPressureToDevice());
+    valve_kep6->setPipePressure(valve_vz104->getPressureToDevice());
     valve_kep6->setDeviceFlow(pantograph->getPneumodriveFlow());
     valve_kep6->setVoltage(50.0 * shield_223->getTumblerPos(Shield_223::TUMBLER_PANT_FWD)); // TODO
     valve_kep6->step(t, dt);
 
     // ПВУ1 - контроль давления в магистрали пневмоблокировок и токоприёмника
-    pvu1->setPressure(valve_vz->getPressureToDevice());
+    pvu1->setPressure(valve_vz104->getPressureToDevice());
     pvu1->step(t, dt);
 
 

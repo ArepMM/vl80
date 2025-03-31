@@ -94,11 +94,11 @@ void VL80s::stepDebugPrint(double t, double dt)
                     .arg(Physics::g * pant_reservoir->getPressure(), 5, 'f', 2)
                     .arg(Physics::g * pneumoreducer_pant->getOutPressure(), 5, 'f', 2)
                     .arg(shutoff_pant->isOpened())
-                    .arg(Physics::g * valve_vz->getPressureToDevice(), 5, 'f', 2)
+                    .arg(Physics::g * valve_vz104->getPressureToDevice(), 5, 'f', 2)
                     .arg(Physics::g * pantograph->getY(0), 5, 'f', 2)
                     .arg(pantograph->getHeight(), 5, 'f', 3);
     DebugMsg += QString(" | ВЗ %1 | КЭП6 %2")
-                    .arg(valve_vz->isOpened())
+                    .arg(valve_vz104->isOpened())
                     .arg(valve_kep6->isOpened());
 /*
     DebugMsg += QString("\n");

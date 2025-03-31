@@ -29,6 +29,7 @@
 #include    <panel-5.h>
 #include    <panel-6.h>
 #include    <panel-7.h>
+#include    <power-unit.h>
 
 #include    <vl80-sme-connector.h>
 
@@ -145,7 +146,7 @@ private:
     Reservoir *pant_reservoir = nullptr;
 
     /// Вентиль защиты ВЗ
-    PneumoElectroValve *valve_vz = nullptr;
+    PneumoElectroValve *valve_vz104 = nullptr;
 
     /// Вентиль токоприёмника КЭП6
     PneumoElectroValve *valve_kep6 = nullptr;
@@ -315,6 +316,8 @@ private:
 
     /// ПВУ7 - контроль давления в резервуаре управления
     PressContactSensor *pvu7 = new PressContactSensor();
+
+    PowerUnit *power_units = new PowerUnit(PowerUnit::INPUTS_NUM, PowerUnit::OUTPUTS_NUM);
 
     enum
     {

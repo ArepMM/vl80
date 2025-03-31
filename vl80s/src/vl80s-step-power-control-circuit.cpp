@@ -98,6 +98,7 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     km->setInputVoltage(ControllerKM84::N05, shield_215->getOutputVoltage(Shield_215::N05));
     km->setInputVoltage(ControllerKM84::N88, shield_223->getOutputVoltage(Shield_223::N88));
     km->setInputVoltage(ControllerKM84::N306, 0.0); // !!! ЗАДАТЬ ПОСЛЕ РЕАЛИЗАЦИИ ВНЕШНЕЙ ЦЕПИ !!!
+
     // Проверяем запрет на включение реверсивки в неактивной кабине
     if ((sme_bwd->getSignal(SME_NO_REVERS_HANDLE) == 1.0) ||
         (sme_bwd->getSignal(SME_NO_REVERS_HANDLE) == 1.0))
@@ -117,6 +118,8 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
         km->setControl(keys);
     }
     km->step(t, dt);
+
+    // Вентиль защиты
 
     panel_1->setControl(keys);
     panel_1->step(t, dt);
