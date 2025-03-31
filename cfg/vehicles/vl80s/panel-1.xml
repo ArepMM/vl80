@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<Device>
+		<!-- Разъединитель секций 126 -->
+		<S126>1</S126>		
+	</Device>
+</Config>

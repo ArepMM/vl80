@@ -47,6 +47,17 @@ public:
         return 0.0;
     }
 
+    /// Получить напряжение с входного провода
+    double getIutputVoltage(size_t wire_idx) const
+    {
+        if (wire_idx < input_wire.max_size())
+        {
+            return input_wire[wire_idx];
+        }
+
+        return 0.0;
+    }
+
     /// Вернуть ток, потребляемый модулем
     double getCurrent() const
     {

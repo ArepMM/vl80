@@ -53,7 +53,8 @@ void Panel_1::ode_system(const state_vector_t &Y,
                          state_vector_t &dYdt,
                          double t)
 {
-
+    output_wire[E35] =
+        input_wire[E28] * static_cast<double>(S126.getState());
 }
 
 //------------------------------------------------------------------------------
@@ -61,7 +62,20 @@ void Panel_1::ode_system(const state_vector_t &Y,
 //------------------------------------------------------------------------------
 void Panel_1::load_config(CfgReader &cfg)
 {
+    QString secName = "Device";
 
+    bool S126_state = false;
+
+    cfg.getBool(secName, "S126", S126_state);
+
+    if (S126_state)
+    {
+        S126.set();
+    }
+    else
+    {
+        S126.reset();
+    }
 }
 
 //------------------------------------------------------------------------------

@@ -119,11 +119,13 @@ void VL80s::stepPowerControlCircuit(double t, double dt)
     }
     km->step(t, dt);
 
-    // Вентиль защиты
 
+    // Панель 1
+    panel_1->setInputVoltage(Panel_1::E28, shield_223->getOutputVoltage(Shield_223::E16) * static_cast<double>(pvu1->getState()));
     panel_1->setControl(keys);
     panel_1->step(t, dt);
 
+    // Панель 2
     panel_2->setControl(keys);
     panel_2->step(t, dt);
 

@@ -23,12 +23,14 @@ public:
 
     enum P1_InputWires
     {
-        INPUTS_NUM = 1
+        INPUTS_NUM = 1,
+        E28 = 0
     };
 
     enum P1_OutputWires
     {
-        OUTPUTS_NUM = 1
+        OUTPUTS_NUM = 1,
+        E35 = 0
     };
 
 private:
@@ -160,6 +162,9 @@ private:
 
     /// Вентилятор 4
     Relay *K130 = new Relay(K130_NUM_CONTACTS);
+
+    /// Разъединитель секций 126
+    Trigger S126;
 
     void preStep(state_vector_t &Y, double t) override;
 

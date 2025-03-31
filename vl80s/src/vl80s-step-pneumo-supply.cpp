@@ -61,7 +61,7 @@ void VL80s::stepPneumoSupply(double t, double dt)
     // Вентиль защиты ВЗ
     valve_vz104->setPipePressure(pneumoreducer_pant->getOutPressure());
     valve_vz104->setDeviceFlow(valve_kep6->getFlowToPipe());
-    valve_vz104->setVoltage(power_units->getOutputVoltage(PowerUnit::N44)); // TODO
+    valve_vz104->setVoltage(power_units->getOutputVoltage(PowerUnit::N44));
     valve_vz104->step(t, dt);
 
     // Вентиль токоприёмника КЭП6
