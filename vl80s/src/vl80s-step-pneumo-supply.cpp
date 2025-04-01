@@ -1,4 +1,5 @@
 #include    "vl80s.h"
+#include    <vl80-sme-signals.h>
 
 //------------------------------------------------------------------------
 //
@@ -67,7 +68,10 @@ void VL80s::stepPneumoSupply(double t, double dt)
     // Вентиль токоприёмника КЭП6
     valve_kep6->setPipePressure(valve_vz104->getPressureToDevice());
     valve_kep6->setDeviceFlow(pantograph->getPneumodriveFlow());
-    valve_kep6->setVoltage(panel_9->getOutputVoltage(Panel_9::N125));
+
+    double U_N125 = max(panel_9->getOutputVoltage(Panel_9::N125), sme_bwd->getSignal(SME_E16_IN));
+    valve_kep6->setVoltage(U_N125);
+
     valve_kep6->step(t, dt);
 
     // ПВУ1 - контроль давления в магистрали пневмоблокировок и токоприёмника

@@ -35,6 +35,10 @@ void VL80s::stepSME(double t, double dt)
     sme_bwd->setSignal(SME_E35_OUT, panel_1->getOutputVoltage(Panel_1::E35_OUT));
     sme_bwd->setSignal(SME_E37_OUT, panel_1->getOutputVoltage(Panel_1::E28_OUT));
 
+    double U_E30 = max(shield_223->getOutputVoltage(Shield_223::E16),
+                       shield_223->getOutputSignal(Shield_223::E17));
+    sme_bwd->setSignal(SME_E30_OUT, U_E30);
+
     // Управление
     sme_fwd->setControl(keys);
     sme_fwd->step(t, dt);
