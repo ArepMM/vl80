@@ -37,6 +37,7 @@ void Panel_9::init(const QString &custom_cfg_dir)
 {
     K248->read_config("mk-69", custom_cfg_dir);
     K248->setInitContactState(K248_E16_N125, false);
+    K248->setInitContactState(K248_E13_N68, false);
 }
 
 //------------------------------------------------------------------------------
@@ -46,6 +47,12 @@ void Panel_9::preStep(state_vector_t &Y, double t)
 {
     output_wire[N125] =
         input_wire[E16] * static_cast<double>(K248->getContactState(K248_E16_N125));
+
+    output_wire[N68] =
+        input_wire[E13] * static_cast<double>(K248->getContactState(K248_E13_N68));
+
+    // Ток, потребляемый панелью
+    Icc = K248->getCurrent();
 }
 
 //------------------------------------------------------------------------------
