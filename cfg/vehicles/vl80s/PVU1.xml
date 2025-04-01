@@ -3,7 +3,7 @@
 	<Device>
 		<p_min>0.27</p_min>
 		<p_max>0.45</p_max>
-		<IsNormalOFF>0</IsNormalOFF>
+		<IsNormalOFF>1</IsNormalOFF>
 	</Device>
 </Config>
 

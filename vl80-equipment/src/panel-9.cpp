@@ -35,6 +35,7 @@ void Panel_9::step(double t, double dt)
 //------------------------------------------------------------------------------
 void Panel_9::init(const QString &custom_cfg_dir)
 {
+    K248->read_config("mk-69", custom_cfg_dir);
     K248->setInitContactState(K248_E16_N125, false);
 }
 
