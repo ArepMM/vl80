@@ -139,61 +139,87 @@ void Pantograph_new::ode_system(const state_vector_t &Y, state_vector_t &dYdt, d
     Qc = (Y[PRESSURE] - pc) * Kc;
     dYdt[PRESSURE] = -Qc / Vc;
 
-    // Высота токоприёмника
-    if (Y[PRESSURE] > Pmin)
+    // Целевая высота полоза токоприёмника - высота контактного провода
+    double ref_height = input_signals[INPUT_WIRE_HEIGHT];
+
+    // Если нет контактного провода, или его высота
+    // выше максимально поднятого полоза или ниже опущенного
+    if ((!is_linked) ||
+        (ref_height > height_up) ||
+        ( (ref_height - height_down) < Physics::ZERO ))
     {
-        // Поднятие токоприёмника
-        // Скорость поднятия с учётом давления в пневмоприводе, м/с
-        double motion_v = motion_v_nom * ((Y[PRESSURE] - Pmin) / (Pnom - Pmin));
+        // Если провода нет, отключаем токоприёмник
+        is_contact = false;
 
-        // Целевая высота полоза - высота контактного провода
-        double ref_height = input_signals[INPUT_WIRE_HEIGHT];
-
-        // Проверяем, что есть контактный провод, и его высота
-        // не выше максимально поднятого полоза и не ниже опущенного
-        if ( is_linked &&
-            ( (ref_height < height_up) ||
-             ((ref_height - height_down) > Physics::ZERO) ) )
+        // Проверяем давление в пневмоприводе
+        if (Y[PRESSURE] > Pmin)
         {
-            // Проверяем касание полоза и контактного провода
-            is_contact = (abs(Y[HEIGHT] - ref_height) < eps);
+            // Озвучка // TODO // Переделать
+            ref_state.set();
+
+            // Давление поднимает полоз без ограничения до макисмальной высоты
+            if (Y[HEIGHT] < height_up)
+            {
+                // Скорость поднятия с учётом давления в пневмоприводе, м/с
+                dYdt[HEIGHT] = motion_v_nom * ((Y[PRESSURE] - Pmin) / (Pnom - Pmin));
+                return;
+            }
+
+            // Не позволяем подниматься выше максимума
+            dYdt[HEIGHT] = 0.0;
+            if (Y[HEIGHT] - height_up > Physics::ZERO)
+            {
+                setY(HEIGHT, ref_height);
+            }
+            return;
         }
-        else
-        {
-            // Если провода нет, поднимаем без ограничения
-            ref_height = height_up;
-
-            // Отключаем токоприёмник
-            is_contact = false;
-        }
-
-        // Расстояние до целевой высоты
-        double height_delta = ref_height - Y[HEIGHT];
-
-        // Токоприёмник стремится к проводу
-        dYdt[HEIGHT] = motion_v * (cut(height_delta, -eps, eps) / eps);
-
-        // Озвучка // TODO // Переделать
-        ref_state.set();
     }
     else
     {
-        // Опускание токоприёмника
-        // Скорость опускания токоприёмника с учётом давления в пневмоприводе, м/с
-        double motion_v = motion_v_nom * ((Pmin - Y[PRESSURE]) / Pmin);
+        // Провод всегда прижимает токоприёмник вниз
+        if (Y[HEIGHT] - ref_height > Physics::ZERO)
+        {
+            setY(HEIGHT, ref_height);
+            dYdt[HEIGHT] = 0.0;
+            is_contact = true;
+            return;
+        }
 
-        // Отключаем токоприёмник
-        is_contact = false;
+        // Проверяем касание полоза и контактного провода
+        is_contact = (abs(Y[HEIGHT] - ref_height) < eps);
 
-        // Расстояние до опущенного состояния
-        double height_delta = Y[HEIGHT] - height_down;
+        // Проверяем давление в пневмоприводе
+        if (Y[PRESSURE] > Pmin)
+        {
+            // Озвучка // TODO // Переделать
+            ref_state.set();
 
-        // Токоприёмник стремится опустится
-        dYdt[HEIGHT] = -1.0 * motion_v * (min(height_delta, eps) / eps);
+            // Давление поднимает полоз к проводу
+            if (Y[HEIGHT] < ref_height)
+            {
+                // Скорость поднятия с учётом давления в пневмоприводе, м/с
+                dYdt[HEIGHT] = motion_v_nom * ((Y[PRESSURE] - Pmin) / (Pnom - Pmin));
+                return;
+            }
 
-        // Озвучка // TODO // Переделать
-        ref_state.reset();
+            // Не позволяем подниматься выше провода
+            dYdt[HEIGHT] = 0.0;
+            return;
+        }
     }
+
+    // Сюда программа доходит в случае давления в пневмоприводе ниже минимального
+    // Озвучка // TODO // Переделать
+    ref_state.reset();
+
+    // Скорость опускания токоприёмника с учётом давления в пневмоприводе, м/с
+    double motion_v = motion_v_nom * ((Pmin - Y[PRESSURE]) / Pmin);
+
+    // Расстояние до опущенного состояния
+    double height_delta = Y[HEIGHT] - height_down;
+
+    // Токоприёмник стремится опуститься, но в конце мягко сложиться
+    dYdt[HEIGHT] = -1.0 * motion_v * (min(height_delta, eps) / eps);
 }
 
 //------------------------------------------------------------------------------
@@ -215,5 +241,6 @@ void Pantograph_new::load_config(CfgReader &cfg)
     cfg.getDouble(secName, "HeightDown", height_down);
     cfg.getDouble(secName, "HeightUp", height_up);
 
+    motion_v_nom = (height_up - height_down) / motion_time;
     setY(HEIGHT, height_down);
 }
