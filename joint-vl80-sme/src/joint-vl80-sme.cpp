@@ -50,11 +50,17 @@ void JointVL80sme::step(double t, double dt)
         devices[FWD]->setInputSignal(SME_INPUT_IS_CONNECTED, 1.0);
         devices[BWD]->setInputSignal(SME_INPUT_IS_CONNECTED, 1.0);
 
-        /*for (size_t i = SME_NUM_SECTIONS; i < NUM_VL80_SME_SIGNALS; ++i)
-        {
-            devices[FWD]->setInputSignal(i, devices[BWD]->getOutputSignal(i));
-            devices[BWD]->setInputSignal(i, devices[FWD]->getOutputSignal(i));
-        }*/
+        // Сигнал-счётчик количества соединённых в СМЕ секций
+        devices[FWD]->setInputSignal(SME_NUM_SECTIONS, devices[BWD]->getOutputSignal(SME_NUM_SECTIONS));
+        devices[BWD]->setInputSignal(SME_NUM_SECTIONS, devices[FWD]->getOutputSignal(SME_NUM_SECTIONS));
+
+        // Сигнал запрета вставлять реверсивную рукоятку в других кабинах
+        devices[FWD]->setInputSignal(SME_NO_REVERS_HANDLE, devices[BWD]->getOutputSignal(SME_NO_REVERS_HANDLE));
+        devices[BWD]->setInputSignal(SME_NO_REVERS_HANDLE, devices[FWD]->getOutputSignal(SME_NO_REVERS_HANDLE));
+
+        // Сигнал запрета разблокировать УБТ в других кабинах
+        devices[FWD]->setInputSignal(SME_NO_BRAKELOCK_KEY, devices[BWD]->getOutputSignal(SME_NO_BRAKELOCK_KEY));
+        devices[BWD]->setInputSignal(SME_NO_BRAKELOCK_KEY, devices[FWD]->getOutputSignal(SME_NO_BRAKELOCK_KEY));
 
         // Цепи управления токоприемниками
         devices[FWD]->setInputSignal(SME_E15_IN, devices[BWD]->getOutputSignal(SME_E15_OUT));
